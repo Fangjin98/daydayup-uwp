@@ -24,7 +24,7 @@ namespace DayDayUp.Helpers
 
             _dataAccess = Ioc.Default.GetRequiredService<IDataAccess>();
 
-            allTodos = new List<Todo>();
+            allTodos = _dataAccess.GetData();
             
         }
 

@@ -2,6 +2,7 @@
 using LiteDB;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -30,7 +31,7 @@ namespace DayDayUp.Services
             name = "MyTodos";
 
             var filePath = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, name);
-
+            Debug.WriteLine(filePath);
             db = new LiteDatabase(filePath);
         }
 

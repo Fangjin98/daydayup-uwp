@@ -19,7 +19,7 @@ namespace DayDayUp
         public List<Scenario> Scenarios { get; } = new ()
         {
             new Scenario() { Title = "Home", ClassName = typeof(HomePage).FullName, Icon = "\uE80F" },
-            new Scenario() { Title = "Dashboard", ClassName = typeof(DashboardPage).FullName, Icon = "\uE81C" }
+            new Scenario() { Title = "Dashboard", ClassName = typeof(DashboardPage).FullName, Icon = "\ue8a1" }
             //new Scenario() { Title = "Archive", ClassName = typeof(DonePage).FullName, Icon = "\uE8B7" }
         };
 

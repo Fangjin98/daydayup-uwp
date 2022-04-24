@@ -24,18 +24,18 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Image Source="ms-appx:///Assets/window_icon.png"
+            <Image Source="ms-appx:///Assets/daydayup.png"
                    Grid.Column="0"
                    HorizontalAlignment="Left"
                    Width="16"
                    Height="16"
-                   Margin="8,0,0,0" />
+                   Margin="12,0,0,0" />
             <TextBlock x:Name="AppTitleTextBlock"
                        Text="DayDayUp"
                        Style="{StaticResource CaptionTextBlockStyle}"
                        Grid.Column="1"
                        VerticalAlignment="Center"
-                       Margin="28,0,0,0" />
+                       Margin="12,0,0,0" />
         </Grid>
         <muxc:NavigationView x:Name="NavView"
                         Grid.Row="1"
