@@ -26,7 +26,7 @@ namespace DayDayUp.Views
 
         private void newTaskTextBoxKeyUp(object sender, KeyRoutedEventArgs e)
         {
-            if(e.Key == VirtualKey.Enter && newTaskTextBox.Text != "")
+            if (e.Key == VirtualKey.Enter && newTaskTextBox.Text != "")
             {
                 ViewModel.AddTaskCommand.ExecuteAsync(new Todo
                 {
@@ -88,7 +88,7 @@ namespace DayDayUp.Views
                 ViewModel.AddTaskCommand.ExecuteAsync(new Todo
                 {
                     Name = newTaskTextBox.Text,
-                    ExpectedDurationMins = 6*60,
+                    ExpectedDurationMins = 6 * 60,
                     IsFinished = false,
                     Status = TodoStatus.Pause,
                     CreationDate = DateTime.Now,
@@ -107,7 +107,7 @@ namespace DayDayUp.Views
                 ViewModel.AddTaskCommand.ExecuteAsync(new Todo
                 {
                     Name = newTaskTextBox.Text,
-                    ExpectedDurationMins = 12*60,
+                    ExpectedDurationMins = 12 * 60,
                     IsFinished = false,
                     Status = TodoStatus.Pause,
                     CreationDate = DateTime.Now,
@@ -126,7 +126,7 @@ namespace DayDayUp.Views
                 ViewModel.AddTaskCommand.ExecuteAsync(new Todo
                 {
                     Name = newTaskTextBox.Text,
-                    ExpectedDurationMins = 24*60,
+                    ExpectedDurationMins = 24 * 60,
                     IsFinished = false,
                     Status = TodoStatus.Pause,
                     CreationDate = DateTime.Now,
@@ -190,7 +190,7 @@ namespace DayDayUp.Views
             ListView listView = sender as ListView;
             if (((FrameworkElement)e.OriginalSource).DataContext as Todo != null)
             {
-                ItemFlyout.ShowAt(listView, e.GetPosition(listView));
+                TodoItemFlyout.ShowAt(listView, e.GetPosition(listView));
                 ViewModel.SelectedTask = ((FrameworkElement)e.OriginalSource).DataContext as Todo;
             }
         }
@@ -212,7 +212,7 @@ namespace DayDayUp.Views
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            AppBarButton button = (AppBarButton)sender;
+            var button = (Button)sender;
             Todo task = (Todo)button.DataContext;
             ViewModel.StartTask(task);
         }
@@ -223,9 +223,28 @@ namespace DayDayUp.Views
             resetDetailPanel();
         }
 
-        private void DetailMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        private void Combo_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.StartTask(ViewModel.SelectedTask);
         }
+
+        private void Combo_Loaded(object sender, RoutedEventArgs e)
+        {
+            //Combo.SelectedIndex = 0;
+            //if(ViewModel.SelectedTask.Status==TodoStatus.Doing)
+            //{
+            //    Combo.SelectedIndex = 0;
+            //}
+            //else
+            //{
+            //    Combo.SelectedIndex = 1;
+            //}
+        }
+
+        private List<Tuple<string,TodoStatus>> todoStatus { get; } = new List<Tuple<string, TodoStatus>>()
+        {
+              new Tuple<string, TodoStatus>("Doing", TodoStatus.Doing),
+              new Tuple<string, TodoStatus>("Pause", TodoStatus.Pause),
+        };
     }
 }

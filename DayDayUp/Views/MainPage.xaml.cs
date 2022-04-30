@@ -41,7 +41,7 @@ namespace DayDayUp
                 {
                     Content = item.Title,
                     Tag = item.ClassName,
-                    Icon = new FontIcon() { FontFamily = new("Segoe MDL2 Assets"), Glyph = item.Icon }
+                    Icon = new FontIcon() { FontFamily = new("Segoe Fluent Icons"), Glyph = item.Icon }
                 });
             }
 

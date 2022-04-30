@@ -7,8 +7,7 @@
       xmlns:helper="using:DayDayUp.Helpers"
       xmlns:models="using:DayDayUp.Models"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-      mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+      mc:Ignorable="d">
     
     <Page.Resources>
         <helper:EnumToVisibilityConverter x:Key="TaskStatusConverter" />
@@ -16,6 +15,24 @@
         <helper:CountToVisibilityConverter x:Key="CountConverter" />
         <helper:CountToVisibilityNegativeConverter x:Key="NegativeCountConverter" />
         <helper:MinToStringConverter x:Key="MinToStringConverter" />
+        
+        <MenuFlyout x:Name="TodoItemFlyout">
+            <MenuFlyout.Items>
+                <MenuFlyoutItem Text="Delete"
+                                Click="DeleteTaskFlyoutButton_Click"
+                                Icon="Delete" />
+            </MenuFlyout.Items>
+        </MenuFlyout>
+        
+        <Style x:Key="DoingTodoItemContainerStyle"
+               BasedOn="{StaticResource ListViewItemContainerStyle}"
+               TargetType="ListViewItem">
+            <Setter Property="Margin"
+                    Value="0,0,0,4" />
+            <Setter Property="ContextFlyout"
+                    Value="{StaticResource TodoItemFlyout}" />
+        </Style>
+        
     </Page.Resources>
     
     <Grid Padding="{StaticResource PagePadding}"
@@ -30,12 +47,13 @@
         <SplitView  Grid.Row="1"
                     x:Name="HomeSplitView"
                     IsPaneOpen="False"
-                    CharacterSpacing="10"
                     OpenPaneLength="300"
                     CompactPaneLength="48"
                     DisplayMode="Inline"
                     PanePlacement="Right"
-                    LightDismissOverlayMode="Auto">
+                    PaneBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="4">
             <Grid Name="LeftView" Margin="0,0,12,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -43,7 +61,7 @@
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0">
-                    <TextBlock Text="New task" 
+                    <TextBlock Text="New task"
                                Style="{StaticResource SubtitleTextStyle}" />
                     <Grid Margin="0,0,0,20">
                         <Grid.ColumnDefinitions>
@@ -61,7 +79,7 @@
                                              Margin="{StaticResource ContentMargin}"
                                              ToolTipService.ToolTip="Estimated duration">
                             <muxc:DropDownButton.Content>
-                                <FontIcon FontFamily="Segoe MDl2 Assets"
+                                <FontIcon FontFamily="Segoe Fluent Icons"
                                           Glyph="&#xe823;" />
                             </muxc:DropDownButton.Content>
                             <muxc:DropDownButton.Flyout>
@@ -81,13 +99,7 @@
                                 </MenuFlyout>
                             </muxc:DropDownButton.Flyout>
                         </muxc:DropDownButton>
-                        <!--<Button Grid.Column="2"
-                                Margin="{StaticResource ContentMargin}"
-                                Click="AddTaskButton_Click"
-                                HorizontalAlignment="Right">
-                            <FontIcon FontFamily="Segoe MDl2 Assets"
-                                      Glyph="&#xe948;"/>
-                        </Button>-->
+                        
                     </Grid>
                 </StackPanel>
                 <TextBlock Grid.Row="1"
@@ -100,55 +112,76 @@
                           Visibility="{x:Bind ViewModel.MyTasks.Count,Converter={StaticResource CountConverter}, Mode=OneWay}"
                           Loaded="TaskList_Loaded"
                           RightTapped="ListView_RightTapped"
-                          Tapped="TaskList_ItemClick">
-                    <ListView.Resources>
-                        <MenuFlyout x:Name="ItemFlyout">
-                            <MenuFlyout.Items>
-                                <MenuFlyoutItem Text="Delete"
-                                                Click="DeleteTaskFlyoutButton_Click" />
-                            </MenuFlyout.Items>
-                        </MenuFlyout>
-                    </ListView.Resources>
+                          Tapped="TaskList_ItemClick"
+                          ItemContainerStyle="{StaticResource DoingTodoItemContainerStyle}">
                     <ListView.ItemTemplate>
-                        <DataTemplate x:Name="ListViewItem"
-                                      x:DataType="models:Todo">
-                            <Grid Height="{StaticResource ItemHeight}">
+                        <DataTemplate x:DataType="models:Todo">
+                            <Grid x:Name="itemRoot"
+                                  Padding="8"
+                                  Height="52"
+                                  Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                  BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                  BorderThickness="1"
+                                  CornerRadius="{StaticResource ControlCornerRadius}">
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="LayoutVisualStates">
+                                        <VisualState x:Name="WideLayout">
+                                            <VisualState.StateTriggers>
+                                                <AdaptiveTrigger MinWindowWidth="{StaticResource Breakpoint640Plus}" />
+                                            </VisualState.StateTriggers>
+                                            <VisualState.Setters />
+                                        </VisualState>
+                                        <VisualState x:Name="NarrowLayout">
+                                            <VisualState.StateTriggers>
+                                                <AdaptiveTrigger MinWindowWidth="0" />
+                                            </VisualState.StateTriggers>
+                                            <VisualState.Setters>
+                                                <Setter Target="itemRoot.Width"
+                                                        Value="Auto" />
+                                                <Setter Target="itemRoot.Height"
+                                                        Value="48" />
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="36" />
+                                    <ColumnDefinition Width="32" />
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="72" />
+                                    <ColumnDefinition Width="48" />
                                 </Grid.ColumnDefinitions>
                                 <CheckBox Grid.Column="0"
                                           IsChecked="{x:Bind IsFinished}"
                                           Click="TaskCheckBox_Click"
-                                          VerticalAlignment="Center"/>
+                                          VerticalAlignment="Center" />
                                 <TextBlock Grid.Column="1"
                                            x:Name="taskNameTextBlock"
                                            VerticalAlignment="Center"
+                                           HorizontalAlignment="Left"
                                            Text="{x:Bind Name, Mode=TwoWay}"
                                            Style="{ThemeResource BasicTextStyle}" />
-                                <AppBarButton x:Name="StartButton"
-                                              HorizontalContentAlignment="Center"
-                                              VerticalContentAlignment="Center"
-                                              Grid.Column="2"
-                                              Visibility="{x:Bind ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}"
+                                <Button x:Name="StartButton"
+                                        Grid.Column="2"
+                                        Style="{StaticResource TransparentButton}"
                                               VerticalAlignment="Center"
-                                              HorizontalAlignment="Right"
+                                              HorizontalAlignment="Center"
                                               Click="StartButton_Click"
-                                              AutomationProperties.Name="Play">
-                                    <StackPanel>
-                                        <SymbolIcon Name="StartIcon"
-                                                    Symbol="Play"
-                                                    Visibility="{x:Bind Status,  Mode=OneWay,Converter={StaticResource NegativeTaskStatusConverter}}"
-                                                    />
-                                        <SymbolIcon Name="PauseIcon"
-                                                    Symbol="Pause"
-                                                    Visibility="{x:Bind Status,  Mode=OneWay,Converter={StaticResource TaskStatusConverter}}" />
+                                              Visibility="{x:Bind ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
+                                    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <FontIcon Name="StartIcon"
+                                                  FontSize="16"
+                                                  FontFamily="Segoe Fluent Icons"
+                                                  Glyph="&#xe768;"
+                                                  Visibility="{x:Bind Status,  Mode=OneWay,Converter={StaticResource NegativeTaskStatusConverter}}" />
+                                        <FontIcon Name="PauseIcon"
+                                                  FontSize="16"
+                                                  FontFamily="Segoe Fluent Icons"
+                                                  Glyph="&#xe769;"
+                                                  Visibility="{x:Bind Status,  Mode=OneWay,Converter={StaticResource TaskStatusConverter}}" />
                                     </StackPanel>
-                                </AppBarButton>
+                                </Button>
                                 <muxc:ProgressRing Grid.Column="2"
-                                                   Width="28"
-                                                   Height="28"
+                                                   Width="32"
+                                                   Height="32"
                                                    HorizontalAlignment="Center"
                                                    VerticalAlignment="Center"
                                                    Value="{x:Bind Progress}"
@@ -171,8 +204,7 @@
                 </RichTextBlock>
             </Grid>
             <SplitView.Pane>
-                <ScrollViewer Padding="20"
-                              CornerRadius="4">
+                <ScrollViewer Padding="20,12,20,12">
                     <StackPanel>
                         <TextBlock Text="Details"
                                    Style="{ThemeResource SubtitleTextStyle}" />
@@ -192,19 +224,14 @@
                                     Visibility="{x:Bind ViewModel.SelectedTask.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
                             <TextBlock Text="Status"
                                        Style="{ThemeResource SubsubtitleTextStyle}" />
-                            <DropDownButton Margin="{StaticResource ElementMargin}"
-                                                 HorizontalAlignment="Stretch"
-                                                 Content="{x:Bind ViewModel.SelectedTask.Status, Mode=TwoWay}"
-                                                 HorizontalContentAlignment="Left">
-                                <DropDownButton.Flyout>
-                                    <MenuFlyout Placement="Bottom">
-                                        <MenuFlyoutItem Text="Doing"
-                                                        Click="DetailMenuFlyoutItem_Click" />
-                                        <MenuFlyoutItem Text="Pause"
-                                                        Click="DetailMenuFlyoutItem_Click" />
-                                    </MenuFlyout>
-                                </DropDownButton.Flyout>
-                            </DropDownButton >
+                            <ComboBox x:Name="Combo"
+                                Margin="{StaticResource ElementMargin}"
+                                      ItemsSource="{x:Bind todoStatus}"
+                                      DisplayMemberPath="Item1"
+                                      SelectedValuePath="Item2"
+                                      SelectionChanged="Combo_Click"
+                                      Loaded="Combo_Loaded"
+                                      HorizontalAlignment="Stretch" />
                             <TextBlock Text="Duration"
                                        Style="{ThemeResource SubsubtitleTextStyle}" />
                             <Button Margin="{StaticResource ElementMargin}"
@@ -231,7 +258,7 @@
                                 HorizontalAlignment="Stretch"
                                 Click="FinishButton_Click"
                                 ToolTipService.ToolTip="Done">
-                            <FontIcon FontFamily="Segoe MDL2 Assets"
+                            <FontIcon FontFamily="Segoe Fluent Icons"
                                       Glyph="&#xf78c;" />
                         </Button>
                     </StackPanel>
