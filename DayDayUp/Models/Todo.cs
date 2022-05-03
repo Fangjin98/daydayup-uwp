@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics;
 
 namespace DayDayUp.Models
 {
@@ -24,6 +25,11 @@ namespace DayDayUp.Models
 
         public int ExpectedDurationMins { get; set; }
 
+        // record by app
+        public DateTime CreationDate { get; set; }
+
+        public List<DateTime> TimeStamps { get; set; }
+        
         // set by users
         public string Description { get; set; }
 
@@ -34,13 +40,15 @@ namespace DayDayUp.Models
         public TodoStatus Status
         {
             get { return status; }
-            set { SetProperty(ref status, value); }
+            set
+            {
+                if (SetProperty(ref status, value))
+                {
+                    TimeStamps?.Add(DateTime.Now);
+                    Debug.WriteLine("Status changed ", status.ToString());
+                }
+            }
         }
-
-        // record by app
-        public DateTime CreationDate { get; set; }
-
-        public List<DateTime> TimeStamps { get; set; }
 
         // init by program
         [BsonIgnore]
