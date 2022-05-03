@@ -28,7 +28,7 @@ namespace DayDayUp.Helpers
             
         }
 
-        public void FinishTodo(Todo item)
+        public void Finish(Todo item)
         {
             item.IsFinished = true;
             item.TimeStamps.Add(DateTime.Now);
@@ -50,6 +50,14 @@ namespace DayDayUp.Helpers
         public void Update(Todo item)
         {
             _dataAccess.UpdateDataAsync(item);
+        }
+
+        public void UpdateAll()
+        {
+            foreach (Todo todo in allTodos)
+            {
+                _dataAccess.UpdateDataAsync(todo);
+            }
         }
 
         public void CalDurationAndProgress(Todo item)
