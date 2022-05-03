@@ -15,7 +15,7 @@
         <helper:CountToVisibilityConverter x:Key="CountConverter" />
         <helper:CountToVisibilityNegativeConverter x:Key="NegativeCountConverter" />
         <helper:MinToStringConverter x:Key="MinToStringConverter" />
-        
+        <helper:StatusToStringConverter x:Key="StatusToStringConverter" />
         <MenuFlyout x:Name="TodoItemFlyout">
             <MenuFlyout.Items>
                 <MenuFlyoutItem Text="Delete"
@@ -72,7 +72,8 @@
                                  Grid.Column="0"
                                  PlaceholderText="Enter the name..."
                                  VerticalAlignment="Center"
-                                 HorizontalAlignment="Stretch" />
+                                 HorizontalAlignment="Stretch"
+                                 KeyUp="newTaskTextBoxKeyUp"/>
                         <muxc:DropDownButton x:Name="TaskDurationSelectionButton"
                                              Grid.Column="1"
                                              HorizontalAlignment="Center"
@@ -151,13 +152,13 @@
                                 </Grid.ColumnDefinitions>
                                 <CheckBox Grid.Column="0"
                                           IsChecked="{x:Bind IsFinished}"
-                                          Click="TaskCheckBox_Click"
+                                          Click="CheckBox_Click"
                                           VerticalAlignment="Center" />
                                 <TextBlock Grid.Column="1"
                                            x:Name="taskNameTextBlock"
                                            VerticalAlignment="Center"
                                            HorizontalAlignment="Left"
-                                           Text="{x:Bind Name, Mode=TwoWay}"
+                                           Text="{x:Bind Name, Mode=OneWay}"
                                            Style="{ThemeResource BasicTextStyle}" />
                                 <Button x:Name="StartButton"
                                         Grid.Column="2"
@@ -210,10 +211,12 @@
                                    Style="{ThemeResource SubtitleTextStyle}" />
                         <TextBlock Text="Name"
                                    Style="{ThemeResource SubsubtitleTextStyle}" />
-                        <TextBox Margin="{StaticResource ElementMargin}"
+                        <TextBox x:Name="DetailPanelTaskName"
+                                 Margin="{StaticResource ElementMargin}"
                                  PlaceholderText="{x:Bind ViewModel.SelectedTask.Name}"
                                  TextWrapping="Wrap"
-                                 Text="{x:Bind ViewModel.SelectedTask.Name, Mode=TwoWay}" />
+                                 Text="{x:Bind ViewModel.SelectedTask.Name, Mode=TwoWay}" 
+                                 KeyUp="DetailPanelTaskName_KeyUp"/>
                         <TextBlock Text="Estimated duration"
                                    Style="{ThemeResource SubsubtitleTextStyle}" />
                         <Button Margin="{StaticResource ElementMargin}"
@@ -222,16 +225,8 @@
                                 HorizontalContentAlignment="Left" />
                         <StackPanel Orientation="Vertical"
                                     Visibility="{x:Bind ViewModel.SelectedTask.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
-                            <TextBlock Text="Status"
+                            <TextBlock Text="{x:Bind ViewModel.SelectedTask.Status, Mode=OneWay, Converter={StaticResource StatusToStringConverter}}"
                                        Style="{ThemeResource SubsubtitleTextStyle}" />
-                            <ComboBox x:Name="Combo"
-                                Margin="{StaticResource ElementMargin}"
-                                      ItemsSource="{x:Bind todoStatus}"
-                                      DisplayMemberPath="Item1"
-                                      SelectedValuePath="Item2"
-                                      SelectionChanged="Combo_Click"
-                                      Loaded="Combo_Loaded"
-                                      HorizontalAlignment="Stretch" />
                             <TextBlock Text="Duration"
                                        Style="{ThemeResource SubsubtitleTextStyle}" />
                             <Button Margin="{StaticResource ElementMargin}"
@@ -253,14 +248,6 @@
                                        Text="{x:Bind ViewModel.SelectedTask.CreationDate, Mode=OneWay}"
                                        Style="{ThemeResource BasicTextStyle}" />
                         </StackPanel>
-                        <Button Margin="{StaticResource ElementMargin}"
-                                Style="{StaticResource AccentButtonStyle}"
-                                HorizontalAlignment="Stretch"
-                                Click="FinishButton_Click"
-                                ToolTipService.ToolTip="Done">
-                            <FontIcon FontFamily="Segoe Fluent Icons"
-                                      Glyph="&#xf78c;" />
-                        </Button>
                     </StackPanel>
                 </ScrollViewer>
             </SplitView.Pane>

@@ -3,11 +3,13 @@ using DayDayUp.ViewModels;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
-
+using Windows.UI.Xaml.Navigation;
 
 namespace DayDayUp.Views
 {
@@ -20,8 +22,12 @@ namespace DayDayUp.Views
         {
             InitializeComponent();
             DataContext = Ioc.Default.GetRequiredService<HomePageViewModel>();
+        }
 
-            newTaskTextBox.KeyUp += new KeyEventHandler(newTaskTextBoxKeyUp);
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            Debug.WriteLine("Homepage navigated from", "Update all");
+            ViewModel.UpdateAll();
         }
 
         private void newTaskTextBoxKeyUp(object sender, KeyRoutedEventArgs e)
@@ -202,7 +208,7 @@ namespace DayDayUp.Views
             resetDetailPanel();
         }
 
-        private void TaskCheckBox_Click(object sender, RoutedEventArgs e)
+        private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
             CheckBox checkBox = (CheckBox)sender;
             Todo task = (Todo)checkBox.DataContext;
@@ -214,37 +220,14 @@ namespace DayDayUp.Views
         {
             var button = (Button)sender;
             Todo task = (Todo)button.DataContext;
-            ViewModel.StartTask(task);
+            ViewModel.SwapTodoStatus(task);
         }
 
-        private void FinishButton_Click(object sender, RoutedEventArgs e)
+        private void DetailPanelTaskName_KeyUp(object sender, KeyRoutedEventArgs e)
         {
-            ViewModel.CompleteTask(ViewModel.SelectedTask);
-            resetDetailPanel();
+            var textbox=(TextBox)sender;
+            ViewModel.SelectedTask.Name=textbox.Text;
+            ViewModel.Update(ViewModel.SelectedTask);
         }
-
-        private void Combo_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.StartTask(ViewModel.SelectedTask);
-        }
-
-        private void Combo_Loaded(object sender, RoutedEventArgs e)
-        {
-            //Combo.SelectedIndex = 0;
-            //if(ViewModel.SelectedTask.Status==TodoStatus.Doing)
-            //{
-            //    Combo.SelectedIndex = 0;
-            //}
-            //else
-            //{
-            //    Combo.SelectedIndex = 1;
-            //}
-        }
-
-        private List<Tuple<string,TodoStatus>> todoStatus { get; } = new List<Tuple<string, TodoStatus>>()
-        {
-              new Tuple<string, TodoStatus>("Doing", TodoStatus.Doing),
-              new Tuple<string, TodoStatus>("Pause", TodoStatus.Pause),
-        };
     }
 }

@@ -4,10 +4,8 @@ using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Nito.AsyncEx;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace DayDayUp.ViewModels
@@ -43,7 +41,7 @@ namespace DayDayUp.ViewModels
         public void CompleteTask(Todo task)
         {
             MyTasks.Remove(task);
-            taskManager.FinishTodo(task);
+            taskManager.Finish(task);
 
             if (selectedTask == task)
             {
@@ -51,19 +49,24 @@ namespace DayDayUp.ViewModels
             }
         }
 
-        public void StartTask(Todo task)
+        public void SwapTodoStatus(Todo task)
         {
-            if (task.Status == TodoStatus.Pause)
-            {
-                task.Status = TodoStatus.Doing;
-                moveToTop(task);
-            }
-            else
-            {
-                task.Status = TodoStatus.Pause;
-            }
-            task.TimeStamps.Add(DateTime.Now);
+            task.Status = task.Status == TodoStatus.Doing ? TodoStatus.Pause : TodoStatus.Doing;
             taskManager.Update(task);
+        }
+
+        public void Update(Todo item)
+        {
+            taskManager.Update(item);
+        }
+
+        public void UpdateAll()
+        {
+            foreach(Todo todo in MyTasks)
+            {
+                Debug.WriteLine("Update todo", "VIEWMODEL");
+                taskManager.Update(todo);
+            }
         }
 
         private async Task AddTaskAsync(Todo task)
@@ -105,21 +108,10 @@ namespace DayDayUp.ViewModels
             }
         }
 
-        private void moveToTop(Todo task)
-        {
-            if (MyTasks.IndexOf(task) != 0)
-            {
-                MyTasks.Move(MyTasks.IndexOf(task), 0);
-                taskManager.Update(task);
-            }
-        }
-
-
         private readonly TodoManagementHelper taskManager;
 
-        private Todo selectedTask = new Todo();
+        private Todo selectedTask = new ();
 
-        private readonly AsyncLock LoadingLock = new AsyncLock();
-
+        private readonly AsyncLock LoadingLock = new AsyncLock();   
     }
 }
