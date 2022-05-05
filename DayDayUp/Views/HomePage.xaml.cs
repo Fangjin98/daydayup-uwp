@@ -229,5 +229,17 @@ namespace DayDayUp.Views
             ViewModel.SelectedTask.Name=textbox.Text;
             ViewModel.Update(ViewModel.SelectedTask);
         }
+
+        private async void ExpectedDurationMinsButton_Click(object sender, RoutedEventArgs e)
+        {
+            ContentDialog dialog = new ContentDialog();
+            dialog.Title = "Set the duration";
+            dialog.PrimaryButtonText = "Save";
+            dialog.CloseButtonText = "Cancel";
+            dialog.DefaultButton = ContentDialogButton.Primary;
+            dialog.Content = new DurationSettingPage(DataContext);
+
+            var result = await dialog.ShowAsync();
+        }
     }
 }

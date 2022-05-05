@@ -215,14 +215,15 @@
                                  Margin="{StaticResource ElementMargin}"
                                  PlaceholderText="{x:Bind ViewModel.SelectedTask.Name}"
                                  TextWrapping="Wrap"
-                                 Text="{x:Bind ViewModel.SelectedTask.Name, Mode=TwoWay}" 
+                                 Text="{x:Bind ViewModel.SelectedTask.Name, Mode=OneWay}" 
                                  KeyUp="DetailPanelTaskName_KeyUp"/>
                         <TextBlock Text="Estimated duration"
                                    Style="{ThemeResource SubsubtitleTextStyle}" />
                         <Button Margin="{StaticResource ElementMargin}"
                                 Content="{x:Bind ViewModel.SelectedTask.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
                                 HorizontalAlignment="Stretch"
-                                HorizontalContentAlignment="Left" />
+                                HorizontalContentAlignment="Left" 
+                                Click="ExpectedDurationMinsButton_Click"/>
                         <StackPanel Orientation="Vertical"
                                     Visibility="{x:Bind ViewModel.SelectedTask.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
                             <TextBlock Text="{x:Bind ViewModel.SelectedTask.Status, Mode=OneWay, Converter={StaticResource StatusToStringConverter}}"
