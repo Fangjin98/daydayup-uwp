@@ -10,58 +10,56 @@
     <Page.Resources>
         <helper:MinToStringConverter x:Key="MinToStringConverter" />
     </Page.Resources>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
-        <TextBlock x:Name="DaysLabel"
-                   x:Uid="DaysLabel"
-                   Margin="0,0,0,6"
-                   TextWrapping="Wrap" />
-        <ComboBox x:Name="DaysValue"
-                  Grid.Row="1"
-                  MinWidth="84"
-                  AutomationProperties.LabeledBy="{Binding ElementName=DaysLabel}"
-                  ItemsSource="{x:Bind dayOffsetValues, Mode=OneTime}"
-                  SelectedIndex="{x:Bind daysOffset, Mode=TwoWay}"
-                  SelectionChanged="OffsetValue_Changed" />
-        <TextBlock x:Name="HoursLabel"
-                   x:Uid="HoursLabel"
-                   Grid.Column="1"
-                   Margin="12,0,12,6"
-                   TextWrapping="Wrap" />
-        <ComboBox x:Name="HoursValue"
-                  Grid.Row="1"
-                  Grid.Column="1"
-                  MinWidth="84"
-                  Margin="12,0,12,0"
-                  AutomationProperties.LabeledBy="{Binding ElementName=HoursLabel}"
-                  ItemsSource="{x:Bind offsetValues, Mode=OneTime}"
-                  SelectedIndex="{x:Bind hoursOffset, Mode=TwoWay}"
-                  SelectionChanged="OffsetValue_Changed" />
-        <TextBlock x:Name="MinsLabel"
-                   x:Uid="MinsLabel"
-                   Grid.Column="2"
-                   Margin="0,0,0,6"
-                   TextWrapping="Wrap" />
-        <ComboBox x:Name="MinsValue"
-                  Grid.Row="1"
-                  Grid.Column="2"
-                  MinWidth="84"
-                  AutomationProperties.LabeledBy="{Binding ElementName=MinsLabel}"
-                  ItemsSource="{x:Bind offsetValues, Mode=OneTime}"
-                  SelectedIndex="{x:Bind minutesOffset, Mode=TwoWay}"
-                  SelectionChanged="OffsetValue_Changed" />
-      
-        <TextBlock Grid.Row="2"
-                Text="{x:Bind totalOffset, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
-                HorizontalAlignment="Stretch"/>
-    </Grid>
+    <StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="DaysLabel"
+                       x:Uid="DaysLabel"
+                       Margin="0,0,0,6"
+                       TextWrapping="Wrap" />
+            <ComboBox x:Name="DaysValue"
+                      Grid.Row="1"
+                      MinWidth="84"
+                      AutomationProperties.LabeledBy="{Binding ElementName=DaysLabel}"
+                      ItemsSource="{x:Bind dayOffsetValues, Mode=OneTime}"
+                      SelectedIndex="{x:Bind durationPicker.DaysOffset, Mode=TwoWay}" />
+            <TextBlock x:Name="HoursLabel"
+                       x:Uid="HoursLabel"
+                       Grid.Column="1"
+                       Margin="12,0,12,6"
+                       TextWrapping="Wrap" />
+            <ComboBox x:Name="HoursValue"
+                      Grid.Row="1"
+                      Grid.Column="1"
+                      MinWidth="84"
+                      Margin="12,0,12,0"
+                      AutomationProperties.LabeledBy="{Binding ElementName=HoursLabel}"
+                      ItemsSource="{x:Bind offsetValues, Mode=OneTime}"
+                      SelectedIndex="{x:Bind durationPicker.HoursOffset, Mode=TwoWay}" />
+            <TextBlock x:Name="MinsLabel"
+                       x:Uid="MinsLabel"
+                       Grid.Column="2"
+                       Margin="0,0,0,6"
+                       TextWrapping="Wrap" />
+            <ComboBox x:Name="MinsValue"
+                      Grid.Row="1"
+                      Grid.Column="2"
+                      MinWidth="84"
+                      AutomationProperties.LabeledBy="{Binding ElementName=MinsLabel}"
+                      ItemsSource="{x:Bind offsetValues, Mode=OneTime}"
+                      SelectedIndex="{x:Bind durationPicker.MinsOffset, Mode=TwoWay}" />
+        </Grid>
+        <TextBlock 
+                   Text="{x:Bind durationPicker.Duration, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
+                   HorizontalAlignment="Stretch" />
+    </StackPanel>
+    
 </Page>

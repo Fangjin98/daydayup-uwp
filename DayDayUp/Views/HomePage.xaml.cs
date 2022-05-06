@@ -237,9 +237,15 @@ namespace DayDayUp.Views
             dialog.PrimaryButtonText = "Save";
             dialog.CloseButtonText = "Cancel";
             dialog.DefaultButton = ContentDialogButton.Primary;
-            dialog.Content = new DurationSettingPage(DataContext);
+            dialog.Content = new DurationSettingPage(ViewModel.SelectedTask.ExpectedDurationMins);
 
             var result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                DurationSettingPage tmp = (DurationSettingPage)dialog.Content;
+                ViewModel.SelectedTask.ExpectedDurationMins = tmp.DurationResult;
+            }
         }
     }
 }

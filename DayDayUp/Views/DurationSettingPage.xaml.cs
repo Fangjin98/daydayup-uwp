@@ -1,6 +1,8 @@
 ﻿using DayDayUp.ViewModels;
+using Microsoft.Toolkit.Mvvm.ComponentModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -19,44 +21,88 @@ namespace DayDayUp.Views
 {
     public sealed partial class DurationSettingPage : Page
     {
-        public DurationSettingPage(object dataContext)
+        public DurationSettingPage(int duration)
         {
             this.InitializeComponent();
 
-            this.DataContext = dataContext;
+            durationPicker = new DurationPicker(duration);
             
             for(int i = 0; i <= 60; i++)
             {
                 offsetValues.Add(i.ToString()); 
             }
 
-            for (int i = 0; i < 15; i++)
+            for (int i = 0; i < 8; i++)
             {
                 dayOffsetValues.Add(i.ToString());
             }
-        }
 
-        private void OffsetValue_Changed(object sender, SelectionChangedEventArgs e)
+        }
+        public int DurationResult
         {
-            totalOffset=daysOffset*24*60+hoursOffset*60+minutesOffset;
-            if (totalOffset != 0)
-            {
-                var viewModel = (HomePageViewModel)this.DataContext;
-                viewModel.SelectedTask.ExpectedDurationMins = totalOffset;
-            }
+            get => durationPicker.Duration;
         }
-
+        private DurationPicker durationPicker;
 
         private List<string> offsetValues = new List<string>();
 
         private List<string> dayOffsetValues = new List<string>();
 
-        private int daysOffset=0;
+    }
+    internal class DurationPicker : ObservableObject
+    {
+        public DurationPicker(int duration)
+        {
+            this.duration = duration;
+        }
 
-        private int hoursOffset=0;
+        private int duration;
+        public int Duration
+        {
+            get => duration;
+            set=> SetProperty(ref duration, value);
+        }
 
-        private int minutesOffset=0;
+        private int daysOffset;
+        public int DaysOffset
+        {
+            get {
+                return Duration / 24 / 60;
+            }
+            set
+            {
+                daysOffset = value;
+                Duration = daysOffset * 24 * 60 + HoursOffset * 60 + MinsOffset;
+            }
+        }
 
-        private int totalOffset = 0;
+        private int hoursOffset;
+        public int HoursOffset
+        {
+            get
+            {
+                return (Duration-DaysOffset*24*60)/ 60;
+            }
+            set
+            {
+                hoursOffset = value;
+                Duration = DaysOffset * 24 * 60 + hoursOffset * 60 + MinsOffset;
+            }
+        }
+
+        private int minsOffset;
+        public int MinsOffset
+        {
+            get
+            {
+                return Duration - DaysOffset * 24 * 60 - HoursOffset * 60;
+            }
+            set
+            {
+                minsOffset = value;
+                Duration = DaysOffset * 24 * 60 + HoursOffset * 60 + minsOffset;
+            }
+        }
+
     }
 }
