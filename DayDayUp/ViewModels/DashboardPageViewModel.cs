@@ -2,15 +2,12 @@
 using DayDayUp.Models;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
-using LiveChartsCore.Drawing;
 using LiveChartsCore.Kernel.Sketches;
 using LiveChartsCore.SkiaSharpView;
 using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.Themes;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Nito.AsyncEx;
-using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -31,14 +28,14 @@ namespace DayDayUp.ViewModels
 
         public int FinishedTaskCount { get; set; }
 
-        //public int TotalCount { get; set; }
-
+        private double doingTaskBias;
         public double DoingTaskBias
         {
             get => doingTaskBias;
             set => SetProperty(ref doingTaskBias, value);
         }
 
+        private double finishedTaskBias;
         public double FinishedTaskBias
         {
             get => finishedTaskBias;
@@ -47,9 +44,13 @@ namespace DayDayUp.ViewModels
 
         public double TotalBias
         {
-            get => totalBias;
-            set => SetProperty(ref totalBias, value);
+            get => DoingTaskBias + FinishedTaskBias;
         }
+
+        public List<String> Categories { get; } = new List<String>()
+        {
+            "Progress","Duration","Creation date"
+        };
 
         public ObservableCollection<DoingStatics> Statics = new ObservableCollection<DoingStatics>();
 
@@ -61,6 +62,7 @@ namespace DayDayUp.ViewModels
 
             FinishedTaskCount = todoManager.FinishedTodos.Count;
             DoingTaskCount = todoManager.UnfinishedTodos.Count;
+            DoingStatics.DoingTasks = DoingTaskCount;
 
             initCharts();
         }
@@ -73,7 +75,7 @@ namespace DayDayUp.ViewModels
                 try
                 {
 
-                    foreach (Todo item in todoManager.FinishedTodos)
+                    foreach (var item in todoManager.FinishedTodos)
                     {
                         if (item.ExpectedDurationMins != 0)  // scheduled
                         {
@@ -82,59 +84,59 @@ namespace DayDayUp.ViewModels
                             FinishedTaskBias += updateBias(item);
                         }
 
-                        updateHistory(item);
+                        //updateHistory(item);
                     }
 
-                    foreach (Todo item in todoManager.UnfinishedTodos)
+                    foreach (var item in todoManager.UnfinishedTodos)
                     {
                         if (item.ExpectedDurationMins != 0)
                         {
                             todoManager.CalDurationAndProgress(item);
 
                             DoingTaskBias += updateBias(item);
+                        }
 
-                            //TODO: modify
-                            if (item.Progress <= 50)
-                            {
-                                if (!Statics.Contains(progress1))
-                                {
-                                    Statics.Add(progress1);
-                                }
-                                progress1.Count += 1;
-                            }
-                            else if (item.Progress <= 100)
-                            {
-                                if (!Statics.Contains(progress2))
-                                {
-                                    Statics.Add(progress2);
-                                }
-                                progress2.Count += 1;
-                            }
-                            else
-                            {
-                                if (!Statics.Contains(progress3))
-                                {
-                                    Statics.Add(progress3);
-                                }
-                                progress3.Count += 1;
-                            }
-                        }
-                        else
-                        {
-                            if (!Statics.Contains(progress0))
-                            {
-                                Statics.Add(progress0);
-                            }
-                            progress0.Count += 1;
-                        }
                     }
-                    TotalBias = DoingTaskBias + FinishedTaskBias;
-                    updateStatics();
+                    
+                    updateStatics(todoManager.UnfinishedTodos);
+
+                    foreach(var item in progress.Where(p => p.Count != 0).ToList())
+                    {
+                        Statics.Add(item);
+                    }
                 }
                 catch
                 {
                     // Whoops!
                 }
+            }
+        }
+
+        public void SetStatics(string categoryName)
+        {
+            switch (categoryName)
+            {
+                case "Progress":
+                    Statics.Clear();
+                    foreach (var item in progress.Where(p => p.Count != 0).ToList())
+                    {
+                        Statics.Add(item);
+                    }
+                    break;
+                case "Duration":
+                    Statics.Clear();
+                    foreach (var item in duration.Where(p => p.Count != 0).ToList())
+                    {
+                        Statics.Add(item);
+                    }
+                    break;
+                case "Creation date":
+                    Statics.Clear();
+                    foreach (var item in creationDate.Where(p => p.Count != 0).ToList())
+                    {
+                        Statics.Add(item);
+                    }
+                    break;
             }
         }
 
@@ -144,15 +146,16 @@ namespace DayDayUp.ViewModels
                 new LineSeries<ObservableValue> {
                     Name = "Finished Tasks",
                     Values = historyCount,
-                    Fill= null,
-                    Stroke = new SolidColorPaint(new SKColor(color.R, color.G, color.B)){StrokeThickness = 5},
+                    Stroke = new SolidColorPaint(){StrokeThickness = 2},
+                    GeometrySize = 0,
                     },
 
                 new LineSeries<ObservableValue>
                 {
                     Name = "Estimated Bias",
                     Values= historyBias,
-                    Fill=null,
+                    Stroke = null,
+                    GeometrySize = 0,
                 }
              };
 
@@ -171,16 +174,6 @@ namespace DayDayUp.ViewModels
             };
         }
 
-        private void updateStatics()
-        {
-            foreach (var item in Statics)
-            {
-                var ratio = (decimal)item.Count / DoingTaskCount;
-                item.Length = Convert.ToInt32(ratio * 100);
-                item.Ratio = (double)ratio;
-            }
-        }
-
         private void updateHistory(Todo item)
         {
             var diffDays = DateTime.Now.Subtract(item.TimeStamps.Last()).Days;
@@ -190,59 +183,102 @@ namespace DayDayUp.ViewModels
             }
         }
 
-        private double updateBias(Todo task)
+        private void updateStatics(List<Todo> todos)
         {
-            return (task.ExpectedDurationMins - task.DurationMins) / task.ExpectedDurationMins;
+            progress[0].Count=todos.Count(t =>(t.Progress ==0 || t.ExpectedDurationMins==0));
+            progress[1].Count=todos.Count(t=>(t.Progress > 0 && t.Progress<=50));
+            progress[2].Count = todos.Count(t => (t.Progress>50 && t.Progress <= 100));
+            progress[3].Count = todos.Count(t => t.Progress > 100);
+
+            duration[0].Count = todos.Count(t => t.DurationMins < 60);
+            duration[1].Count = todos.Count(t => (t.DurationMins >= 60 && t.DurationMins < 60 * 12));
+            duration[2].Count = todos.Count(t => (t.DurationMins >= 60 * 12 && t.DurationMins < 60 * 24));
+            duration[3].Count = todos.Count(t => t.DurationMins >= 60 * 24);
+
+            creationDate[0].Count=todos.Count(t => (DateTime.Now-t.CreationDate).TotalMinutes<5);
+            creationDate[1].Count = todos.Count(t => (DateTime.Now - t.CreationDate).TotalHours <= 1)
+                - creationDate[0].Count;
+            creationDate[2].Count = todos.Count(t => (DateTime.Now -t.CreationDate).TotalDays <= 1)
+                - creationDate[0].Count-creationDate[1].Count;
+            creationDate[3].Count = todos.Count(t => (DateTime.Now - t.CreationDate).TotalDays <= 7)
+                - creationDate[0].Count - creationDate[1].Count - creationDate[2].Count;
+            creationDate[4].Count = todos.Count(t => (DateTime.Now - t.CreationDate).TotalDays > 7);
         }
 
-        private double doingTaskBias;
-
-        private double finishedTaskBias;
-
-        private double totalBias;
+        private double updateBias(Todo task)
+        {
+            return (task.DurationMins - task.ExpectedDurationMins) / task.ExpectedDurationMins;
+        }
 
         private List<string> xLabel = new List<string>();
-
-        private LvcColor color = ColorPalletes.FluentDesign[0];
 
         private readonly TodoManagementHelper todoManager;
 
         private ObservableValue[] historyCount { get; set; } = new ObservableValue[]
        {
+            new ObservableValue(10),
+            new ObservableValue(20),
             new ObservableValue(0),
             new ObservableValue(0),
+            new ObservableValue(10),
             new ObservableValue(0),
-            new ObservableValue(0),
-            new ObservableValue(0),
-            new ObservableValue(0),
-            new ObservableValue(0)
+            new ObservableValue(50)
        };
 
         private ObservableValue[] historyBias { get; set; } = new ObservableValue[]
        {
+            new ObservableValue(20),
+            new ObservableValue(30),
             new ObservableValue(0),
+            new ObservableValue(12),
             new ObservableValue(0),
-            new ObservableValue(0),
-            new ObservableValue(0),
-            new ObservableValue(0),
-            new ObservableValue(0),
+            new ObservableValue(40),
             new ObservableValue(0)
        };
 
-        private readonly AsyncLock LoadingLock = new AsyncLock();
+       
 
-        private DoingStatics progress0 = new DoingStatics { Name = "Not started", Ratio = 0, Length = 0, Count = 0 };
-        private DoingStatics progress1 = new DoingStatics { Name = "0%~50%", Ratio = 0, Length = 0, Count = 0 };
-        private DoingStatics progress2 = new DoingStatics { Name = "50%~100%", Ratio = 0, Length = 0, Count = 0 };
-        private DoingStatics progress3 = new DoingStatics { Name = ">100%", Ratio = 0, Length = 0, Count = 0 };
+        private List<DoingStatics> progress = new()
+        {
+            new DoingStatics { Name = "Not started", Count = 0 },
+            new DoingStatics { Name = "For a while", Count = 0 },
+            new DoingStatics { Name = "Almost due", Count = 0 },
+            new DoingStatics { Name = "Overdue", Count = 0 }
+        };
+        private List<DoingStatics> duration = new()
+        {
+            new DoingStatics { Name = "< 1 hour", Count = 0 },
+            new DoingStatics { Name = "Half days", Count = 0 },
+            new DoingStatics { Name = "One day", Count = 0 },
+            new DoingStatics { Name = "Over one day", Count = 0 }
+        };
+        private List<DoingStatics> creationDate = new()
+        {
+            new DoingStatics { Name = "Now", Count = 0 },
+            new DoingStatics { Name = "An hour ago", Count = 0 },
+            new DoingStatics { Name = "Today", Count = 0 },
+            new DoingStatics { Name = "This week", Count = 0 },
+            new DoingStatics { Name = "A week ago", Count = 0 }
+        }; 
+        
+        private readonly AsyncLock LoadingLock = new AsyncLock();
     }
 
     public class DoingStatics
     {
+      
         public string Name { get; set; }
-        public double Ratio { get; set; }
-        public int Length { get; set; }
         public int Count { get; set; }
+
+        public double Ratio
+        {
+            get => (double) Count / DoingTasks;
+        }
+        public int Length { 
+            get=>Convert.ToInt32(Ratio*100);
+        }
+        
+        public static int DoingTasks;
     }
 
 }

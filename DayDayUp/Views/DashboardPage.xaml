@@ -80,11 +80,12 @@
                               ItemsSource="{Binding Categories}"
                               Width="160"
                               HorizontalAlignment="Right"
-                              SelectedIndex="0"/>
+                              SelectedIndex="0"
+                              SelectionChanged="ComboBox_SelectionChanged"/>
                 </Grid>
                 <ListView Grid.Row="1"
                           Visibility="{Binding DoingTaskCount, Converter={StaticResource CountConverter}, Mode=OneWay}"
-                          ItemsSource="{x:Bind ViewModel.Statics}"
+                          ItemsSource="{x:Bind ViewModel.Statics, Mode=OneWay}"
                           SelectionMode="None">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="viewModel:DoingStatics">
@@ -131,7 +132,8 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <TextBlock Text="History"
-                       Style="{StaticResource SubtitleTextStyle}" />
+                       Style="{StaticResource SubtitleTextStyle}"
+                       HorizontalAlignment="Center"/>
             <lvc:CartesianChart Grid.Row="1"
                                 Series="{Binding LineChartHistory}"
                                 XAxes="{Binding XAxes}" />

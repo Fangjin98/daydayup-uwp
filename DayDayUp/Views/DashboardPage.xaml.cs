@@ -16,5 +16,11 @@ namespace DayDayUp.Views
 
             ViewModel.LoadTaskCommand.Execute(null);
         }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string categoryName = e.AddedItems[0].ToString();
+            ViewModel.SetStatics(categoryName);
+        }
     }
 }
