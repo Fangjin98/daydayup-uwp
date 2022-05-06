@@ -66,25 +66,34 @@ namespace DayDayUp.Helpers
             {
                 int len = item.TimeStamps.Count;
                 double totalDuration = 0;
-                if (item.IsFinished==true && len == 1) //only finish date, no duration
+                if (item.IsFinished == true) 
                 {
-                    item.Progress = 100;
-                    item.DurationMins = 0;
-                    return;
-                }
-                
-                if (len % 2 == 0)
-                {
-                    for (int i = 0; i < len; i += 2)
+                    if (len == 1) // directly finish the todo, only finish date
                     {
-                        totalDuration += (item.TimeStamps[i + 1] - item.TimeStamps[i]).TotalMinutes;
+                        item.Progress = 100;
+                        item.DurationMins = 0;
+                        return;
                     }
-                }
-                else
-                {
-                    if (item.IsFinished == true) // Last date is the finish date.
+                    else if (len %2 == 0) // todo is finished under the doing status
+                    {
+                        for (int i = 0; i < len; i += 2)
+                        {
+                            totalDuration += (item.TimeStamps[i + 1] - item.TimeStamps[i]).TotalMinutes;
+                        }
+                    }
+                    else // todo is finished under the pause status, the finish date can't be counted
                     {
                         for (int i = 0; i < len - 1; i += 2)
+                        {
+                            totalDuration += (item.TimeStamps[i + 1] - item.TimeStamps[i]).TotalMinutes;
+                        }
+                    }
+                }
+                else // unfinished todos, no finish date
+                {
+                    if (len %2 == 0)
+                    {
+                        for (int i = 0; i < len; i += 2)
                         {
                             totalDuration += (item.TimeStamps[i + 1] - item.TimeStamps[i]).TotalMinutes;
                         }
