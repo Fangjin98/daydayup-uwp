@@ -23,7 +23,12 @@ namespace DayDayUp.Models
             set { SetProperty(ref name, value); }
         }
 
-        public int ExpectedDurationMins { get; set; }
+        private int expectedDurationMins;
+
+        public int ExpectedDurationMins {
+            get => expectedDurationMins;
+            set => SetProperty(ref expectedDurationMins, value);
+        }
 
         // record by app
         public DateTime CreationDate { get; set; }
