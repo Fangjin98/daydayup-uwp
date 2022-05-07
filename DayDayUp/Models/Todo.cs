@@ -19,8 +19,8 @@ namespace DayDayUp.Models
 
         public string Name
         {
-            get { return name; }
-            set { SetProperty(ref name, value); }
+            get => name; 
+            set => SetProperty(ref name, value); 
         }
 
         private int expectedDurationMins;
@@ -44,15 +44,13 @@ namespace DayDayUp.Models
 
         public TodoStatus Status
         {
-            get { return status; }
+            get => status;
             set
             {
-                if (SetProperty(ref status, value))
-                {
-                    TimeStamps?.Add(DateTime.Now);
-                    Debug.WriteLine("Status changed ", status.ToString());
-                }
+                SetProperty(ref status, value);
+                Debug.WriteLine("Set status", Name);
             }
+
         }
 
         // init by program
