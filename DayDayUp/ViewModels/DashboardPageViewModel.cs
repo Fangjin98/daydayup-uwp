@@ -11,6 +11,7 @@ using Nito.AsyncEx;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -47,7 +48,7 @@ namespace DayDayUp.ViewModels
             get => DoingTaskBias + FinishedTaskBias;
         }
 
-        public List<String> Categories { get; } = new List<String>()
+        public List<string> Categories { get; } = new List<string>()
         {
             "Progress","Duration","Creation date"
         };
@@ -72,43 +73,27 @@ namespace DayDayUp.ViewModels
 
             using (await LoadingLock.LockAsync())
             {
-                try
+
+                foreach (var item in todoManager.DurationAndProgress(todoManager.FinishedTodos))
                 {
-
-                    foreach (var item in todoManager.FinishedTodos)
-                    {
-                        if (item.ExpectedDurationMins != 0)  // scheduled
-                        {
-                            todoManager.CalDurationAndProgress(item);
-
-                            FinishedTaskBias += updateBias(item);
-                        }
-
-                        //updateHistory(item);
-                    }
-
-                    foreach (var item in todoManager.UnfinishedTodos)
-                    {
-                        if (item.ExpectedDurationMins != 0)
-                        {
-                            todoManager.CalDurationAndProgress(item);
-
-                            DoingTaskBias += updateBias(item);
-                        }
-
-                    }
-                    
-                    updateStatics(todoManager.UnfinishedTodos);
-
-                    foreach(var item in progress.Where(p => p.Count != 0).ToList())
-                    {
-                        Statics.Add(item);
-                    }
+                    Debug.WriteLine(item.Name,"Dashboard Page");
+                    FinishedTaskBias += todoManager.Bias(item);
+                    updateHistory(item);
                 }
-                catch
+
+                foreach (var item in todoManager.DurationAndProgress(todoManager.UnfinishedTodos))
                 {
-                    // Whoops!
+                    Debug.WriteLine(item.Name, "Dashboard Page");
+                    DoingTaskBias += todoManager.Bias(item);
                 }
+
+                updateStatics(todoManager.UnfinishedTodos);
+
+                foreach (var item in progress.Where(p => p.Count != 0).ToList())
+                {
+                    Statics.Add(item);
+                }
+
             }
         }
 
@@ -118,21 +103,21 @@ namespace DayDayUp.ViewModels
             {
                 case "Progress":
                     Statics.Clear();
-                    foreach (var item in progress.Where(p => p.Count != 0).ToList())
+                    foreach (var item in progress.Where(p => p.Count != 0))
                     {
                         Statics.Add(item);
                     }
                     break;
                 case "Duration":
                     Statics.Clear();
-                    foreach (var item in duration.Where(p => p.Count != 0).ToList())
+                    foreach (var item in duration.Where(p => p.Count != 0))
                     {
                         Statics.Add(item);
                     }
                     break;
                 case "Creation date":
                     Statics.Clear();
-                    foreach (var item in creationDate.Where(p => p.Count != 0).ToList())
+                    foreach (var item in creationDate.Where(p => p.Count != 0))
                     {
                         Statics.Add(item);
                     }
@@ -180,12 +165,16 @@ namespace DayDayUp.ViewModels
             if (diffDays < 7)
             {
                 historyCount[diffDays].Value++;
+                if (item.ExpectedDurationMins != 0)
+                {
+                    historyBias[diffDays].Value += todoManager.Bias(item);
+                }
             }
         }
 
         private void updateStatics(List<Todo> todos)
         {
-            progress[0].Count=todos.Count(t =>(t.Progress ==0 || t.ExpectedDurationMins==0));
+            progress[0].Count=todos.Count(t =>(t.Progress == 0 || t.ExpectedDurationMins==0));
             progress[1].Count=todos.Count(t=>(t.Progress > 0 && t.Progress<=50));
             progress[2].Count = todos.Count(t => (t.Progress>50 && t.Progress <= 100));
             progress[3].Count = todos.Count(t => t.Progress > 100);
@@ -205,38 +194,31 @@ namespace DayDayUp.ViewModels
             creationDate[4].Count = todos.Count(t => (DateTime.Now - t.CreationDate).TotalDays > 7);
         }
 
-        private double updateBias(Todo task)
-        {
-            return (task.DurationMins - task.ExpectedDurationMins) / task.ExpectedDurationMins;
-        }
-
         private List<string> xLabel = new List<string>();
 
         private readonly TodoManagementHelper todoManager;
 
-        private ObservableValue[] historyCount { get; set; } = new ObservableValue[]
+        private ObservableValue[] historyCount = new ObservableValue[]
        {
-            new ObservableValue(10),
-            new ObservableValue(20),
             new ObservableValue(0),
             new ObservableValue(0),
-            new ObservableValue(10),
             new ObservableValue(0),
-            new ObservableValue(50)
-       };
-
-        private ObservableValue[] historyBias { get; set; } = new ObservableValue[]
-       {
-            new ObservableValue(20),
-            new ObservableValue(30),
             new ObservableValue(0),
-            new ObservableValue(12),
             new ObservableValue(0),
-            new ObservableValue(40),
+            new ObservableValue(0),
             new ObservableValue(0)
        };
 
-       
+        private ObservableValue[] historyBias = new ObservableValue[]
+       {
+            new ObservableValue(0),
+            new ObservableValue(0),
+            new ObservableValue(0),
+            new ObservableValue(0),
+            new ObservableValue(0),
+            new ObservableValue(0),
+            new ObservableValue(0)
+       };
 
         private List<DoingStatics> progress = new()
         {
