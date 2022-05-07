@@ -45,17 +45,24 @@ namespace DayDayUp.Models
         public TodoStatus Status
         {
             get => status;
-            set
-            {
-                SetProperty(ref status, value);
-                Debug.WriteLine("Set status", Name);
-            }
-
+            set => SetProperty(ref status, value);
         }
 
         // init by program
         [BsonIgnore]
         public int DurationMins { get; set; }
+        [BsonIgnore]
+        public DateTime? FinishDate
+        {
+            get
+            {
+                if (IsFinished == true)
+                {
+                    return TimeStamps[TimeStamps.Count-1];
+                }
+                else return null;
+            }
+        }
         [BsonIgnore]
         public DateTime ExpectedFinishDate { get; set; }
         [BsonIgnore]
