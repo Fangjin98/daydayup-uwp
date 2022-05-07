@@ -47,6 +47,12 @@ namespace DayDayUp.Helpers
             _dataAccess.AddDataAsync(item);
         }
 
+        public void SwitchStaus(Todo item)
+        {
+            item.Status = item.Status == TodoStatus.Doing ? TodoStatus.Pause : TodoStatus.Doing;
+            item.TimeStamps.Add(DateTime.Now);
+            Update(item);
+        }
         public void Update(Todo item)
         {
             _dataAccess.UpdateDataAsync(item);
@@ -57,6 +63,18 @@ namespace DayDayUp.Helpers
             foreach (Todo todo in allTodos)
             {
                 _dataAccess.UpdateDataAsync(todo);
+            }
+        }
+
+        public double Bias(Todo item)
+        {
+            if (item.ExpectedDurationMins != 0)
+            {
+                return (item.DurationMins - item.ExpectedDurationMins) / item.ExpectedDurationMins;
+            }
+            else
+            {
+                return 0;
             }
         }
 
@@ -116,6 +134,16 @@ namespace DayDayUp.Helpers
                 item.DurationMins = 0;
             }
 
+        }
+
+        public IEnumerable<Todo> DurationAndProgress(
+            IEnumerable<Todo> todos)
+        {
+            foreach (var item in todos)
+            {
+                CalDurationAndProgress(item);
+                yield return item;
+            }
         }
 
         private List<Todo> allTodos;
