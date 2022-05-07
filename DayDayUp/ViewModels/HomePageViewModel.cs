@@ -3,9 +3,8 @@ using DayDayUp.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Nito.AsyncEx;
-using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace DayDayUp.ViewModels
@@ -15,16 +14,19 @@ namespace DayDayUp.ViewModels
 
         public HomePageViewModel(TodoManagementHelper TaskManager)
         {
-            taskManager = TaskManager;
+            todoManager = TaskManager;
 
             LoadTaskCommand = new AsyncRelayCommand(LoadTaskAsync);
             AddTaskCommand = new AsyncRelayCommand<Todo>(AddTaskAsync);
         }
 
         public IAsyncRelayCommand LoadTaskCommand { get; }
+
         public IAsyncRelayCommand AddTaskCommand { get; }
 
         public ObservableCollection<Todo> MyTasks { get; set; } = new();
+
+        private Todo selectedTask = new();
 
         public Todo SelectedTask
         {
@@ -35,38 +37,33 @@ namespace DayDayUp.ViewModels
         public void DeleteTask(Todo task)
         {
             MyTasks.Remove(task);
-            taskManager.RemoveTask(task);
+            todoManager.RemoveTask(task);
+
+            if (SelectedTask == task)
+            {
+                SelectedTask = null;
+            }
         }
 
         public void CompleteTask(Todo task)
         {
             MyTasks.Remove(task);
-            taskManager.Finish(task);
+            todoManager.Finish(task);
 
-            if (selectedTask == task)
+            if (SelectedTask == task)
             {
-                selectedTask = null;
+                SelectedTask = null;
             }
         }
 
         public void SwapTodoStatus(Todo task)
         {
-            task.Status = task.Status == TodoStatus.Doing ? TodoStatus.Pause : TodoStatus.Doing;
-            taskManager.Update(task);
+           todoManager.SwitchStaus(task);
         }
 
         public void Update(Todo item)
         {
-            taskManager.Update(item);
-        }
-
-        public void UpdateAll()
-        {
-            foreach(Todo todo in MyTasks)
-            {
-                Debug.WriteLine("Update todo", "VIEWMODEL");
-                taskManager.Update(todo);
-            }
+            todoManager.Update(item);
         }
 
         private async Task AddTaskAsync(Todo task)
@@ -75,14 +72,14 @@ namespace DayDayUp.ViewModels
             {
                 try
                 {
-                    taskManager.AddTask(task);
+                    todoManager.AddTask(task);
                 }
                 catch
                 {
                     return;
                 }
+                MyTasks.Add(task);
             }
-            MyTasks.Add(task);
         }
 
         private async Task LoadTaskAsync()
@@ -90,27 +87,17 @@ namespace DayDayUp.ViewModels
 
             using (await LoadingLock.LockAsync())
             {
-                try
-                {
+                MyTasks.Clear();
 
-                    MyTasks.Clear();
-
-                    foreach (Todo item in taskManager.UnfinishedTodos)
-                    {
-                        taskManager.CalDurationAndProgress(item);
-                        MyTasks.Add(item);
-                    }
-                }
-                catch
+                foreach (Todo item in todoManager.DurationAndProgress(todoManager.UnfinishedTodos))
                 {
-                    // Whoops!
+                    MyTasks.Add(item);
                 }
             }
         }
 
-        private readonly TodoManagementHelper taskManager;
 
-        private Todo selectedTask = new ();
+        private readonly TodoManagementHelper todoManager;
 
         private readonly AsyncLock LoadingLock = new AsyncLock();   
     }
