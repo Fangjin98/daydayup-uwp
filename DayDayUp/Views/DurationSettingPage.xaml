@@ -10,7 +10,7 @@
     <Page.Resources>
         <helper:MinToStringConverter x:Key="MinToStringConverter" />
     </Page.Resources>
-    <StackPanel>
+    <StackPanel Spacing="12">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -57,9 +57,14 @@
                       ItemsSource="{x:Bind offsetValues, Mode=OneTime}"
                       SelectedIndex="{x:Bind durationPicker.MinsOffset, Mode=TwoWay}" />
         </Grid>
-        <TextBlock 
-                   Text="{x:Bind durationPicker.Duration, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
-                   HorizontalAlignment="Stretch" />
+        <StackPanel VerticalAlignment="Bottom"
+                    Orientation="Horizontal">
+            <TextBlock Text="Total duration: "
+                       Style="{ThemeResource SubsubtitleTextStyle}" />
+            <TextBlock Margin="5,0,0,0"
+                       Text="{x:Bind durationPicker.Duration, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
+                       Style="{ThemeResource BasicTextStyle}" />
+        </StackPanel>
     </StackPanel>
     
 </Page>
