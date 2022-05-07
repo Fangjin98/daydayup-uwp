@@ -26,8 +26,7 @@ namespace DayDayUp.Views
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
-            Debug.WriteLine("Homepage navigated from", "Update all");
-            ViewModel.UpdateAll();
+            Debug.WriteLine("Navigated from", "Homepage");
         }
 
         private void newTaskTextBoxKeyUp(object sender, KeyRoutedEventArgs e)

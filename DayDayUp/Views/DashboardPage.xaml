@@ -77,6 +77,7 @@
                                Style="{StaticResource SubtitleTextStyle}" />
                     <ComboBox Grid.Column="1"
                               x:Name="ComboBox"
+                              Visibility="{Binding DoingTaskCount, Converter={StaticResource CountConverter}, Mode=OneWay}"
                               ItemsSource="{Binding Categories}"
                               Width="160"
                               HorizontalAlignment="Right"
@@ -131,7 +132,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <TextBlock Text="History"
+            <TextBlock x:Uid="Dashboard_History"
                        Style="{StaticResource SubtitleTextStyle}"
                        HorizontalAlignment="Center"/>
             <lvc:CartesianChart Grid.Row="1"
