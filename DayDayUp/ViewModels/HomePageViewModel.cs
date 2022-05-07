@@ -1,104 +1,64 @@
 ﻿using DayDayUp.Helpers;
 using DayDayUp.Models;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
-using Nito.AsyncEx;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace DayDayUp.ViewModels
 {
-    public sealed class HomePageViewModel : ObservableRecipient
+    public sealed class HomePageViewModel : BaseTodoListViewModel
     {
+        public IAsyncRelayCommand AddTodoCommand { get; }
 
-        public HomePageViewModel(TodoManagementHelper TaskManager)
+        public HomePageViewModel(TodoManagementHelper TodoManager):
+            base(TodoManager)
         {
-            todoManager = TaskManager;
-
-            LoadTaskCommand = new AsyncRelayCommand(LoadTaskAsync);
-            AddTaskCommand = new AsyncRelayCommand<Todo>(AddTaskAsync);
+            AddTodoCommand = new AsyncRelayCommand<Todo>(AddTodoAsync);
         }
 
-        public IAsyncRelayCommand LoadTaskCommand { get; }
-
-        public IAsyncRelayCommand AddTaskCommand { get; }
-
-        public ObservableCollection<Todo> MyTasks { get; set; } = new();
-
-        private Todo selectedTask = new();
-
-        public Todo SelectedTask
+        public void SwapTodoStatus(Todo todo)
         {
-            get => selectedTask;
-            set => SetProperty(ref selectedTask, value);
+            todoManager.SwitchStaus(todo);
         }
 
-        public void DeleteTask(Todo task)
+        public void Complete(Todo todo)
         {
-            MyTasks.Remove(task);
-            todoManager.RemoveTask(task);
+            Todos.Remove(todo);
+            todoManager.Finish(todo);
 
-            if (SelectedTask == task)
+            if (SelectedTodo == todo)
             {
-                SelectedTask = null;
+                SelectedTodo = null;
             }
         }
 
-        public void CompleteTask(Todo task)
+        private async Task AddTodoAsync(Todo todo)
         {
-            MyTasks.Remove(task);
-            todoManager.Finish(task);
-
-            if (SelectedTask == task)
-            {
-                SelectedTask = null;
-            }
-        }
-
-        public void SwapTodoStatus(Todo task)
-        {
-           todoManager.SwitchStaus(task);
-        }
-
-        public void Update(Todo item)
-        {
-            todoManager.Update(item);
-        }
-
-        private async Task AddTaskAsync(Todo task)
-        {
-            using (await LoadingLock.LockAsync())
+            using (await loadingLock.LockAsync())
             {
                 try
                 {
-                    todoManager.AddTask(task);
+                    todoManager.AddTask(todo);
                 }
                 catch
                 {
                     return;
                 }
-                MyTasks.Add(task);
+                Todos.Add(todo);
             }
         }
 
-        private async Task LoadTaskAsync()
+        protected override async Task LoadTodoAsync()
         {
 
-            using (await LoadingLock.LockAsync())
+            using (await loadingLock.LockAsync())
             {
-                MyTasks.Clear();
+                Todos.Clear();
 
                 foreach (Todo item in todoManager.DurationAndProgress(todoManager.UnfinishedTodos))
                 {
-                    MyTasks.Add(item);
+                    Todos.Add(item);
                 }
             }
-        }
-
-
-        private readonly TodoManagementHelper todoManager;
-
-        private readonly AsyncLock LoadingLock = new AsyncLock();   
+        }  
     }
 }

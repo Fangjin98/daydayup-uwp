@@ -17,13 +17,11 @@ using System.Threading.Tasks;
 
 namespace DayDayUp.ViewModels
 {
-    public class DashboardPageViewModel : ObservableRecipient
+    public class DashboardPageViewModel : BaseTodoListViewModel
     {
         public ISeries[] LineChartHistory { get; set; }
 
         public IEnumerable<ICartesianAxis> XAxes { get; set; }
-
-        public IAsyncRelayCommand LoadTaskCommand { get; }
 
         public int DoingTaskCount { get; set; }
 
@@ -55,46 +53,14 @@ namespace DayDayUp.ViewModels
 
         public ObservableCollection<DoingStatics> Statics = new ObservableCollection<DoingStatics>();
 
-        public DashboardPageViewModel(TodoManagementHelper TodoManager)
+        public DashboardPageViewModel(TodoManagementHelper TodoManager):
+            base(TodoManager)
         {
-            todoManager = TodoManager;
-
-            LoadTaskCommand = new AsyncRelayCommand(LoadTaskAsync);
-
             FinishedTaskCount = todoManager.FinishedTodos.Count;
             DoingTaskCount = todoManager.UnfinishedTodos.Count;
             DoingStatics.DoingTasks = DoingTaskCount;
 
             initCharts();
-        }
-
-        private async Task LoadTaskAsync()
-        {
-
-            using (await LoadingLock.LockAsync())
-            {
-
-                foreach (var item in todoManager.DurationAndProgress(todoManager.FinishedTodos))
-                {
-                    Debug.WriteLine(item.Name,"Dashboard Page");
-                    FinishedTaskBias += todoManager.Bias(item);
-                    updateHistory(item);
-                }
-
-                foreach (var item in todoManager.DurationAndProgress(todoManager.UnfinishedTodos))
-                {
-                    Debug.WriteLine(item.Name, "Dashboard Page");
-                    DoingTaskBias += todoManager.Bias(item);
-                }
-
-                updateStatics(todoManager.UnfinishedTodos);
-
-                foreach (var item in progress.Where(p => p.Count != 0).ToList())
-                {
-                    Statics.Add(item);
-                }
-
-            }
         }
 
         public void SetStatics(string categoryName)
@@ -194,9 +160,35 @@ namespace DayDayUp.ViewModels
             creationDate[4].Count = todos.Count(t => (DateTime.Now - t.CreationDate).TotalDays > 7);
         }
 
-        private List<string> xLabel = new List<string>();
+        protected override async Task LoadTodoAsync()
+        {
+            using (await loadingLock.LockAsync())
+            {
 
-        private readonly TodoManagementHelper todoManager;
+                foreach (var item in todoManager.DurationAndProgress(todoManager.FinishedTodos))
+                {
+                    Debug.WriteLine(item.Name, "Dashboard Page");
+                    FinishedTaskBias += todoManager.Bias(item);
+                    updateHistory(item);
+                }
+
+                foreach (var item in todoManager.DurationAndProgress(todoManager.UnfinishedTodos))
+                {
+                    Debug.WriteLine(item.Name, "Dashboard Page");
+                    DoingTaskBias += todoManager.Bias(item);
+                }
+
+                updateStatics(todoManager.UnfinishedTodos);
+
+                foreach (var item in progress.Where(p => p.Count != 0).ToList())
+                {
+                    Statics.Add(item);
+                }
+
+            }
+        }
+
+        private List<string> xLabel = new List<string>();
 
         private ObservableValue[] historyCount = new ObservableValue[]
        {
@@ -242,8 +234,6 @@ namespace DayDayUp.ViewModels
             new DoingStatics { Name = "This week", Count = 0 },
             new DoingStatics { Name = "A week ago", Count = 0 }
         }; 
-        
-        private readonly AsyncLock LoadingLock = new AsyncLock();
     }
 
     public class DoingStatics
