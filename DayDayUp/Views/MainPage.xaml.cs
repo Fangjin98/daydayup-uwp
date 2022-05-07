@@ -19,8 +19,8 @@ namespace DayDayUp
         public List<Scenario> Scenarios { get; } = new ()
         {
             new Scenario() { Title = "Home", ClassName = typeof(HomePage).FullName, Icon = "\uE80F" },
-            new Scenario() { Title = "Dashboard", ClassName = typeof(DashboardPage).FullName, Icon = "\ue8a1" }
-            //new Scenario() { Title = "Archive", ClassName = typeof(DonePage).FullName, Icon = "\uE8B7" }
+            new Scenario() { Title = "Dashboard", ClassName = typeof(DashboardPage).FullName, Icon = "\ue8a1" },
+            new Scenario() { Title = "Archive", ClassName = typeof(ArchivePage).FullName, Icon = "\uE8B7" }
         };
 
         public MainPage()
@@ -108,7 +108,6 @@ namespace DayDayUp
 
             if (ContentFrame.SourcePageType == typeof(SettingsPage))
             {
-                // SettingsItem is not part of NavView.MenuItems, and doesn't have a Tag.
                 NavView.SelectedItem = (Microsoft.UI.Xaml.Controls.NavigationViewItem)NavView.SettingsItem;
                 NavView.Header = "Settings";
             }
