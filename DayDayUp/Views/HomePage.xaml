@@ -108,9 +108,9 @@
                            Style="{ThemeResource SubtitleTextStyle}" />
                 <ListView Grid.Row="2"
                           Name="TaskList"
-                          ItemsSource="{x:Bind ViewModel.MyTasks}"
-                          SelectedItem="{x:Bind ViewModel.SelectedTask, Mode=TwoWay}"
-                          Visibility="{x:Bind ViewModel.MyTasks.Count,Converter={StaticResource CountConverter}, Mode=OneWay}"
+                          ItemsSource="{x:Bind ViewModel.Todos}"
+                          SelectedItem="{x:Bind ViewModel.SelectedTodo, Mode=TwoWay}"
+                          Visibility="{x:Bind ViewModel.Todos.Count,Converter={StaticResource CountConverter}, Mode=OneWay}"
                           Loaded="TaskList_Loaded"
                           RightTapped="ListView_RightTapped"
                           Tapped="TaskList_ItemClick"
@@ -195,7 +195,7 @@
                 </ListView>
                 <RichTextBlock Grid.Row="2"
                                Name="DefaultText"
-                               Visibility="{x:Bind ViewModel.MyTasks.Count, Converter={StaticResource NegativeCountConverter}, Mode=OneWay}"
+                               Visibility="{x:Bind ViewModel.Todos.Count, Converter={StaticResource NegativeCountConverter}, Mode=OneWay}"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center">
                     <Paragraph>The list is empty now. Start by
@@ -213,32 +213,32 @@
                                    Style="{ThemeResource SubsubtitleTextStyle}" />
                         <TextBox x:Name="DetailPanelTaskName"
                                  Margin="{StaticResource ElementMargin}"
-                                 PlaceholderText="{x:Bind ViewModel.SelectedTask.Name}"
+                                 PlaceholderText="{x:Bind ViewModel.SelectedTodo.Name}"
                                  TextWrapping="Wrap"
-                                 Text="{x:Bind ViewModel.SelectedTask.Name, Mode=OneWay}" 
+                                 Text="{x:Bind ViewModel.SelectedTodo.Name, Mode=OneWay}" 
                                  KeyUp="DetailPanelTaskName_KeyUp"/>
                         <TextBlock Text="Estimated duration"
                                    Style="{ThemeResource SubsubtitleTextStyle}" />
                         <Button Margin="{StaticResource ElementMargin}"
-                                Content="{x:Bind ViewModel.SelectedTask.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
+                                Content="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Left" 
                                 Click="ExpectedDurationMinsButton_Click"/>
                         <StackPanel Orientation="Vertical"
-                                    Visibility="{x:Bind ViewModel.SelectedTask.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
-                            <TextBlock Text="{x:Bind ViewModel.SelectedTask.Status, Mode=OneWay, Converter={StaticResource StatusToStringConverter}}"
+                                    Visibility="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
+                            <TextBlock Text="{x:Bind ViewModel.SelectedTodo.Status, Mode=OneWay, Converter={StaticResource StatusToStringConverter}}"
                                        Style="{ThemeResource SubsubtitleTextStyle}" />
                             <TextBlock Text="Duration"
                                        Style="{ThemeResource SubsubtitleTextStyle}" />
                             <Button Margin="{StaticResource ElementMargin}"
-                                    Content="{x:Bind ViewModel.SelectedTask.DurationMins, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
+                                    Content="{x:Bind ViewModel.SelectedTodo.DurationMins, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
                                     HorizontalAlignment="Stretch"
                                     HorizontalContentAlignment="Left" />
                         </StackPanel>
                         <TextBlock Text="Description"
                                    Style="{ThemeResource SubsubtitleTextStyle}" />
                         <TextBox Margin="{StaticResource ElementMargin}"
-                                 Text="{x:Bind ViewModel.SelectedTask.Description, Mode=TwoWay}"
+                                 Text="{x:Bind ViewModel.SelectedTodo.Description, Mode=TwoWay}"
                                  TextWrapping="Wrap"
                                  AcceptsReturn="True" />
                         <StackPanel VerticalAlignment="Bottom"
@@ -246,7 +246,7 @@
                             <TextBlock Text="Created in"
                                        Style="{ThemeResource SubsubtitleTextStyle}" />
                             <TextBlock Margin="5,0,0,0"
-                                       Text="{x:Bind ViewModel.SelectedTask.CreationDate, Mode=OneWay}"
+                                       Text="{x:Bind ViewModel.SelectedTodo.CreationDate, Mode=OneWay}"
                                        Style="{ThemeResource BasicTextStyle}" />
                         </StackPanel>
                     </StackPanel>

@@ -14,13 +14,18 @@ namespace DayDayUp.Views
 
             DataContext = Ioc.Default.GetRequiredService<DashboardPageViewModel>();
 
-            ViewModel.LoadTaskCommand.Execute(null);
+            ViewModel.LoadTodoCommand.Execute(null);
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             string categoryName = e.AddedItems[0].ToString();
             ViewModel.SetStatics(categoryName);
+        }
+
+        private void SeeAll_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(ArchivePage));
         }
     }
 }

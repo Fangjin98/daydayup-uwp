@@ -132,9 +132,32 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <TextBlock x:Uid="Dashboard_History"
-                       Style="{StaticResource SubtitleTextStyle}"
-                       HorizontalAlignment="Center"/>
+            <Grid >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                
+                <TextBlock x:Name="HistoryTitle"
+                    x:Uid="Dashboard_History"
+                           Grid.Column="1"
+                           Style="{StaticResource SubtitleTextStyle}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"/>
+                <Button x:Name="SeeAll"
+                        Grid.Column="2"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Click="SeeAll_Click"
+                        ToolTipService.ToolTip="See All"
+                        Height="24">
+                    <FontIcon FontFamily="Segoe Fluent Icons"
+                              Glyph="&#xe72a;" 
+                              VerticalAlignment="Center"/>
+                </Button>
+            </Grid>
+            
             <lvc:CartesianChart Grid.Row="1"
                                 Series="{Binding LineChartHistory}"
                                 XAxes="{Binding XAxes}" />

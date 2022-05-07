@@ -4,7 +4,6 @@ using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -33,7 +32,7 @@ namespace DayDayUp.Views
         {
             if (e.Key == VirtualKey.Enter && newTaskTextBox.Text != "")
             {
-                ViewModel.AddTaskCommand.ExecuteAsync(new Todo
+                ViewModel.AddTodoCommand.ExecuteAsync(new Todo
                 {
                     Name = newTaskTextBox.Text,
                     ExpectedDurationMins = 0,
@@ -52,7 +51,7 @@ namespace DayDayUp.Views
         {
             if (newTaskTextBox.Text != "")
             {
-                ViewModel.AddTaskCommand.ExecuteAsync(new Todo
+                ViewModel.AddTodoCommand.ExecuteAsync(new Todo
                 {
                     Name = newTaskTextBox.Text,
                     ExpectedDurationMins = 30,
@@ -71,7 +70,7 @@ namespace DayDayUp.Views
         {
             if (newTaskTextBox.Text != "")
             {
-                ViewModel.AddTaskCommand.ExecuteAsync(new Todo
+                ViewModel.AddTodoCommand.ExecuteAsync(new Todo
                 {
                     Name = newTaskTextBox.Text,
                     ExpectedDurationMins = 60,
@@ -90,7 +89,7 @@ namespace DayDayUp.Views
         {
             if (newTaskTextBox.Text != "")
             {
-                ViewModel.AddTaskCommand.ExecuteAsync(new Todo
+                ViewModel.AddTodoCommand.ExecuteAsync(new Todo
                 {
                     Name = newTaskTextBox.Text,
                     ExpectedDurationMins = 6 * 60,
@@ -109,7 +108,7 @@ namespace DayDayUp.Views
         {
             if (newTaskTextBox.Text != "")
             {
-                ViewModel.AddTaskCommand.ExecuteAsync(new Todo
+                ViewModel.AddTodoCommand.ExecuteAsync(new Todo
                 {
                     Name = newTaskTextBox.Text,
                     ExpectedDurationMins = 12 * 60,
@@ -128,7 +127,7 @@ namespace DayDayUp.Views
         {
             if (newTaskTextBox.Text != "")
             {
-                ViewModel.AddTaskCommand.ExecuteAsync(new Todo
+                ViewModel.AddTodoCommand.ExecuteAsync(new Todo
                 {
                     Name = newTaskTextBox.Text,
                     ExpectedDurationMins = 24 * 60,
@@ -147,7 +146,7 @@ namespace DayDayUp.Views
         {
             if (newTaskTextBox.Text != "")
             {
-                ViewModel.AddTaskCommand.ExecuteAsync(new Todo
+                ViewModel.AddTodoCommand.ExecuteAsync(new Todo
                 {
                     Name = newTaskTextBox.Text,
                     ExpectedDurationMins = 0,
@@ -174,7 +173,7 @@ namespace DayDayUp.Views
 
         private void TaskList_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel.LoadTaskCommand.ExecuteAsync(null);
+            ViewModel.LoadTodoCommand.ExecuteAsync(null);
         }
 
         private void TaskList_ItemClick(object sender, TappedRoutedEventArgs e)
@@ -196,13 +195,13 @@ namespace DayDayUp.Views
             if (((FrameworkElement)e.OriginalSource).DataContext as Todo != null)
             {
                 TodoItemFlyout.ShowAt(listView, e.GetPosition(listView));
-                ViewModel.SelectedTask = ((FrameworkElement)e.OriginalSource).DataContext as Todo;
+                ViewModel.SelectedTodo = ((FrameworkElement)e.OriginalSource).DataContext as Todo;
             }
         }
 
         private void DeleteTaskFlyoutButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.DeleteTask(ViewModel.SelectedTask);
+            ViewModel.Delete(ViewModel.SelectedTodo);
 
             resetDetailPanel();
         }
@@ -211,7 +210,7 @@ namespace DayDayUp.Views
         {
             CheckBox checkBox = (CheckBox)sender;
             Todo task = (Todo)checkBox.DataContext;
-            ViewModel.CompleteTask(task);
+            ViewModel.Complete(task);
             resetDetailPanel();
         }
 
@@ -225,8 +224,8 @@ namespace DayDayUp.Views
         private void DetailPanelTaskName_KeyUp(object sender, KeyRoutedEventArgs e)
         {
             var textbox=(TextBox)sender;
-            ViewModel.SelectedTask.Name=textbox.Text;
-            ViewModel.Update(ViewModel.SelectedTask);
+            ViewModel.SelectedTodo.Name=textbox.Text;
+            ViewModel.Update(ViewModel.SelectedTodo);
         }
 
         private async void ExpectedDurationMinsButton_Click(object sender, RoutedEventArgs e)
@@ -236,14 +235,14 @@ namespace DayDayUp.Views
             dialog.PrimaryButtonText = "Save";
             dialog.CloseButtonText = "Cancel";
             dialog.DefaultButton = ContentDialogButton.Primary;
-            dialog.Content = new DurationSettingPage(ViewModel.SelectedTask.ExpectedDurationMins);
+            dialog.Content = new DurationSettingPage(ViewModel.SelectedTodo.ExpectedDurationMins);
 
             var result = await dialog.ShowAsync();
 
             if (result == ContentDialogResult.Primary)
             {
                 DurationSettingPage tmp = (DurationSettingPage)dialog.Content;
-                ViewModel.SelectedTask.ExpectedDurationMins = tmp.DurationResult;
+                ViewModel.SelectedTodo.ExpectedDurationMins = tmp.DurationResult;
             }
         }
     }
