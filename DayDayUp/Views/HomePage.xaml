@@ -7,6 +7,7 @@
       xmlns:helper="using:DayDayUp.Helpers"
       xmlns:models="using:DayDayUp.Models"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      xmlns:views="using:DayDayUp.Views"
       mc:Ignorable="d">
     
     <Page.Resources>
@@ -119,7 +120,7 @@
                         <DataTemplate x:DataType="models:Todo">
                             <Grid x:Name="itemRoot"
                                   Padding="8"
-                                  Height="52"
+                                  Height="56"
                                   Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                                   BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                   BorderThickness="1"
@@ -154,12 +155,25 @@
                                           IsChecked="{x:Bind IsFinished}"
                                           Click="CheckBox_Click"
                                           VerticalAlignment="Center" />
-                                <TextBlock Grid.Column="1"
-                                           x:Name="taskNameTextBlock"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Left"
-                                           Text="{x:Bind Name, Mode=OneWay}"
-                                           Style="{ThemeResource BasicTextStyle}" />
+                                <StackPanel Grid.Column="1"
+                                            Orientation="Vertical"
+                                            VerticalAlignment="Center"
+                                            Spacing="4">
+                                    <TextBlock x:Name="taskNameTextBlock"
+                                               HorizontalAlignment="Left"
+                                               Text="{x:Bind Name, Mode=OneWay}"
+                                               Style="{ThemeResource BasicTextStyle}" />
+                                    <StackPanel Orientation="Horizontal"
+                                                Spacing="4"
+                                                Margin="{StaticResource ContentMargin}"
+                                                Visibility="{x:Bind ExpectedDurationMins, Converter={StaticResource CountConverter},Mode=OneWay}">
+                                        <TextBlock x:Name="EstimatedDuration"
+                                                   x:Uid="EstimatiedDuration"
+                                                   Style="{ThemeResource SmallTextStyle}" />
+                                        <TextBlock Text="{x:Bind ExpectedDurationMins, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
+                                                   Style="{ThemeResource SmallTextStyle}" />
+                                    </StackPanel>
+                                </StackPanel>
                                 <Button x:Name="StartButton"
                                         Grid.Column="2"
                                         Style="{StaticResource TransparentButton}"
@@ -207,8 +221,6 @@
             <SplitView.Pane>
                 <ScrollViewer Padding="20,12,20,12">
                     <StackPanel>
-                        <TextBlock Text="Details"
-                                   Style="{ThemeResource SubtitleTextStyle}" />
                         <TextBlock Text="Name"
                                    Style="{ThemeResource SubsubtitleTextStyle}" />
                         <TextBox x:Name="DetailPanelTaskName"
@@ -228,26 +240,35 @@
                                     Visibility="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
                             <TextBlock Text="{x:Bind ViewModel.SelectedTodo.Status, Mode=OneWay, Converter={StaticResource StatusToStringConverter}}"
                                        Style="{ThemeResource SubsubtitleTextStyle}" />
-                            <TextBlock Text="Duration"
-                                       Style="{ThemeResource SubsubtitleTextStyle}" />
-                            <Button Margin="{StaticResource ElementMargin}"
-                                    Content="{x:Bind ViewModel.SelectedTodo.DurationMins, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
-                                    HorizontalAlignment="Stretch"
-                                    HorizontalContentAlignment="Left" />
+                            <muxc:Expander Margin="{StaticResource ElementMargin}"
+                                           HorizontalAlignment="Stretch"
+                                           HorizontalContentAlignment="Left"
+                                           ExpandDirection="Down"
+                                           IsExpanded="False"
+                                           DataContextChanged="TodoTimeStamp_DataContextChanged">
+                                <muxc:Expander.Header>
+                                    <TextBlock Text="{x:Bind ViewModel.SelectedTodo.DurationMins, Mode=OneWay,Converter={StaticResource MinToStringConverter}}" />
+                                </muxc:Expander.Header>
+                                <muxc:Expander.Content>
+                                    <views:TodoTimeStamp 
+                                        x:Name="TodoTimeStamp_Expander"
+                                        TimeStamps="{x:Bind ViewModel.SelectedTodo.TimeStamps,Mode=OneWay}"/>
+                                </muxc:Expander.Content>
+                            </muxc:Expander>
                         </StackPanel>
                         <TextBlock Text="Description"
                                    Style="{ThemeResource SubsubtitleTextStyle}" />
                         <TextBox Margin="{StaticResource ElementMargin}"
-                                 Text="{x:Bind ViewModel.SelectedTodo.Description, Mode=TwoWay}"
+                                 Text="{x:Bind ViewModel.SelectedTodo.Description, Mode=OneWay}"
                                  TextWrapping="Wrap"
                                  AcceptsReturn="True" />
                         <StackPanel VerticalAlignment="Bottom"
                                     Orientation="Horizontal">
                             <TextBlock Text="Created in"
-                                       Style="{ThemeResource SubsubtitleTextStyle}" />
+                                       Style="{ThemeResource SmallTextStyle}" />
                             <TextBlock Margin="5,0,0,0"
                                        Text="{x:Bind ViewModel.SelectedTodo.CreationDate, Mode=OneWay}"
-                                       Style="{ThemeResource BasicTextStyle}" />
+                                       Style="{ThemeResource SmallTextStyle}" />
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>

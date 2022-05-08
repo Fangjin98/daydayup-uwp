@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:models="using:DayDayUp.Models"
       xmlns:helper="using:DayDayUp.Helpers"
+      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       mc:Ignorable="d">
     <Page.Resources>
         <helper:EnumToVisibilityConverter x:Key="TaskStatusConverter" />
@@ -15,6 +16,7 @@
         <helper:CountToVisibilityNegativeConverter x:Key="NegativeCountConverter" />
         <helper:MinToStringConverter x:Key="MinToStringConverter" />
         <helper:StatusToStringConverter x:Key="StatusToStringConverter" />
+        <helper:DoubleToRatioConverter x:Key="DoubleToRationConverter" />
         <MenuFlyout x:Name="TodoItemFlyout">
             <MenuFlyout.Items>
                 <MenuFlyoutItem Text="Delete"
@@ -78,7 +80,6 @@
                             <Grid x:Name="itemRoot"
                                   Padding="8"
                                   Height="56"
-                                  RowSpacing="4"
                                   Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                                   BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                   BorderThickness="1"
@@ -104,28 +105,23 @@
                                         </VisualState>
                                     </VisualStateGroup>
                                 </VisualStateManager.VisualStateGroups>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                
-                                <TextBlock x:Name="TodoNameTextBlock"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Left"
-                                           Text="{x:Bind Name, Mode=OneWay}"
-                                           Style="{ThemeResource BasicTextStyle}" />
-                                <StackPanel Grid.Row="1"
-                                    Orientation="Horizontal"
-                                            Spacing="4"
-                                            Margin="{StaticResource ContentMargin}">
-                                    <TextBlock x:Name="FinishedIn"
-                                               x:Uid="FinishedIn"
-                                               Style="{ThemeResource SmallTextStyle}"/>
-                                    <TextBlock x:Name="FinishDateTextBlock"
-                                               Text="{x:Bind FinishDate, Mode=OneTime}"
-                                               Style="{ThemeResource SmallTextStyle}" />
+                                <StackPanel Spacing="4" Orientation="Vertical" VerticalAlignment="Center">
+                                    <TextBlock x:Name="TodoNameTextBlock"
+                                               VerticalAlignment="Center"
+                                               HorizontalAlignment="Left"
+                                               Text="{x:Bind Name, Mode=OneWay}"
+                                               Style="{ThemeResource BasicTextStyle}" />
+                                    <StackPanel Orientation="Horizontal"
+                                                Spacing="4"
+                                                Margin="{StaticResource ContentMargin}"
+                                                Visibility="{x:Bind ExpectedDurationMins, Converter={StaticResource CountConverter}}">
+                                        <TextBlock x:Name="BiasRate"
+                                                   x:Uid="BiasRate"
+                                                   Style="{ThemeResource SmallTextStyle}" />
+                                        <TextBlock Text="{x:Bind Bias, Mode=OneTime, Converter={StaticResource DoubleToRationConverter}}"
+                                                   Style="{ThemeResource SmallTextStyle}" />
+                                    </StackPanel>
                                 </StackPanel>
-                                
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -159,22 +155,28 @@
                                 IsEnabled="False"
                                 HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Left" />
-                        <StackPanel Orientation="Vertical"
-                                    Visibility="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
-                            <TextBlock Text="Duration"
-                                       Style="{ThemeResource SubsubtitleTextStyle}" />
-                            <Button Margin="{StaticResource ElementMargin}"
-                                    Content="{x:Bind ViewModel.SelectedTodo.DurationMins, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
-                                    HorizontalAlignment="Stretch"
-                                    HorizontalContentAlignment="Left" />
-                        </StackPanel>
-                        <StackPanel VerticalAlignment="Bottom"
-                                    Orientation="Horizontal">
-                            <TextBlock Text="Created in"
-                                       Style="{ThemeResource SubsubtitleTextStyle}" />
-                            <TextBlock Margin="5,0,0,0"
-                                       Text="{x:Bind ViewModel.SelectedTodo.CreationDate, Mode=OneWay}"
-                                       Style="{ThemeResource BasicTextStyle}" />
+                        <muxc:Expander Margin="{StaticResource ElementMargin}"
+                                       HorizontalAlignment="Stretch"
+                                       HorizontalContentAlignment="Left"
+                                       ExpandDirection="Down"
+                                       IsExpanded="False"
+                                       Visibility="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
+                            <muxc:Expander.Header>
+                                <TextBlock Text="{x:Bind ViewModel.SelectedTodo.DurationMins, Mode=OneWay,Converter={StaticResource MinToStringConverter}}" />
+                            </muxc:Expander.Header>
+                            <muxc:Expander.Content>
+                                <local:TodoTimeStamp x:Name="TodoTimeStamp_Expander"
+                                                     TimeStamps="{x:Bind ViewModel.SelectedTodo.TimeStamps,Mode=OneWay}" />
+                            </muxc:Expander.Content>
+                        </muxc:Expander>
+                        <StackPanel Orientation="Horizontal"
+                                    Spacing="4">
+                            <TextBlock x:Name="FinishedIn"
+                                       x:Uid="FinishedIn"
+                                       Style="{ThemeResource SmallTextStyle}" />
+                            <TextBlock x:Name="FinishDateTextBlock"
+                                       Text="{x:Bind ViewModel.SelectedTodo.FinishDate, Mode=OneWay}"
+                                       Style="{ThemeResource SmallTextStyle}" />
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>

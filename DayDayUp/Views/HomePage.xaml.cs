@@ -236,7 +236,13 @@ namespace DayDayUp.Views
             {
                 DurationSettingPage tmp = (DurationSettingPage)dialog.Content;
                 ViewModel.SelectedTodo.ExpectedDurationMins = tmp.DurationResult;
+                ViewModel.Update(ViewModel.SelectedTodo);
             }
+        }
+
+        private void TodoTimeStamp_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        {
+            Debug.WriteLine("Expander timestamp changed", "HomePage");
         }
     }
 }
