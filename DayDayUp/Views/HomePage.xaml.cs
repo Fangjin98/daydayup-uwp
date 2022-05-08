@@ -40,7 +40,6 @@ namespace DayDayUp.Views
                     Status = TodoStatus.Pause,
                     CreationDate = DateTime.Now,
                     TimeStamps = new List<DateTime>(),
-                    Progress = 0
                 });
 
                 resetTaskInput();
@@ -59,7 +58,6 @@ namespace DayDayUp.Views
                     Status = TodoStatus.Pause,
                     CreationDate = DateTime.Now,
                     TimeStamps = new List<DateTime>(),
-                    Progress = 0
                 });
 
                 resetTaskInput();
@@ -77,8 +75,7 @@ namespace DayDayUp.Views
                     IsFinished = false,
                     Status = TodoStatus.Pause,
                     CreationDate = DateTime.Now,
-                    TimeStamps = new List<DateTime>(),
-                    Progress = 0
+                    TimeStamps = new List<DateTime>()
                 });
 
                 resetTaskInput();
@@ -96,8 +93,7 @@ namespace DayDayUp.Views
                     IsFinished = false,
                     Status = TodoStatus.Pause,
                     CreationDate = DateTime.Now,
-                    TimeStamps = new List<DateTime>(),
-                    Progress = 0
+                    TimeStamps = new List<DateTime>()
                 });
 
                 resetTaskInput();
@@ -115,8 +111,7 @@ namespace DayDayUp.Views
                     IsFinished = false,
                     Status = TodoStatus.Pause,
                     CreationDate = DateTime.Now,
-                    TimeStamps = new List<DateTime>(),
-                    Progress = 0
+                    TimeStamps = new List<DateTime>()
                 });
 
                 resetTaskInput();
@@ -134,8 +129,7 @@ namespace DayDayUp.Views
                     IsFinished = false,
                     Status = TodoStatus.Pause,
                     CreationDate = DateTime.Now,
-                    TimeStamps = new List<DateTime>(),
-                    Progress = 0
+                    TimeStamps = new List<DateTime>()
                 });
 
                 resetTaskInput();
@@ -153,8 +147,7 @@ namespace DayDayUp.Views
                     IsFinished = false,
                     Status = TodoStatus.Pause,
                     CreationDate = DateTime.Now,
-                    TimeStamps = new List<DateTime>(),
-                    Progress = 0
+                    TimeStamps = new List<DateTime>()
                 });
 
                 resetTaskInput();

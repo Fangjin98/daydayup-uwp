@@ -32,7 +32,7 @@ namespace DayDayUp.ViewModels
             {
                 Todos.Clear();
 
-                foreach (Todo item in todoManager.DurationAndProgress(todoManager.FinishedTodos))
+                foreach (Todo item in todoManager.FinishedTodos)
                 {
                     Todos.Add(item);
                 }

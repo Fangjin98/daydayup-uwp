@@ -133,7 +133,7 @@ namespace DayDayUp.ViewModels
                 historyCount[diffDays].Value++;
                 if (item.ExpectedDurationMins != 0)
                 {
-                    historyBias[diffDays].Value += todoManager.Bias(item);
+                    historyBias[diffDays].Value += item.Bias;
                 }
             }
         }
@@ -165,17 +165,17 @@ namespace DayDayUp.ViewModels
             using (await loadingLock.LockAsync())
             {
 
-                foreach (var item in todoManager.DurationAndProgress(todoManager.FinishedTodos))
+                foreach (var item in todoManager.FinishedTodos)
                 {
                     Debug.WriteLine(item.Name, "Dashboard Page");
-                    FinishedTaskBias += todoManager.Bias(item);
+                    FinishedTaskBias += item.Bias;
                     updateHistory(item);
                 }
 
-                foreach (var item in todoManager.DurationAndProgress(todoManager.UnfinishedTodos))
+                foreach (var item in todoManager.UnfinishedTodos)
                 {
                     Debug.WriteLine(item.Name, "Dashboard Page");
-                    DoingTaskBias += todoManager.Bias(item);
+                    DoingTaskBias += item.Bias;
                 }
 
                 updateStatics(todoManager.UnfinishedTodos);
