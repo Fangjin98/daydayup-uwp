@@ -167,14 +167,12 @@ namespace DayDayUp.ViewModels
 
                 foreach (var item in todoManager.FinishedTodos)
                 {
-                    Debug.WriteLine(item.Name, "Dashboard Page");
                     FinishedTaskBias += item.Bias;
                     updateHistory(item);
                 }
 
                 foreach (var item in todoManager.UnfinishedTodos)
                 {
-                    Debug.WriteLine(item.Name, "Dashboard Page");
                     DoingTaskBias += item.Bias;
                 }
 
