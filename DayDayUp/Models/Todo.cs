@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Diagnostics;
+using System.Linq;
 
 namespace DayDayUp.Models
 {
@@ -93,7 +94,7 @@ namespace DayDayUp.Models
                             {
                                 totalDuration += (TimeStamps[i + 1] - TimeStamps[i]).TotalMinutes;
                             }
-                            totalDuration += (DateTime.Now - TimeStamps[len - 1]).TotalMinutes;
+                            totalDuration += (DateTime.Now - TimeStamps.Last()).TotalMinutes;
                         }
                     }
                     return Convert.ToInt32(totalDuration);
@@ -111,7 +112,7 @@ namespace DayDayUp.Models
             {
                 if (IsFinished == true)
                 {
-                    return TimeStamps[TimeStamps.Count-1];
+                    return TimeStamps.Last();
                 }
                 else return null;
             }
@@ -124,7 +125,7 @@ namespace DayDayUp.Models
             get
             {
                 if (IsFinished == true) return 100;
-                if (ExpectedDurationMins == 0)
+                if (ExpectedDurationMins != 0)
                 {
                     return Convert.ToInt32(
                         Convert.ToDecimal(DurationMins) / Convert.ToDecimal(ExpectedDurationMins) * 100);

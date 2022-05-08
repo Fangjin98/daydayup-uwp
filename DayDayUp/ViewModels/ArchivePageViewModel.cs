@@ -23,6 +23,8 @@ namespace DayDayUp.ViewModels
         public void Restore(Todo item)
         {
             item.IsFinished = false;
+            item.TimeStamps.Remove(item.TimeStamps.Last());
+            todoManager.Update(item);
             Todos.Remove(item);
         }
 
