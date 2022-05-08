@@ -138,7 +138,7 @@ namespace DayDayUp.Models
         {
             get
             {
-                if (ExpectedDurationMins != 0)
+                if (ExpectedDurationMins != 0 && DurationMins!=0)
                 {
                     return (double)(Convert.ToDecimal(DurationMins - ExpectedDurationMins) /
                         Convert.ToDecimal(ExpectedDurationMins));

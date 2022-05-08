@@ -32,7 +32,7 @@ namespace DayDayUp.Helpers
         {
             item.IsFinished = true;
             item.TimeStamps.Add(DateTime.Now);
-            _dataAccess.UpdateDataAsync(item);
+            Update(item);
         }
 
         public void RemoveTask(Todo item)
@@ -53,9 +53,10 @@ namespace DayDayUp.Helpers
             item.TimeStamps.Add(DateTime.Now);
             Update(item);
         }
-        public void Update(Todo item)
+
+        public async void Update(Todo item)
         {
-            _dataAccess.UpdateDataAsync(item);
+            await _dataAccess.UpdateDataAsync(item);
         }
 
         public void UpdateAll()
