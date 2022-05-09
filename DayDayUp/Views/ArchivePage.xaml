@@ -54,20 +54,9 @@
                     CompactPaneLength="48"
                     DisplayMode="Inline"
                     PanePlacement="Right"
-                    PaneBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderThickness="1"
-                    CornerRadius="4">
-            <Grid Name="LeftView"
-                  Margin="0,0,12,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <TextBlock 
-                           x:Uid="List"
-                           Style="{ThemeResource SubtitleTextStyle}" />
-                <ListView Grid.Row="1"
-                          Name="TaskList"
+                    PaneBackground="Transparent">
+            <Grid>
+                <ListView Name="TaskList"
                           ItemsSource="{x:Bind ViewModel.Todos}"
                           SelectedItem="{x:Bind ViewModel.SelectedTodo, Mode=TwoWay}"
                           Visibility="{x:Bind ViewModel.Todos.Count,Converter={StaticResource CountConverter}, Mode=OneWay}"
@@ -126,8 +115,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <RichTextBlock Grid.Row="1"
-                               Visibility="{x:Bind ViewModel.Todos.Count, Converter={StaticResource NegativeCountConverter}, Mode=OneWay}"
+                <RichTextBlock Visibility="{x:Bind ViewModel.Todos.Count, Converter={StaticResource NegativeCountConverter}, Mode=OneWay}"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center">
                     <Paragraph>The list is empty now. Go to
@@ -137,24 +125,23 @@
                 </RichTextBlock>
             </Grid>
             <SplitView.Pane>
-                <ScrollViewer Padding="20,12,20,12">
-                    <StackPanel>
-                        <TextBlock Text="Details"
-                                   Style="{ThemeResource SubtitleTextStyle}" />
-                        <TextBlock Text="Name"
-                                   Style="{ThemeResource SubsubtitleTextStyle}"/>
-                        <TextBlock 
-                                   Text="{x:Bind ViewModel.SelectedTodo.Name, Mode=OneWay}"
-                                   Style="{ThemeResource BasicTextStyle}"
-                                   Margin="{StaticResource ElementMargin}"
-                                   />
-                        <TextBlock Text="Estimated duration"
-                                   Style="{ThemeResource SubsubtitleTextStyle}" />
-                        <Button Margin="{StaticResource ElementMargin}"
-                                Content="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
-                                IsEnabled="False"
-                                HorizontalAlignment="Stretch"
-                                HorizontalContentAlignment="Left" />
+                <ScrollViewer Padding="20"
+                              Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                              Margin="8,0,0,0"
+                              CornerRadius="4">
+                    <StackPanel Spacing="8">
+                        <TextBlock Text="{x:Bind ViewModel.SelectedTodo.Name, Mode=OneWay}"
+                                   FontSize="16"/>
+                        <Button HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Left"
+                                IsEnabled="False">
+                            <Button.Content>
+                                <TextBlock>
+                                    <Run Text="Estimated in" />
+                                    <Run Text="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
+                                         FontWeight="Bold" /></TextBlock>
+                            </Button.Content>
+                        </Button>
                         <muxc:Expander Margin="{StaticResource ElementMargin}"
                                        HorizontalAlignment="Stretch"
                                        HorizontalContentAlignment="Left"
@@ -169,15 +156,9 @@
                                                      TimeStamps="{x:Bind ViewModel.SelectedTodo.TimeStamps,Mode=OneWay}" />
                             </muxc:Expander.Content>
                         </muxc:Expander>
-                        <StackPanel Orientation="Horizontal"
-                                    Spacing="4">
-                            <TextBlock x:Name="FinishedIn"
-                                       x:Uid="FinishedIn"
-                                       Style="{ThemeResource SmallTextStyle}" />
-                            <TextBlock x:Name="FinishDateTextBlock"
-                                       Text="{x:Bind ViewModel.SelectedTodo.FinishDate, Mode=OneWay}"
-                                       Style="{ThemeResource SmallTextStyle}" />
-                        </StackPanel>
+                        <TextBlock Style="{ThemeResource SmallTextStyle}">
+                                <Run x:Uid="FinishedIn" />
+                                <Run Text="{x:Bind ViewModel.SelectedTodo.FinishDate, Mode=OneWay}" /></TextBlock>
                     </StackPanel>
                 </ScrollViewer>
             </SplitView.Pane>

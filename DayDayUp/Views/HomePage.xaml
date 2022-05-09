@@ -40,75 +40,61 @@
           CornerRadius="4">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
         <TextBlock x:Name="Title"
                    Text="Home"
                    Style="{StaticResource TitleTextStyle}" />
-        <SplitView  Grid.Row="1"
+        <Grid Grid.Row="1"
+              Margin="0,0,0,12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="newTaskTextBox"
+                     Grid.Column="0"
+                     PlaceholderText="Add a new todo..."
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Stretch"
+                     KeyUp="newTaskTextBoxKeyUp" />
+            <muxc:DropDownButton x:Name="TaskDurationSelectionButton"
+                                 Grid.Column="1"
+                                 HorizontalAlignment="Center"
+                                 Margin="{StaticResource ContentMargin}"
+                                 ToolTipService.ToolTip="Estimated duration">
+                <muxc:DropDownButton.Content>
+                    <FontIcon FontFamily="Segoe Fluent Icons"
+                              Glyph="&#xe823;" />
+                </muxc:DropDownButton.Content>
+                <muxc:DropDownButton.Flyout>
+                    <MenuFlyout Placement="Bottom">
+                        <MenuFlyoutItem Text="None"
+                                        Click="AlignmentMenuFlyoutItem5_Click" />
+                        <MenuFlyoutItem Text="30 mins"
+                                        Click="AlignmentMenuFlyoutItem0_Click" />
+                        <MenuFlyoutItem Text="1 hour"
+                                        Click="AlignmentMenuFlyoutItem1_Click" />
+                        <MenuFlyoutItem Text="6 hours"
+                                        Click="AlignmentMenuFlyoutItem2_Click" />
+                        <MenuFlyoutItem Text="12 hours"
+                                        Click="AlignmentMenuFlyoutItem3_Click" />
+                        <MenuFlyoutItem Text="1 day"
+                                        Click="AlignmentMenuFlyoutItem4_Click" />
+                    </MenuFlyout>
+                </muxc:DropDownButton.Flyout>
+            </muxc:DropDownButton>
+        </Grid>
+        <SplitView  Grid.Row="2"
                     x:Name="HomeSplitView"
                     IsPaneOpen="False"
                     OpenPaneLength="300"
                     CompactPaneLength="48"
                     DisplayMode="Inline"
                     PanePlacement="Right"
-                    PaneBackground="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                    BorderThickness="1"
-                    CornerRadius="4">
-            <Grid Name="LeftView" Margin="0,0,12,0">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <StackPanel Grid.Row="0">
-                    <TextBlock Text="New task"
-                               Style="{StaticResource SubtitleTextStyle}" />
-                    <Grid Margin="0,0,0,20">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBox x:Name="newTaskTextBox"
-                                 Grid.Column="0"
-                                 PlaceholderText="Enter the name..."
-                                 VerticalAlignment="Center"
-                                 HorizontalAlignment="Stretch"
-                                 KeyUp="newTaskTextBoxKeyUp"/>
-                        <muxc:DropDownButton x:Name="TaskDurationSelectionButton"
-                                             Grid.Column="1"
-                                             HorizontalAlignment="Center"
-                                             Margin="{StaticResource ContentMargin}"
-                                             ToolTipService.ToolTip="Estimated duration">
-                            <muxc:DropDownButton.Content>
-                                <FontIcon FontFamily="Segoe Fluent Icons"
-                                          Glyph="&#xe823;" />
-                            </muxc:DropDownButton.Content>
-                            <muxc:DropDownButton.Flyout>
-                                <MenuFlyout Placement="Bottom">
-                                    <MenuFlyoutItem Text="None"
-                                                    Click="AlignmentMenuFlyoutItem5_Click" />
-                                    <MenuFlyoutItem Text="30 mins"
-                                                    Click="AlignmentMenuFlyoutItem0_Click" />
-                                    <MenuFlyoutItem Text="1 hour"
-                                                    Click="AlignmentMenuFlyoutItem1_Click" />
-                                    <MenuFlyoutItem Text="6 hours"
-                                                    Click="AlignmentMenuFlyoutItem2_Click" />
-                                    <MenuFlyoutItem Text="12 hours"
-                                                    Click="AlignmentMenuFlyoutItem3_Click" />
-                                    <MenuFlyoutItem Text="1 day"
-                                                    Click="AlignmentMenuFlyoutItem4_Click" />
-                                </MenuFlyout>
-                            </muxc:DropDownButton.Flyout>
-                        </muxc:DropDownButton>
-                        
-                    </Grid>
-                </StackPanel>
-                <TextBlock Grid.Row="1"
-                           Text="List"
-                           Style="{ThemeResource SubtitleTextStyle}" />
-                <ListView Grid.Row="2"
-                          Name="TaskList"
+                    PaneBackground="Transparent">
+            <Grid >
+                <ListView Name="TaskList"
                           ItemsSource="{x:Bind ViewModel.Todos}"
                           SelectedItem="{x:Bind ViewModel.SelectedTodo, Mode=TwoWay}"
                           Visibility="{x:Bind ViewModel.Todos.Count,Converter={StaticResource CountConverter}, Mode=OneWay}"
@@ -207,8 +193,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <RichTextBlock Grid.Row="2"
-                               Name="DefaultText"
+                <RichTextBlock Name="DefaultText"
                                Visibility="{x:Bind ViewModel.Todos.Count, Converter={StaticResource NegativeCountConverter}, Mode=OneWay}"
                                HorizontalAlignment="Center"
                                VerticalAlignment="Center">
@@ -219,57 +204,46 @@
                 </RichTextBlock>
             </Grid>
             <SplitView.Pane>
-                <ScrollViewer Padding="20,12,20,12">
-                    <StackPanel>
-                        <TextBlock Text="Name"
-                                   Style="{ThemeResource SubsubtitleTextStyle}" />
+                <ScrollViewer Padding="20"
+                              Margin="8,0,0,0"
+                              Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                              CornerRadius="4">
+                    <StackPanel Spacing="8">
                         <TextBox x:Name="DetailPanelTaskName"
-                                 Margin="{StaticResource ElementMargin}"
                                  PlaceholderText="{x:Bind ViewModel.SelectedTodo.Name}"
                                  TextWrapping="Wrap"
-                                 Text="{x:Bind ViewModel.SelectedTodo.Name, Mode=OneWay}" 
-                                 KeyUp="DetailPanelTaskName_KeyUp"/>
-                        <TextBlock Text="Estimated duration"
-                                   Style="{ThemeResource SubsubtitleTextStyle}" />
-                        <Button Margin="{StaticResource ElementMargin}"
-                                Content="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
-                                HorizontalAlignment="Stretch"
-                                HorizontalContentAlignment="Left" 
-                                Click="ExpectedDurationMinsButton_Click"/>
-                        <StackPanel Orientation="Vertical"
-                                    Visibility="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
-                            <TextBlock Text="{x:Bind ViewModel.SelectedTodo.Status, Mode=OneWay, Converter={StaticResource StatusToStringConverter}}"
-                                       Style="{ThemeResource SubsubtitleTextStyle}" />
-                            <muxc:Expander Margin="{StaticResource ElementMargin}"
-                                           HorizontalAlignment="Stretch"
-                                           HorizontalContentAlignment="Left"
-                                           ExpandDirection="Down"
-                                           IsExpanded="False"
-                                           DataContextChanged="TodoTimeStamp_DataContextChanged">
-                                <muxc:Expander.Header>
-                                    <TextBlock Text="{x:Bind ViewModel.SelectedTodo.DurationMins, Mode=OneWay,Converter={StaticResource MinToStringConverter}}" />
-                                </muxc:Expander.Header>
-                                <muxc:Expander.Content>
-                                    <views:TodoTimeStamp 
-                                        x:Name="TodoTimeStamp_Expander"
-                                        TimeStamps="{x:Bind ViewModel.SelectedTodo.TimeStamps,Mode=OneWay}"/>
-                                </muxc:Expander.Content>
-                            </muxc:Expander>
-                        </StackPanel>
-                        <TextBlock Text="Description"
-                                   Style="{ThemeResource SubsubtitleTextStyle}" />
-                        <TextBox Margin="{StaticResource ElementMargin}"
-                                 Text="{x:Bind ViewModel.SelectedTodo.Description, Mode=OneWay}"
-                                 TextWrapping="Wrap"
-                                 AcceptsReturn="True" />
-                        <StackPanel VerticalAlignment="Bottom"
-                                    Orientation="Horizontal">
-                            <TextBlock Text="Created in"
-                                       Style="{ThemeResource SmallTextStyle}" />
-                            <TextBlock Margin="5,0,0,0"
-                                       Text="{x:Bind ViewModel.SelectedTodo.CreationDate, Mode=OneWay}"
-                                       Style="{ThemeResource SmallTextStyle}" />
-                        </StackPanel>
+                                 Text="{x:Bind ViewModel.SelectedTodo.Name, Mode=OneWay}"
+                                 KeyUp="DetailPanelTaskName_KeyUp"
+                                 FontSize="16" />
+                        <Button HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Left"
+                                Click="ExpectedDurationMinsButton_Click">
+                            <Button.Content>
+                                <TextBlock>
+                                    <Run Text="Estimated in" />
+                                    <Run Text="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
+                                         FontWeight="Bold" /></TextBlock>
+                            </Button.Content>
+                        </Button>
+                        <TextBlock Visibility="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}"
+                                   Text="{x:Bind ViewModel.SelectedTodo.Status, Mode=OneWay, Converter={StaticResource StatusToStringConverter}}" />
+                        <muxc:Expander HorizontalAlignment="Stretch"
+                                       HorizontalContentAlignment="Left"
+                                       ExpandDirection="Down"
+                                       IsExpanded="False"
+                                       Visibility="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
+                            <muxc:Expander.Header>
+                                <TextBlock Text="{x:Bind ViewModel.SelectedTodo.DurationMins, Mode=OneWay,Converter={StaticResource MinToStringConverter}}" />
+                            </muxc:Expander.Header>
+                            <muxc:Expander.Content>
+                                <views:TodoTimeStamp x:Name="TodoTimeStamp_Expander"
+                                                     TimeStamps="{x:Bind ViewModel.SelectedTodo.TimeStamps,Mode=OneWay}" />
+                            </muxc:Expander.Content>
+                        </muxc:Expander>
+                      
+                        <TextBlock Style="{ThemeResource SmallTextStyle}">
+                                <Run Text="Created in" />
+                                <Run Text="{x:Bind ViewModel.SelectedTodo.CreationDate, Mode=OneWay}" /></TextBlock>
                     </StackPanel>
                 </ScrollViewer>
             </SplitView.Pane>
