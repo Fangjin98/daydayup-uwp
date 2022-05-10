@@ -2,7 +2,8 @@
     x:Class="DayDayUp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives">
+             xmlns:primitives="using:Microsoft.UI.Xaml.Controls.Primitives"
+             xmlns:helper="using:DayDayUp.Helpers">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -78,6 +79,15 @@
             <x:Double x:Key="Breakpoint640Plus">641</x:Double>
             <primitives:CornerRadiusFilterConverter x:Key="CornerRadiusTopLeftToDoubleConverter"
                                                     Filter="TopLeftValue" />
+            
+            <helper:EnumToVisibilityConverter x:Key="TaskStatusConverter" />
+            <helper:EnumToVisibilityNegativeConverter x:Key="NegativeTaskStatusConverter" />
+            <helper:CountToVisibilityConverter x:Key="CountConverter" />
+            <helper:CountToVisibilityNegativeConverter x:Key="NegativeCountConverter" />
+            <helper:DurationToStringConverter x:Key="DurationToStringConverter" />
+            <helper:StatusToStringConverter x:Key="StatusToStringConverter" />
+            <helper:DateToStringConverter x:Key="DateToStringConverter" />
+            
             <Style x:Key="ListViewItemContainerStyle"
                    TargetType="ListViewItem">
                 <Setter Property="Background"

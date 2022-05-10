@@ -1,22 +1,14 @@
 ﻿<Page
     x:Class="DayDayUp.Views.ArchivePage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:DayDayUp.Views"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:models="using:DayDayUp.Models"
-      xmlns:helper="using:DayDayUp.Helpers"
+      xmlns:local="using:DayDayUp.Views"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       mc:Ignorable="d">
     <Page.Resources>
-        <helper:EnumToVisibilityConverter x:Key="TaskStatusConverter" />
-        <helper:EnumToVisibilityNegativeConverter x:Key="NegativeTaskStatusConverter" />
-        <helper:CountToVisibilityConverter x:Key="CountConverter" />
-        <helper:CountToVisibilityNegativeConverter x:Key="NegativeCountConverter" />
-        <helper:MinToStringConverter x:Key="MinToStringConverter" />
-        <helper:StatusToStringConverter x:Key="StatusToStringConverter" />
-        <helper:DoubleToRatioConverter x:Key="DoubleToRationConverter" />
         <MenuFlyout x:Name="TodoItemFlyout">
             <MenuFlyout.Items>
                 <MenuFlyoutItem Text="Delete"
@@ -138,7 +130,7 @@
                             <Button.Content>
                                 <TextBlock>
                                     <Run Text="Estimated in" />
-                                    <Run Text="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
+                                    <Run Text="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource DuratioinToStringConverter}}"
                                          FontWeight="Bold" /></TextBlock>
                             </Button.Content>
                         </Button>
@@ -149,7 +141,7 @@
                                        IsExpanded="False"
                                        Visibility="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
                             <muxc:Expander.Header>
-                                <TextBlock Text="{x:Bind ViewModel.SelectedTodo.DurationMins, Mode=OneWay,Converter={StaticResource MinToStringConverter}}" />
+                                <TextBlock Text="{x:Bind ViewModel.SelectedTodo.DurationMins, Mode=OneWay,Converter={StaticResource DuratioinToStringConverter}}" />
                             </muxc:Expander.Header>
                             <muxc:Expander.Content>
                                 <local:TodoTimeStamp x:Name="TodoTimeStamp_Expander"
@@ -158,7 +150,7 @@
                         </muxc:Expander>
                         <TextBlock Style="{ThemeResource SmallTextStyle}">
                                 <Run x:Uid="FinishedIn" />
-                                <Run Text="{x:Bind ViewModel.SelectedTodo.FinishDate, Mode=OneWay}" /></TextBlock>
+                                <Run Text="{x:Bind ViewModel.SelectedTodo.FinishDate, Mode=OneWay, Converter={StaticResource DateToStringConverter}}" /></TextBlock>
                     </StackPanel>
                 </ScrollViewer>
             </SplitView.Pane>

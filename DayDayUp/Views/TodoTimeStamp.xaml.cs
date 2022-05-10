@@ -60,8 +60,8 @@ namespace DayDayUp.Views
                         new StartEndPair
                         {
                             IsPaused = true,
-                            Start = TimeStamps[i],
-                            End = TimeStamps[i + 1]
+                            StartDate = TimeStamps[i],
+                            EndDate = TimeStamps[i + 1]
                         });
                 }
             }
@@ -73,16 +73,16 @@ namespace DayDayUp.Views
                         new StartEndPair
                         {
                             IsPaused = true,
-                            Start = TimeStamps[i],
-                            End = TimeStamps[i + 1]
+                            StartDate = TimeStamps[i],
+                            EndDate = TimeStamps[i + 1]
                         });
                 }
                 startEndPairs.Add(
                     new StartEndPair
                     {
                         IsPaused = false,
-                        Start = TimeStamps.Last(),
-                        End = DateTime.Now
+                        StartDate = TimeStamps.Last(),
+                        EndDate = DateTime.Now
                     });
             }
         }
@@ -92,13 +92,18 @@ namespace DayDayUp.Views
     {
         public bool IsPaused { get; set; }
 
-        public DateTime Start { get; set; }
+        public DateTime StartDate { get; set; }
 
-        public DateTime End { get; set; }
+        public DateTime EndDate { get; set; }
 
+        public string StartTime { get => StartDate.ToString("T"); }
+        public string EndTime { get => EndDate.ToString("T"); }
+
+        public bool IsTodayStart { get=> DateTime.Now.ToString("d") != StartDate.ToString("d"); }
+        public bool IsTodayEnd { get => DateTime.Now.ToString("d") != EndDate.ToString("d"); }
         public int DurationMins
         {
-            get => (End - Start).Minutes;
+            get => (EndDate - StartDate).Minutes;
         }
     }
 }

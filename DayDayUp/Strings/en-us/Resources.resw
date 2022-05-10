@@ -157,4 +157,46 @@
     <value>Personalization</value>
     <comment>Personalization text for Settings</comment>
   </data>
+  <data name="DaysLabel.Text" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="HoursLabel.Text" xml:space="preserve">
+    <value>Hours</value>
+  </data>
+  <data name="MinsLabel.Text" xml:space="preserve">
+    <value>Minutes</value>
+  </data>
+  <data name="Archive.Text" xml:space="preserve">
+    <value>Archive</value>
+  </data>
+  <data name="Dashboard_History.Text" xml:space="preserve">
+    <value>History</value>
+  </data>
+  <data name="FinishedIn.Text" xml:space="preserve">
+    <value>Finished in</value>
+  </data>
+  <data name="List.Text" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="Restore_MenuFlyoutItem.Text" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="SeeAll.Text" xml:space="preserve">
+    <value>See All</value>
+  </data>
+  <data name="BiasRate.Text" xml:space="preserve">
+    <value>Bias rate is</value>
+  </data>
+  <data name="Duration.Text" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="EstimatiedDuration.Text" xml:space="preserve">
+    <value>Estimated duration is </value>
+  </data>
+  <data name="Pause.Text" xml:space="preserve">
+    <value>Pause</value>
+  </data>
+  <data name="Start.Text" xml:space="preserve">
+    <value>Start</value>
+  </data>
 </root>

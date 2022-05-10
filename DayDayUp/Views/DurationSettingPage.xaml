@@ -7,9 +7,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Page.Resources>
-        <helper:MinToStringConverter x:Key="MinToStringConverter" />
-    </Page.Resources>
+
     <StackPanel Spacing="12">
         <Grid>
             <Grid.RowDefinitions>
@@ -62,7 +60,7 @@
             <TextBlock Text="Total duration: "
                        Style="{ThemeResource SubsubtitleTextStyle}" />
             <TextBlock Margin="5,0,0,0"
-                       Text="{x:Bind durationPicker.Duration, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
+                       Text="{x:Bind durationPicker.Duration, Mode=OneWay, Converter={StaticResource DurationToStringConverter}}"
                        Style="{ThemeResource BasicTextStyle}" />
         </StackPanel>
     </StackPanel>

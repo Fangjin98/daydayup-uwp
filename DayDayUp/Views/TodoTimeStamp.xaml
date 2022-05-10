@@ -13,8 +13,20 @@
         <DataTemplate x:Key="HorizontalPairTemplate"
                       x:DataType="local:StartEndPair">
             <StackPanel Orientation="Vertical" Spacing="4">
-                <TextBlock Text="{x:Bind Start}" />
-                <TextBlock Text="{x:Bind End}" />
+                <TextBlock >
+                    <Run x:Uid="Start" />
+                    <Run Text=": " />
+                    <Run Text="{x:Bind StartDate, Converter={StaticResource DateToStringConverter}}" />
+                </TextBlock>
+                <TextBlock Text="{x:Bind StartTime}" Style="{StaticResource SmallTextStyle}"
+                           Visibility="{x:Bind IsTodayStart}"/>
+                <TextBlock>
+                    <Run x:Uid="Pause" />
+                    <Run Text=": " />
+                    <Run Text="{x:Bind EndDate, Converter={StaticResource DateToStringConverter}}" /></TextBlock>
+                <TextBlock Text="{x:Bind EndTime}"
+                           Style="{StaticResource SmallTextStyle}"
+                           Visibility="{x:Bind IsTodayEnd}"/>
             </StackPanel>
         </DataTemplate>
     </UserControl.Resources>

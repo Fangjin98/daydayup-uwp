@@ -15,8 +15,9 @@
         <helper:EnumToVisibilityNegativeConverter x:Key="NegativeTaskStatusConverter" />
         <helper:CountToVisibilityConverter x:Key="CountConverter" />
         <helper:CountToVisibilityNegativeConverter x:Key="NegativeCountConverter" />
-        <helper:MinToStringConverter x:Key="MinToStringConverter" />
+        <helper:DurationToStringConverter x:Key="DurationToStringConverter" />
         <helper:StatusToStringConverter x:Key="StatusToStringConverter" />
+        <helper:DateToStringConverter x:Key="DateToStringConverter" />
         <MenuFlyout x:Name="TodoItemFlyout">
             <MenuFlyout.Items>
                 <MenuFlyoutItem Text="Delete"
@@ -156,7 +157,7 @@
                                         <TextBlock x:Name="EstimatedDuration"
                                                    x:Uid="EstimatiedDuration"
                                                    Style="{ThemeResource SmallTextStyle}" />
-                                        <TextBlock Text="{x:Bind ExpectedDurationMins, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
+                                        <TextBlock Text="{x:Bind ExpectedDurationMins, Mode=OneWay, Converter={StaticResource DurationToStringConverter}}"
                                                    Style="{ThemeResource SmallTextStyle}" />
                                     </StackPanel>
                                 </StackPanel>
@@ -221,7 +222,7 @@
                             <Button.Content>
                                 <TextBlock>
                                     <Run Text="Estimated in" />
-                                    <Run Text="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource MinToStringConverter}}"
+                                    <Run Text="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource DurationToStringConverter}}"
                                          FontWeight="Bold" /></TextBlock>
                             </Button.Content>
                         </Button>
@@ -233,7 +234,7 @@
                                        IsExpanded="False"
                                        Visibility="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
                             <muxc:Expander.Header>
-                                <TextBlock Text="{x:Bind ViewModel.SelectedTodo.DurationMins, Mode=OneWay,Converter={StaticResource MinToStringConverter}}" />
+                                <TextBlock Text="{x:Bind ViewModel.SelectedTodo.DurationMins, Mode=OneWay,Converter={StaticResource DurationToStringConverter}}" />
                             </muxc:Expander.Header>
                             <muxc:Expander.Content>
                                 <views:TodoTimeStamp x:Name="TodoTimeStamp_Expander"
@@ -243,7 +244,7 @@
                       
                         <TextBlock Style="{ThemeResource SmallTextStyle}">
                                 <Run Text="Created in" />
-                                <Run Text="{x:Bind ViewModel.SelectedTodo.CreationDate, Mode=OneWay}" /></TextBlock>
+                                <Run Text="{x:Bind ViewModel.SelectedTodo.CreationDate, Mode=OneWay, Converter={StaticResource DateToStringConverter}}" /></TextBlock>
                     </StackPanel>
                 </ScrollViewer>
             </SplitView.Pane>

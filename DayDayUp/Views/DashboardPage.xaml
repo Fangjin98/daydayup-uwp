@@ -4,16 +4,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:helper="using:DayDayUp.Helpers"
       xmlns:viewModel="using:DayDayUp.ViewModels"
-      xmlns:lvc="using:LiveChartsCore.SkiaSharpView.UWP"
       xmlns:views="using:DayDayUp.Views"
+      xmlns:lvc="using:LiveChartsCore.SkiaSharpView.UWP"
       mc:Ignorable="d">
-    <Page.Resources>
-        <helper:CountToVisibilityConverter x:Key="CountConverter" />
-        <helper:CountToVisibilityNegativeConverter x:Key="NegativeCountConverter" />
-        <helper:DoubleToRatioConverter x:Key="DoubleToRatioConverter" />
-    </Page.Resources>
+  
     <Grid Padding="{StaticResource PagePadding}"
           CornerRadius="4"
           x:Name="ContentArea">

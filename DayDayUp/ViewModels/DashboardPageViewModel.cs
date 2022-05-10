@@ -127,13 +127,22 @@ namespace DayDayUp.ViewModels
 
         private void updateHistory(Todo item)
         {
-            var diffDays = DateTime.Now.Subtract(item.TimeStamps.Last()).Days;
-            if (diffDays < 7)
+            var diffHours = Convert.ToInt32(DateTime.Now.Subtract(item.TimeStamps.Last()).TotalHours);
+            if (diffHours < (24 - item.TimeStamps.Last().Hour)) //Today
             {
-                historyCount[diffDays].Value++;
-                if (item.ExpectedDurationMins != 0)
+                historyBias[0].Value += item.Bias;
+                historyCount[0].Value++;
+            }
+            else
+            {
+                var diffDays=1+diffHours / 24;
+                if (diffDays < 7)
                 {
-                    historyBias[diffDays].Value += item.Bias;
+                    historyCount[diffDays].Value++;
+                    if (item.ExpectedDurationMins != 0)
+                    {
+                        historyBias[diffDays].Value += item.Bias;
+                    }
                 }
             }
         }
