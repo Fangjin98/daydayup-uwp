@@ -121,10 +121,12 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Converters\CountToVisibilityConverter.cs" />
+    <Compile Include="Helpers\Converters\DateToStringConverter.cs" />
     <Compile Include="Helpers\Converters\DoubleToRatioConverter.cs" />
     <Compile Include="Helpers\Converters\EnumToBooleanConverter.cs" />
     <Compile Include="Helpers\Converters\EnumToVisibilityConverter.cs" />
-    <Compile Include="Helpers\Converters\MinToStringConverter.cs" />
+    <Compile Include="Helpers\Converters\DurationToStringConverter.cs" />
+    <Compile Include="Helpers\Converters\StatusToStringConverter.cs" />
     <Compile Include="Helpers\ResourceExtensions.cs" />
     <Compile Include="Helpers\SettingsHelper.cs" />
     <Compile Include="Helpers\ThemeSelectorHelper.cs" />
@@ -132,11 +134,22 @@
     <Compile Include="Models\Todo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DataAccess.cs" />
+    <Compile Include="ViewModels\ArchivePageViewModel.cs" />
+    <Compile Include="ViewModels\BaseTodoListViewModel.cs" />
     <Compile Include="ViewModels\DashboardPageViewModel.cs" />
     <Compile Include="ViewModels\HomePageViewModel.cs" />
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
+    <Compile Include="Views\ArchivePage.xaml.cs">
+      <DependentUpon>ArchivePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\BasicItem.xaml.cs">
+      <DependentUpon>BasicItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DashboardPage.xaml.cs">
       <DependentUpon>DashboardPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\DurationSettingPage.xaml.cs">
+      <DependentUpon>DurationSettingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
@@ -146,6 +159,12 @@
     </Compile>
     <Compile Include="Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SummaryItem.xaml.cs">
+      <DependentUpon>SummaryItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TodoTimeStamp.xaml.cs">
+      <DependentUpon>TodoTimeStamp.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -226,9 +245,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ArchivePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\BasicItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DashboardPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\DurationSettingPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\HomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -241,6 +272,14 @@
     <Page Include="Views\SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\SummaryItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TodoTimeStamp.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -266,9 +305,7 @@
       <Version>5.1.2</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <PRIResource Include="Strings\en-us\Resources.resw" />
   </ItemGroup>
