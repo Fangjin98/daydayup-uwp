@@ -3,7 +3,7 @@ using System;
 
 namespace DayDayUp.Helpers
 {
-    public class MinToStringConverter : IValueConverter
+    public class DurationToStringConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
