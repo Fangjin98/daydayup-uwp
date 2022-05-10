@@ -19,7 +19,9 @@ namespace DayDayUp.ViewModels
 {
     public class DashboardPageViewModel : BaseTodoListViewModel
     {
-        public ISeries[] LineChartHistory { get; set; }
+        public List<ISeries> LineChartHistory { get; set; }
+
+        public ObservableCollection<ISeries> PieStatics { get; set; }
 
         public IEnumerable<ICartesianAxis> XAxes { get; set; }
 
@@ -51,14 +53,11 @@ namespace DayDayUp.ViewModels
             "Progress","Duration","Creation date"
         };
 
-        public ObservableCollection<DoingStatics> Statics = new ObservableCollection<DoingStatics>();
-
         public DashboardPageViewModel(TodoManagementHelper TodoManager):
             base(TodoManager)
         {
             FinishedTaskCount = todoManager.FinishedTodos.Count;
             DoingTaskCount = todoManager.UnfinishedTodos.Count;
-            DoingStatics.DoingTasks = DoingTaskCount;
 
             initCharts();
         }
@@ -68,24 +67,30 @@ namespace DayDayUp.ViewModels
             switch (categoryName)
             {
                 case "Progress":
-                    Statics.Clear();
+                    PieStatics.Clear();
                     foreach (var item in progress.Where(p => p.Count != 0))
                     {
-                        Statics.Add(item);
+                        PieStatics.Add(
+                            new PieSeries<int> { Values = new int[] { item.Count }, Name = item.Name }
+                            );
                     }
                     break;
                 case "Duration":
-                    Statics.Clear();
+                    PieStatics.Clear();
                     foreach (var item in duration.Where(p => p.Count != 0))
                     {
-                        Statics.Add(item);
+                        PieStatics.Add(
+                            new PieSeries<int> { Values = new int[] { item.Count }, Name = item.Name }
+                            );
                     }
                     break;
                 case "Creation date":
-                    Statics.Clear();
+                    PieStatics.Clear();
                     foreach (var item in creationDate.Where(p => p.Count != 0))
                     {
-                        Statics.Add(item);
+                        PieStatics.Add(
+                            new PieSeries<int> { Values = new int[] { item.Count }, Name = item.Name }
+                            );
                     }
                     break;
             }
@@ -93,22 +98,25 @@ namespace DayDayUp.ViewModels
 
         private void initCharts()
         {
-            LineChartHistory = new ISeries[] {
-                new LineSeries<ObservableValue> {
-                    Name = "Finished Tasks",
-                    Values = historyCount,
-                    Stroke = new SolidColorPaint(){StrokeThickness = 2},
-                    GeometrySize = 0,
-                    },
-
+            LineChartHistory = new();
+            LineChartHistory.Add(new LineSeries<ObservableValue>
+            {
+                Name = "Finished Tasks",
+                Values = historyCount,
+                Stroke = new SolidColorPaint() { StrokeThickness = 2 },
+                GeometrySize = 0,
+            });
+            LineChartHistory.Add(
                 new LineSeries<ObservableValue>
                 {
                     Name = "Estimated Bias",
-                    Values= historyBias,
+                    Values = historyBias,
                     Stroke = null,
                     GeometrySize = 0,
                 }
-             };
+                );
+
+            PieStatics = new();
 
             xLabel.Add("Today");
             xLabel.Add("Yesterday");
@@ -187,11 +195,7 @@ namespace DayDayUp.ViewModels
 
                 updateStatics(todoManager.UnfinishedTodos);
 
-                foreach (var item in progress.Where(p => p.Count != 0).ToList())
-                {
-                    Statics.Add(item);
-                }
-
+                SetStatics("Progress");
             }
         }
 
@@ -245,19 +249,8 @@ namespace DayDayUp.ViewModels
 
     public class DoingStatics
     {
-      
         public string Name { get; set; }
         public int Count { get; set; }
-
-        public double Ratio
-        {
-            get => (double) Count / DoingTasks;
-        }
-        public int Length { 
-            get=>Convert.ToInt32(Ratio*100);
-        }
-        
-        public static int DoingTasks;
     }
 
 }

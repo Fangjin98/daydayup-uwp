@@ -79,35 +79,9 @@
                               SelectedIndex="0"
                               SelectionChanged="ComboBox_SelectionChanged"/>
                 </Grid>
-                <ListView Grid.Row="1"
-                          Visibility="{Binding DoingTaskCount, Converter={StaticResource CountConverter}, Mode=OneWay}"
-                          ItemsSource="{x:Bind ViewModel.Statics, Mode=OneWay}"
-                          SelectionMode="None">
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="viewModel:DoingStatics">
-                            <Grid Height="{StaticResource ItemHeight}">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="80" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="48" />
-                                </Grid.ColumnDefinitions>
-                                <TextBlock Grid.Column="0"
-                                           Text="{x:Bind Name}"
-                                           Style="{StaticResource BaseTextBlockStyle}"
-                                           VerticalAlignment="Center" />
-                                <ProgressBar Grid.Column="1"
-                                             Value="{x:Bind Length}"
-                                             Maximum="100"
-                                             Margin="{StaticResource ContentMargin}"
-                                             VerticalAlignment="Center" />
-                                <TextBlock Grid.Column="2"
-                                           Text="{x:Bind Ratio, Converter={StaticResource DoubleToRatioConverter}}"
-                                           VerticalAlignment="Center"
-                                           HorizontalAlignment="Right" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <lvc:PieChart Grid.Row="1"
+                              Visibility="{Binding DoingTaskCount, Converter={StaticResource CountConverter}, Mode=OneWay}"
+                              Series="{Binding PieStatics}"></lvc:PieChart>
                 <TextBlock Name="DefaultText"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"

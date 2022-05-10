@@ -87,7 +87,7 @@
             <helper:DurationToStringConverter x:Key="DurationToStringConverter" />
             <helper:StatusToStringConverter x:Key="StatusToStringConverter" />
             <helper:DateToStringConverter x:Key="DateToStringConverter" />
-            
+            <helper:DoubleToRatioConverter x:Key="DoubleToRatioConverter" />
             <Style x:Key="ListViewItemContainerStyle"
                    TargetType="ListViewItem">
                 <Setter Property="Background"

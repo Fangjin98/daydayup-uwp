@@ -99,7 +99,7 @@
                                         <TextBlock x:Name="BiasRate"
                                                    x:Uid="BiasRate"
                                                    Style="{ThemeResource SmallTextStyle}" />
-                                        <TextBlock Text="{x:Bind Bias, Mode=OneTime, Converter={StaticResource DoubleToRationConverter}}"
+                                        <TextBlock Text="{x:Bind Bias, Mode=OneTime, Converter={StaticResource DoubleToRatioConverter}}"
                                                    Style="{ThemeResource SmallTextStyle}" />
                                     </StackPanel>
                                 </StackPanel>
@@ -130,7 +130,7 @@
                             <Button.Content>
                                 <TextBlock>
                                     <Run Text="Estimated in" />
-                                    <Run Text="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource DuratioinToStringConverter}}"
+                                    <Run Text="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource DurationToStringConverter}}"
                                          FontWeight="Bold" /></TextBlock>
                             </Button.Content>
                         </Button>
@@ -141,7 +141,7 @@
                                        IsExpanded="False"
                                        Visibility="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
                             <muxc:Expander.Header>
-                                <TextBlock Text="{x:Bind ViewModel.SelectedTodo.DurationMins, Mode=OneWay,Converter={StaticResource DuratioinToStringConverter}}" />
+                                <TextBlock Text="{x:Bind ViewModel.SelectedTodo.DurationMins, Mode=OneWay,Converter={StaticResource DurationToStringConverter}}" />
                             </muxc:Expander.Header>
                             <muxc:Expander.Content>
                                 <local:TodoTimeStamp x:Name="TodoTimeStamp_Expander"
