@@ -88,6 +88,8 @@
             <helper:StatusToStringConverter x:Key="StatusToStringConverter" />
             <helper:DateToStringConverter x:Key="DateToStringConverter" />
             <helper:DoubleToRatioConverter x:Key="DoubleToRatioConverter" />
+            <helper:ProgressToStringConverter x:Key="ProgressToStringConverter" />
+            
             <Style x:Key="ListViewItemContainerStyle"
                    TargetType="ListViewItem">
                 <Setter Property="Background"

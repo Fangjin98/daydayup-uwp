@@ -188,7 +188,7 @@
     <value>Bias rate is</value>
   </data>
   <data name="Duration.Text" xml:space="preserve">
-    <value>Duration</value>
+    <value>Duration is</value>
   </data>
   <data name="EstimatiedDuration.Text" xml:space="preserve">
     <value>Estimated duration is </value>
@@ -198,5 +198,11 @@
   </data>
   <data name="Start.Text" xml:space="preserve">
     <value>Start</value>
+  </data>
+  <data name="Progress.Text" xml:space="preserve">
+    <value>Progress is </value>
+  </data>
+  <data name="Status.Text" xml:space="preserve">
+    <value>Status is </value>
   </data>
 </root>

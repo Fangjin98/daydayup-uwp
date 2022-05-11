@@ -210,8 +210,8 @@ namespace DayDayUp.Views
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
-            Todo task = (Todo)button.DataContext;
-            ViewModel.SwapTodoStatus(task);
+            Todo todo = (Todo)button.DataContext;
+            ViewModel.SwapTodoStatus(todo);
         }
 
         private void DetailPanelTaskName_KeyUp(object sender, KeyRoutedEventArgs e)
@@ -239,10 +239,9 @@ namespace DayDayUp.Views
                 ViewModel.Update(ViewModel.SelectedTodo);
             }
         }
-
-        private void TodoTimeStamp_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        private void StatusButton_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Expander timestamp changed", "HomePage");
+            ViewModel.SwapTodoStatus(ViewModel.SelectedTodo);
         }
     }
 }

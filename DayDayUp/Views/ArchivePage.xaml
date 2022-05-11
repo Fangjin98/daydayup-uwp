@@ -117,38 +117,46 @@
                 </RichTextBlock>
             </Grid>
             <SplitView.Pane>
-                <ScrollViewer Padding="20"
-                              Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                <ScrollViewer Padding="12"
                               Margin="8,0,0,0"
+                              Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                               CornerRadius="4">
-                    <StackPanel Spacing="8">
-                        <TextBlock Text="{x:Bind ViewModel.SelectedTodo.Name, Mode=OneWay}"
-                                   FontSize="16"/>
+                    <StackPanel Spacing="4">
+                        <TextBox x:Name="DetailPanelTaskName"
+                                 PlaceholderText="{x:Bind ViewModel.SelectedTodo.Name}"
+                                 TextWrapping="Wrap"
+                                 Text="{x:Bind ViewModel.SelectedTodo.Name, Mode=OneWay}"
+                                 IsEnabled="False"
+                                 FontSize="16" />
                         <Button HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Left"
+                                Height="44"
+                                VerticalContentAlignment="Center"
                                 IsEnabled="False">
                             <Button.Content>
                                 <TextBlock>
-                                    <Run Text="Estimated in" />
+                                    <Run x:Uid="EstimatiedDuration" />
                                     <Run Text="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource DurationToStringConverter}}"
                                          FontWeight="Bold" /></TextBlock>
                             </Button.Content>
                         </Button>
-                        <muxc:Expander Margin="{StaticResource ElementMargin}"
-                                       HorizontalAlignment="Stretch"
+                        <muxc:Expander HorizontalAlignment="Stretch"
                                        HorizontalContentAlignment="Left"
                                        ExpandDirection="Down"
                                        IsExpanded="False"
                                        Visibility="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
                             <muxc:Expander.Header>
-                                <TextBlock Text="{x:Bind ViewModel.SelectedTodo.DurationMins, Mode=OneWay,Converter={StaticResource DurationToStringConverter}}" />
+                                <TextBlock TextWrapping="Wrap">
+                                    <Run x:Uid="Duration" />
+                                    <Run Text="{x:Bind ViewModel.SelectedTodo.DurationMins, Mode=OneWay,Converter={StaticResource DurationToStringConverter}}"
+                                         FontWeight="Bold" /></TextBlock>
                             </muxc:Expander.Header>
                             <muxc:Expander.Content>
                                 <local:TodoTimeStamp x:Name="TodoTimeStamp_Expander"
                                                      TimeStamps="{x:Bind ViewModel.SelectedTodo.TimeStamps,Mode=OneWay}" />
                             </muxc:Expander.Content>
                         </muxc:Expander>
-                        <TextBlock Style="{ThemeResource SmallTextStyle}">
+                        <TextBlock Style="{ThemeResource SmallTextStyle}" HorizontalAlignment="Center">
                                 <Run x:Uid="FinishedIn" />
                                 <Run Text="{x:Bind ViewModel.SelectedTodo.FinishDate, Mode=OneWay, Converter={StaticResource DateToStringConverter}}" /></TextBlock>
                     </StackPanel>
