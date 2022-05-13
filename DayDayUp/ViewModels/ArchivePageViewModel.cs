@@ -33,11 +33,13 @@ namespace DayDayUp.ViewModels
             using (await loadingLock.LockAsync())
             {
                 Todos.Clear();
-
-                foreach (Todo item in todoManager.FinishedTodos)
+                var tmp = todoManager.FinishedTodos;
+                tmp.Reverse();
+                foreach (Todo item in tmp)
                 {
                     Todos.Add(item);
                 }
+
             }
         }
     }

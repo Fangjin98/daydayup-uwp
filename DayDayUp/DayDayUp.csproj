@@ -126,6 +126,7 @@
     <Compile Include="Helpers\Converters\EnumToBooleanConverter.cs" />
     <Compile Include="Helpers\Converters\EnumToVisibilityConverter.cs" />
     <Compile Include="Helpers\Converters\DurationToStringConverter.cs" />
+    <Compile Include="Helpers\Converters\ProgressToStringConverter.cs" />
     <Compile Include="Helpers\Converters\StatusToStringConverter.cs" />
     <Compile Include="Helpers\ResourceExtensions.cs" />
     <Compile Include="Helpers\SettingsHelper.cs" />

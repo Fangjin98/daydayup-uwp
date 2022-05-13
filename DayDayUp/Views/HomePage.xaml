@@ -155,9 +155,9 @@
                                                 Margin="{StaticResource ContentMargin}"
                                                 Visibility="{x:Bind ExpectedDurationMins, Converter={StaticResource CountConverter},Mode=OneWay}">
                                         <TextBlock x:Name="EstimatedDuration"
-                                                   x:Uid="EstimatiedDuration"
+                                                   x:Uid="Progress"
                                                    Style="{ThemeResource SmallTextStyle}" />
-                                        <TextBlock Text="{x:Bind ExpectedDurationMins, Mode=OneWay, Converter={StaticResource DurationToStringConverter}}"
+                                        <TextBlock Text="{x:Bind Progress, Mode=OneWay, Converter={StaticResource ProgressToStringConverter}}"
                                                    Style="{ThemeResource SmallTextStyle}" />
                                     </StackPanel>
                                 </StackPanel>
@@ -246,7 +246,8 @@
                                 HorizontalContentAlignment="Left"
                                 Height="44"
                                 VerticalContentAlignment="Center"
-                                Visibility="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
+                                Visibility="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}"
+                                Click="ProgressButton_Click">
                             <Button.Content>
                                 <TextBlock TextWrapping="Wrap">
                                     <Run  x:Uid="Progress" />

@@ -243,5 +243,10 @@ namespace DayDayUp.Views
         {
             ViewModel.SwapTodoStatus(ViewModel.SelectedTodo);
         }
+
+        private void ProgressButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.RefreshProgress(ViewModel.SelectedTodo);
+        }
     }
 }

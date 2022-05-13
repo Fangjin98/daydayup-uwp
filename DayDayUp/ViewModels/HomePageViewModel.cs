@@ -1,6 +1,7 @@
 ﻿using DayDayUp.Helpers;
 using DayDayUp.Models;
 using Microsoft.Toolkit.Mvvm.Input;
+using System;
 using System.Threading.Tasks;
 
 namespace DayDayUp.ViewModels
@@ -59,6 +60,11 @@ namespace DayDayUp.ViewModels
                     Todos.Add(item);
                 }
             }
-        }  
+        }
+
+        internal void RefreshProgress(Todo todo)
+        {
+            var tmp= todo.Progress;
+        }
     }
 }
