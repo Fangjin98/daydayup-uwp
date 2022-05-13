@@ -140,8 +140,8 @@ namespace DayDayUp.Models
             {
                 if (ExpectedDurationMins != 0 && DurationMins!=0)
                 {
-                    return (double)(Convert.ToDecimal(DurationMins - ExpectedDurationMins) /
-                        Convert.ToDecimal(ExpectedDurationMins));
+                    return (double) Math.Round(Convert.ToDecimal(DurationMins - ExpectedDurationMins) /
+                        Convert.ToDecimal(ExpectedDurationMins),2);
                 }
                 else return 0;
             }
