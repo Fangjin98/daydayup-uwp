@@ -81,7 +81,12 @@
                 </Grid>
                 <lvc:PieChart Grid.Row="1"
                               Visibility="{Binding DoingTaskCount, Converter={StaticResource CountConverter}, Mode=OneWay}"
-                              Series="{Binding PieStatics}"></lvc:PieChart>
+                              Series="{Binding PieStatics}"
+                              LegendPosition="Right"
+                              LegendBackground="Transparent"
+                              LegendTextBrush="{ThemeResource ApplicationForegroundThemeBrush}"
+                              TooltipBackground="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+                              TooltipTextBrush="{ThemeResource ApplicationForegroundThemeBrush}" />
                 <TextBlock Name="DefaultText"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
@@ -129,7 +134,11 @@
             
             <lvc:CartesianChart Grid.Row="1"
                                 Series="{Binding LineChartHistory}"
-                                XAxes="{Binding XAxes}" />
+                                XAxes="{Binding XAxes}"
+                                YAxes="{Binding YAxes}"
+                                TooltipFindingStrategy="CompareAll"
+                                TooltipBackground="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+                                TooltipTextBrush="{ThemeResource ApplicationForegroundThemeBrush}"/>
         </Grid>
     </Grid>
 </Page>

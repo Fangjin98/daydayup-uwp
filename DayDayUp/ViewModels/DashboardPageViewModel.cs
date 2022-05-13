@@ -14,6 +14,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.UI.Xaml;
 
 namespace DayDayUp.ViewModels
 {
@@ -24,6 +25,8 @@ namespace DayDayUp.ViewModels
         public ObservableCollection<ISeries> PieStatics { get; set; }
 
         public IEnumerable<ICartesianAxis> XAxes { get; set; }
+
+        public IEnumerable<ICartesianAxis> YAxes { get; set; }
 
         public int DoingTaskCount { get; set; }
 
@@ -71,7 +74,9 @@ namespace DayDayUp.ViewModels
                     foreach (var item in progress.Where(p => p.Count != 0))
                     {
                         PieStatics.Add(
-                            new PieSeries<int> { Values = new int[] { item.Count }, Name = item.Name }
+                            new PieSeries<int> { Values = new int[] { item.Count }, Name = item.Name, 
+                                Fill=color[progress.IndexOf(item)]
+                            }
                             );
                     }
                     break;
@@ -80,7 +85,9 @@ namespace DayDayUp.ViewModels
                     foreach (var item in duration.Where(p => p.Count != 0))
                     {
                         PieStatics.Add(
-                            new PieSeries<int> { Values = new int[] { item.Count }, Name = item.Name }
+                            new PieSeries<int> { Values = new int[] { item.Count }, Name = item.Name,
+                                Fill = color[duration.IndexOf(item)]
+                            }
                             );
                     }
                     break;
@@ -89,7 +96,7 @@ namespace DayDayUp.ViewModels
                     foreach (var item in creationDate.Where(p => p.Count != 0))
                     {
                         PieStatics.Add(
-                            new PieSeries<int> { Values = new int[] { item.Count }, Name = item.Name }
+                            new PieSeries<int> { Values = new int[] { item.Count }, Name = item.Name, Fill= color[creationDate.IndexOf(item)] }
                             );
                     }
                     break;
@@ -99,20 +106,25 @@ namespace DayDayUp.ViewModels
         private void initCharts()
         {
             LineChartHistory = new();
-            LineChartHistory.Add(new LineSeries<ObservableValue>
+            LineChartHistory.Add(new ColumnSeries<ObservableValue>
             {
                 Name = "Finished Tasks",
+                Fill = new SolidColorPaint(SkiaSharp.SKColor.Parse(Application.Current.Resources["ColumnSeriesColor"].ToString())),
                 Values = historyCount,
-                Stroke = new SolidColorPaint() { StrokeThickness = 2 },
-                GeometrySize = 0,
+                Stroke = null,
+                ScalesYAt = 0
             });
             LineChartHistory.Add(
                 new LineSeries<ObservableValue>
                 {
                     Name = "Estimated Bias",
                     Values = historyBias,
-                    Stroke = null,
-                    GeometrySize = 0,
+                    Fill = null,
+                    GeometrySize = 12,
+                    GeometryFill =new SolidColorPaint(SkiaSharp.SKColor.Parse(Application.Current.Resources["LineSeriesColor"].ToString())),
+                    GeometryStroke = new SolidColorPaint(SkiaSharp.SKColor.Parse(Application.Current.Resources["LineSeriesColor"].ToString())) { StrokeThickness=4},
+                    Stroke=new SolidColorPaint(SkiaSharp.SKColor.Parse(Application.Current.Resources["LineSeriesColor"].ToString())) { StrokeThickness=6},
+                    ScalesYAt = 1
                 }
                 );
 
@@ -122,13 +134,41 @@ namespace DayDayUp.ViewModels
             xLabel.Add("Yesterday");
             for (int i = 2; i < 7; i++)
             {
-                xLabel.Add(DateTime.Now.AddDays(-i).ToShortDateString());
+                xLabel.Add(DateTime.Now.AddDays(-i).ToString("M"));
             }
 
             XAxes = new Axis[]
             {
                 new Axis{
-                    Labels = xLabel
+                    Labels = xLabel,
+                }
+            };
+
+            YAxes = new Axis[]
+            {
+                new Axis
+                {
+                    Name = "Count",
+                    NamePaint = new SolidColorPaint(SkiaSharp.SKColor.Parse(Application.Current.Resources["NameTextBrush"].ToString())),
+                    MinLimit = 0,
+                    MaxLimit = 4,
+                    ForceStepToMin = true,
+                    MinStep = 1,
+                    NameTextSize = 14,
+                    TextSize = 12,
+                },
+                new Axis
+                {
+                    Name = "Bias Ratio",
+                    NamePaint = new SolidColorPaint(SkiaSharp.SKColor.Parse(Application.Current.Resources["NameTextBrush"].ToString())),
+                    MinLimit = -2,
+                    MaxLimit = 2,
+                    ForceStepToMin = true,
+                    MinStep = 1,
+                    NameTextSize = 14,
+                    TextSize = 12,
+                    ShowSeparatorLines = false,
+                    Position = LiveChartsCore.Measure.AxisPosition.End
                 }
             };
         }
@@ -244,7 +284,14 @@ namespace DayDayUp.ViewModels
             new DoingStatics { Name = "Today", Count = 0 },
             new DoingStatics { Name = "This week", Count = 0 },
             new DoingStatics { Name = "A week ago", Count = 0 }
-        }; 
+        };
+        private List<SolidColorPaint> color = new()
+        {
+            new SolidColorPaint(SkiaSharp.SKColor.Parse(Application.Current.Resources["PieChartColor0"].ToString())),
+            new SolidColorPaint(SkiaSharp.SKColor.Parse(Application.Current.Resources["PieChartColor1"].ToString())),
+            new SolidColorPaint(SkiaSharp.SKColor.Parse(Application.Current.Resources["PieChartColor2"].ToString())),
+            new SolidColorPaint(SkiaSharp.SKColor.Parse(Application.Current.Resources["PieChartColor3"].ToString()))
+        };
     }
 
     public class DoingStatics
