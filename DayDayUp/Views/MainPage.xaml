@@ -1,55 +1,104 @@
-﻿<Page
-    x:Class="DayDayUp.MainPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:local="using:DayDayUp"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
-    >
-    <Grid>
+﻿<Page x:Class="DayDayUp.MainPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      mc:Ignorable="d"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      muxc:BackdropMaterial.ApplyToRootOrPageBackground="True">
+    <Page.Resources>
+        <Thickness x:Key="NavigationViewContentMargin">0,46,0,0</Thickness>
+        <Thickness x:Key="NavigationViewContentGridBorderThickness">1,1,0,0</Thickness>
+    </Page.Resources>
+    
+    <Grid Background="Transparent">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="CompactOverlay">
+                    <VisualState.Setters>
+                        <Setter Target="NavigationView.AlwaysShowHeader"
+                                Value="False" />
+                        <Setter Target="NavigationView.IsPaneVisible"
+                                Value="False" />
+                        <Setter Target="ContentFrame.Padding"
+                                Value="0,0,0,0" />
+                        <!--<Setter Target="HeaderTextBlock.Visibility"
+                                Value="Collapsed" />-->
+                        <Setter Target="AppTitleLeftBorder.Width"
+                                Value="16" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NavigationViewExpanded">
+                    <VisualState.Setters></VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NavigationViewCompact">
+                    <VisualState.Setters></VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NavigationViewMinimal">
+                    <VisualState.Setters>
+                        <Setter Target="NavigationView.AlwaysShowHeader"
+                                Value="False" />
+                        <Setter Target="ContentFrame.Padding"
+                                Value="0,0,0,0" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
         <Grid.BackgroundTransition>
             <BrushTransition />
         </Grid.BackgroundTransition>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="32" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
+     
         <Grid x:Name="AppTitleBar"
-              Background="Transparent">
+              VerticalAlignment="Top"
+              Height="48"
+              Canvas.ZIndex="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Image Source="ms-appx:///Assets/daydayup.png"
-                   Grid.Column="0"
-                   HorizontalAlignment="Left"
-                   Width="16"
-                   Height="16"
-                   Margin="12,0,0,0" />
-            <TextBlock x:Name="AppTitleTextBlock"
-                       Text="DayDayUp"
-                       Style="{StaticResource CaptionTextBlockStyle}"
-                       Grid.Column="1"
+            
+            <Border Name="AppTitleLeftBorder"
+                    Grid.Column="0"
+                    Width="48" />
+            
+            <StackPanel Grid.Column="1"
+                        Orientation="Horizontal">
+                <Image Source="ms-appx:///Assets/daydayup.png"
+                       HorizontalAlignment="Left"
                        VerticalAlignment="Center"
-                       Margin="12,0,0,0" />
+                       Width="16"
+                       Height="16"/>
+                <TextBlock Text="DayDayUp"
+                           Style="{StaticResource CaptionTextBlockStyle}"
+                           VerticalAlignment="Center"
+                           Margin="12,0,0,0" />
+            </StackPanel>
+            
+             <Border
+                Grid.Column="1"
+                Background="Transparent"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Stretch"
+                Height="32"/>
+           
         </Grid>
         <muxc:NavigationView x:Name="NavView"
-                        Grid.Row="1"
-                        Loaded="NavView_Loaded"
-                        ItemInvoked="NavView_ItemInvoked"
-                        IsBackButtonVisible="Collapsed"
-                        OpenPaneLength="200"
-                        BackRequested="NavView_BackRequested"
-                        AlwaysShowHeader="False">
+                             IsTitleBarAutoPaddingEnabled="False"
+                             Loaded="NavView_Loaded"
+                             ItemInvoked="NavView_ItemInvoked"
+                             IsBackButtonVisible="Auto"
+                             IsBackEnabled="True"
+                             OpenPaneLength="200"
+                             BackRequested="NavView_BackRequested"
+                             AlwaysShowHeader="False"
+                             IsPaneToggleButtonVisible="True">
             <muxc:NavigationView.MenuItems>
               
             </muxc:NavigationView.MenuItems>
             <Frame x:Name="ContentFrame"
-                   Navigated="ContentFrame_Navigated"/>
+                   Navigated="ContentFrame_Navigated" />
         </muxc:NavigationView>
     </Grid>
 </Page>
