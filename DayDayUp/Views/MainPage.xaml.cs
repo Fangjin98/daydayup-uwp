@@ -7,8 +7,7 @@ using Windows.ApplicationModel.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-
-
+using Windows.UI.ViewManagement;
 
 namespace DayDayUp
 {
@@ -16,7 +15,7 @@ namespace DayDayUp
     public sealed partial class MainPage : Page
     {
 
-        public List<Scenario> Scenarios { get; } = new ()
+        internal List<Scenario> Scenarios { get; } = new ()
         {
             new Scenario() { Title = "Home", ClassName = typeof(HomePage).FullName, Icon = "\uE80F" },
             new Scenario() { Title = "Dashboard", ClassName = typeof(DashboardPage).FullName, Icon = "\ue8a1" },
@@ -31,6 +30,41 @@ namespace DayDayUp
             coreTitleBar.ExtendViewIntoTitleBar = true;
 
             Window.Current.SetTitleBar(AppTitleBar);
+
+            SizeChanged += MainPage_SizeChanged;
+        }
+
+        private void MainPage_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UpdateVisualState();
+        }
+
+        private void UpdateVisualState()
+        {
+            //var view = ApplicationView.GetForCurrentView();
+            //bool isCompactOverlayMode = view.ViewMode == ApplicationViewMode.CompactOverlay;
+
+            //if (isCompactOverlayMode)
+            //{
+            //    VisualStateManager.GoToState(this, CompactOverlayStateName, useTransitions: true);
+            //}
+            //else
+            //{
+            //switch ((NavigationViewDisplayMode)ViewModel.NavigationViewDisplayMode)
+            //{
+            //    case NavigationViewDisplayMode.Minimal:
+            //        VisualStateManager.GoToState(this, NavigationViewMinimalStateName, useTransitions: true);
+            //        break;
+
+            //    case NavigationViewDisplayMode.Compact:
+            //        VisualStateManager.GoToState(this, NavigationViewCompactStateName, useTransitions: true);
+            //        break;
+
+            //    case NavigationViewDisplayMode.Expanded:
+            //        VisualStateManager.GoToState(this, NavigationViewExpandedStateName, useTransitions: true);
+            //        break;
+            //}
+            //}
         }
 
         private void NavView_Loaded(object sender, RoutedEventArgs e)
@@ -128,7 +162,7 @@ namespace DayDayUp
     }
 
 
-    public class Scenario
+    internal class Scenario
     {
         public string Title { get; set; }
         public string ClassName { get; set; }

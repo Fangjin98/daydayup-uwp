@@ -12,8 +12,6 @@
     </Page.Resources>
     <Grid  Padding="{StaticResource PagePadding}">
         <StackPanel x:Name="ContentArea">
-            <TextBlock Text="Settings"
-                       Style="{StaticResource TitleTextStyle}" />
             <StackPanel>
                 <TextBlock Text="Theme"
                            Style="{ThemeResource SubtitleTextStyle}" />

@@ -32,15 +32,8 @@
     </Page.Resources>
     <Grid Padding="{StaticResource PagePadding}"
           CornerRadius="4">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <TextBlock x:Name="Title"
-                   x:Uid="Archive"
-                   Style="{StaticResource TitleTextStyle}" />
+     
         <SplitView  x:Name="PageSplitView"
-                    Grid.Row="1"
                     IsPaneOpen="False"
                     OpenPaneLength="300"
                     CompactPaneLength="48"

@@ -37,10 +37,8 @@
                 </VisualState>
                 <VisualState x:Name="NavigationViewMinimal">
                     <VisualState.Setters>
-                        <Setter Target="NavigationView.AlwaysShowHeader"
-                                Value="False" />
-                        <Setter Target="ContentFrame.Padding"
-                                Value="0,0,0,0" />
+                        <Setter Target="AppTitleLeftBorder.Width"
+                                Value="96" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>
@@ -49,7 +47,6 @@
         <Grid.BackgroundTransition>
             <BrushTransition />
         </Grid.BackgroundTransition>
-     
         <Grid x:Name="AppTitleBar"
               VerticalAlignment="Top"
               Height="48"
@@ -58,47 +55,45 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            
             <Border Name="AppTitleLeftBorder"
                     Grid.Column="0"
                     Width="48" />
-            
             <StackPanel Grid.Column="1"
                         Orientation="Horizontal">
                 <Image Source="ms-appx:///Assets/daydayup.png"
                        HorizontalAlignment="Left"
                        VerticalAlignment="Center"
                        Width="16"
-                       Height="16"/>
+                       Height="16" />
                 <TextBlock Text="DayDayUp"
                            Style="{StaticResource CaptionTextBlockStyle}"
                            VerticalAlignment="Center"
                            Margin="12,0,0,0" />
             </StackPanel>
-            
-             <Border
-                Grid.Column="1"
-                Background="Transparent"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Stretch"
-                Height="32"/>
-           
+            <Border Grid.Column="1"
+                    Background="Transparent"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Stretch"
+                    Height="32" />
         </Grid>
         <muxc:NavigationView x:Name="NavView"
+                             IsBackButtonVisible="Auto"
                              IsTitleBarAutoPaddingEnabled="False"
+                             IsTabStop="False"
+                             IsBackEnabled="True"
+                             CompactModeThresholdWidth="640"
+                             ExpandedModeThresholdWidth="1008"
+                             OpenPaneLength="200"
+                             AlwaysShowHeader="True"
+                             IsPaneToggleButtonVisible="True"
                              Loaded="NavView_Loaded"
                              ItemInvoked="NavView_ItemInvoked"
-                             IsBackButtonVisible="Auto"
-                             IsBackEnabled="True"
-                             OpenPaneLength="200"
-                             BackRequested="NavView_BackRequested"
-                             AlwaysShowHeader="False"
-                             IsPaneToggleButtonVisible="True">
+                             BackRequested="NavView_BackRequested">
             <muxc:NavigationView.MenuItems>
               
             </muxc:NavigationView.MenuItems>
             <Frame x:Name="ContentFrame"
-                   Navigated="ContentFrame_Navigated" />
+                   Navigated="ContentFrame_Navigated"/>
         </muxc:NavigationView>
     </Grid>
 </Page>
