@@ -30,5 +30,14 @@ namespace DayDayUp.Views
             get { return (string)GetValue(TitleProperty); }
             set { SetValue(TitleProperty, value); }
         }
+
+        public static readonly DependencyProperty SymbolIconProperty = DependencyProperty.Register(
+            nameof(Icon), typeof(Symbol), typeof(SummaryItem), new PropertyMetadata(null));
+
+        public Symbol Icon
+        {
+            get { return (Symbol)GetValue(SymbolIconProperty); }
+            set { SetValue(SymbolIconProperty, value); }
+        }
     }
 }

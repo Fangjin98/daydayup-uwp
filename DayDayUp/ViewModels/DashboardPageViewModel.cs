@@ -8,6 +8,7 @@ using LiveChartsCore.SkiaSharpView.Painting;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 using Nito.AsyncEx;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -75,7 +76,8 @@ namespace DayDayUp.ViewModels
                     {
                         PieStatics.Add(
                             new PieSeries<int> { Values = new int[] { item.Count }, Name = item.Name, 
-                                Fill=color[progress.IndexOf(item)]
+                                Fill=color[progress.IndexOf(item)],
+                                InnerRadius = 30
                             }
                             );
                     }
@@ -86,7 +88,8 @@ namespace DayDayUp.ViewModels
                     {
                         PieStatics.Add(
                             new PieSeries<int> { Values = new int[] { item.Count }, Name = item.Name,
-                                Fill = color[duration.IndexOf(item)]
+                                Fill = color[duration.IndexOf(item)],
+                                InnerRadius = 30
                             }
                             );
                     }
@@ -96,7 +99,10 @@ namespace DayDayUp.ViewModels
                     foreach (var item in creationDate.Where(p => p.Count != 0))
                     {
                         PieStatics.Add(
-                            new PieSeries<int> { Values = new int[] { item.Count }, Name = item.Name, Fill= color[creationDate.IndexOf(item)] }
+                            new PieSeries<int> { Values = new int[] { item.Count }, 
+                                Name = item.Name, 
+                                Fill= color[creationDate.IndexOf(item)], 
+                                InnerRadius = 30 }
                             );
                     }
                     break;
@@ -109,7 +115,9 @@ namespace DayDayUp.ViewModels
             LineChartHistory.Add(new ColumnSeries<ObservableValue>
             {
                 Name = "Finished Tasks",
-                Fill = new SolidColorPaint(SkiaSharp.SKColor.Parse(Application.Current.Resources["ColumnSeriesColor"].ToString())),
+                Fill = new LinearGradientPaint(
+                     new[] { new SKColor(255, 140, 148), new SKColor(220, 237, 194) }
+                     ),
                 Values = historyCount,
                 Stroke = null,
                 ScalesYAt = 0
@@ -119,12 +127,12 @@ namespace DayDayUp.ViewModels
                 {
                     Name = "Estimated Bias",
                     Values = historyBias,
-                    Fill = null,
-                    GeometrySize = 12,
-                    GeometryFill =new SolidColorPaint(SkiaSharp.SKColor.Parse(Application.Current.Resources["LineSeriesColor"].ToString())),
-                    GeometryStroke = new SolidColorPaint(SkiaSharp.SKColor.Parse(Application.Current.Resources["LineSeriesColor"].ToString())) { StrokeThickness=4},
-                    Stroke=new SolidColorPaint(SkiaSharp.SKColor.Parse(Application.Current.Resources["LineSeriesColor"].ToString())) { StrokeThickness=6},
-                    ScalesYAt = 1
+                    GeometrySize = 6,
+                    GeometryStroke = new LinearGradientPaint(gradientColors.ToArray()) { StrokeThickness = 4 },
+                    //Stroke=new SolidColorPaint(SkiaSharp.SKColor.Parse(Application.Current.Resources["LineSeriesColor"].ToString())) { StrokeThickness=4},
+                    Stroke = new LinearGradientPaint(gradientColors.ToArray()) { StrokeThickness = 4},
+                    ScalesYAt = 1,
+                    Fill = null
                 }
                 );
 
@@ -292,6 +300,11 @@ namespace DayDayUp.ViewModels
             new SolidColorPaint(SkiaSharp.SKColor.Parse(Application.Current.Resources["PieChartColor2"].ToString())),
             new SolidColorPaint(SkiaSharp.SKColor.Parse(Application.Current.Resources["PieChartColor3"].ToString()))
         };
+        private List<SKColor> gradientColors = new()
+        {
+                new SKColor(45, 64, 89),
+                new SKColor(255, 212, 96)
+            };
     }
 
     public class DoingStatics

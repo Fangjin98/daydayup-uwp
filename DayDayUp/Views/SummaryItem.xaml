@@ -6,19 +6,28 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <StackPanel Orientation="Vertical"
+    <Grid 
                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"
                 CornerRadius="{StaticResource ControlCornerRadius}"
-                Padding="8"
-                Spacing="12">
-        <TextBlock Text="{x:Bind Title}"
-                   Style="{StaticResource SubtitleTextBlockStyle}"
-                   HorizontalAlignment="Center"/>
-        <TextBlock Text="{x:Bind Number}"
-                   HorizontalAlignment="Center"
+                Padding="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <SymbolIcon Grid.Row="0" 
+                    Symbol="{x:Bind Icon}"
+                    HorizontalAlignment="Left"/>
+        <TextBlock Grid.Row="1"
+                   Text="{x:Bind Number}"
                    Style="{StaticResource SummaryTextStyle}"
-                   Foreground="CadetBlue" />
-    </StackPanel>
+                   FontWeight="Bold" />
+        <TextBlock Grid.Row="2"
+                   Text="{x:Bind Title}"
+                   Style="{StaticResource CaptionTextBlockStyle}"
+                   Foreground="Gray"/>
+    </Grid>
 </UserControl>

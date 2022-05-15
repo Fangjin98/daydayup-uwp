@@ -13,45 +13,50 @@
           CornerRadius="4"
           x:Name="ContentArea">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="1.2*" />
         </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0"
-                   x:Name="Title"
-                   Text="DashBoard"
-                   Style="{StaticResource TitleTextStyle}" />
-        <Grid Grid.Row="1" Margin="0,0,0,20">
+      
+        <Grid Margin="0,0,0,20">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="1.5*" />
             </Grid.ColumnDefinitions>
-            <Grid  Grid.Column="0" Margin="0,0,20,0" RowSpacing="12" ColumnSpacing="12">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <views:SummaryItem Grid.Row="0"
-                                   Grid.Column="0"
-                                   Title="Doing"
-                                   Number="{Binding DoingTaskCount}" />
-                <views:SummaryItem Grid.Row="0"
-                                   Grid.Column="1"
-                                   Title="Finished"
-                                   Number="{Binding FinishedTaskCount}" />
-                <views:SummaryItem Grid.Row="1"
-                                   Grid.Column="0"
-                                   Title="Current Bias"
-                                   Number="{Binding DoingTaskBias,  Mode=OneWay, Converter={StaticResource DoubleToRatioConverter}}" />
-                <views:SummaryItem Grid.Row="1"
-                                   Grid.Column="1"
-                                   Title="History Bias"
-                                   Number="{Binding FinishedTaskBias,  Mode=OneWay, Converter={StaticResource DoubleToRatioConverter}}" />
-            </Grid>
+            <ScrollViewer>
+                <Grid Margin="0,0,20,0"
+                      RowSpacing="12"
+                      ColumnSpacing="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <views:SummaryItem Grid.Row="0"
+                                       Grid.Column="0"
+                                       Icon="AllApps"
+                                       Number="{Binding DoingTaskCount}"
+                                       Title="Doing tasks"/>
+                    <views:SummaryItem Grid.Row="0"
+                                       Grid.Column="1"
+                                       Icon="Bullets"
+                                       Title="Finished tasks"
+                                       Number="{Binding FinishedTaskCount}" />
+                    <views:SummaryItem Grid.Row="1"
+                                       Grid.Column="0"
+                                       Icon="ZeroBars"
+                                       Title="Current estimation bias"
+                                       Number="{Binding DoingTaskBias,  Mode=OneWay, Converter={StaticResource DoubleToRatioConverter}}" />
+                    <views:SummaryItem Grid.Row="1"
+                                       Grid.Column="1"
+                                       Icon="Flag"
+                                       Title="History estimation bias"
+                                       Number="{Binding FinishedTaskBias,  Mode=OneWay, Converter={StaticResource DoubleToRatioConverter}}" />
+                </Grid>
+            </ScrollViewer>            
+            
             <Grid Grid.Column="1"
                   Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                   BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
@@ -96,7 +101,7 @@
                            Style="{StaticResource BasicTextStyle}" />
             </Grid>
         </Grid>
-        <Grid Grid.Row="2"
+        <Grid Grid.Row="1"
               Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
               BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
               BorderThickness="1"
