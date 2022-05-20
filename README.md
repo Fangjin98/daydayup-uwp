@@ -1,4 +1,7 @@
 <p align="center">
+  <a href="#">
+    
+  </a>
   <img width="128" src="/assets/logo/300x300.png">
 </p>
 
@@ -7,44 +10,42 @@
 </h1>
 
 <p align="center">
-  An Easy-To-Use Todo Manager with Time Estimation.
+  An Easy-To-Use Todo Manager with Time Estimation Tracking.
 </p>
 
 <p align="center">
   <a style="text-decoration:none" href="https://svgshare.com/i/ZhY.svg" target="_blank">
     <img src="https://svgshare.com/i/ZhY.svg"/>
   </a>
-  <!-- <a style="text-decoration:none" href="https://github.com/veler/DevToys/releases" target="_blank">
-    <img src="https://img.shields.io/github/release/veler/devtoys.svg?label=Latest%20version" alt="Latest version" />
-  </a> -->
-  <!-- <a style="text-decoration:none" href="https://community.chocolatey.org/packages/devtoys" target="_blank">
-  <img src="https://img.shields.io/chocolatey/v/devtoys?include_prereleases" alt="Chocolatey Version (including pre-releases)"> -->
-  </a>
-  <!-- <a style="text-decoration:none" href="https://www.microsoft.com/store/apps/9PGCV4V3BK4W" target="_blank">
-    <img src="https://img.shields.io/badge/Microsoft%20Store-Download-brightgreen" alt="Store link" />
-  </a> -->
-  <!-- <a style="text-decoration:none" href="https://devtoys.app" target="_blank">
-    <img src="https://img.shields.io/badge/Website-devtoys.app-blue" alt="Website" />
-  </a> -->
-</p>
 
-<!-- DayDayUp is a lightweigh and easy-to-use todo management application. It focus on this week's todos. -->
-
-<p align="center">
   <img src="/assets/screenshots/1.png">
 </p>
 
 ## Motivation
 
+Time estimation is a key needs of todo management. We help you to better track the progress and bias of todos with estimation time.
 
 ## Features
 
-- Can set estimated duration of todos
-- Have statistics analysis
+__Complete__:
 
-## Roadmap
+- *Create Todos* - Can set estimated duration of todos.
+- *Start & Pause Todos* - Set the status of todos to record the duration.
+- *Per-todo Information* - progress, estimation bias, duration, etc.  
+- *Dashboard* - Total todo counts, progress, history, etc.
 
-- [x] Basic function (add, remove, complete ...)
-- [x] Design detailed todo panel
-- [x] Design dashboard
-- [x] Design completion page
+__In progress__:
+
+- *Multi-language Support*
+  - *Chinese*
+- *Sort* - Sort the list of doing or archived todos in terms of creation date, progress, duration, etc.
+
+__To be developed__:
+
+- *Multi-device Synchronization*
+- *Category* - Todos can be assigned to different categories.
+
+## Acknowledgments
+
+- [Windows Community Toolkit](https://github.com/CommunityToolkit/MVVM-Samples)
+- [LiveCharts2](https://github.com/beto-rodriguez/LiveCharts2)
