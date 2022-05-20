@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="128" align="center" src="/assets/logo/300x300.png">
+  <img width="128" src="/assets/logo/300x300.png">
 </p>
 
 <h1 align="center">
@@ -28,7 +28,7 @@
   </a> -->
 </p>
 
-DayDayUp is a lightweigh and easy-to-use todo management application. It focus on this week's todos.
+<!-- DayDayUp is a lightweigh and easy-to-use todo management application. It focus on this week's todos. -->
 
 <p align="center">
   <img src="/assets/screenshots/1.png">
