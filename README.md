@@ -30,6 +30,10 @@
 
 DayDayUp is a lightweigh and easy-to-use todo management application. It focus on this week's todos.
 
+<p align="center">
+  <img src="/assets/screenshots/1.png">
+</p>
+
 ## Motivation
 
 
