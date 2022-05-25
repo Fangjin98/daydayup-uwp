@@ -41,6 +41,6 @@ jobs:
         $manifest.save(".\$env:UWP_Project_Directory\Package.appxmanifest")
         
     - name: Build the sideload solution
-      run: msbuild $env:Solution_Path /p:Platform=x64 /restore
+      run: msbuild $env:Solution_Path /p:Platform=x64
       env:
         Configuration: Debug
