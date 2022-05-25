@@ -2,7 +2,13 @@ name: Release builder
 
 on:
   push:
-    tags: 'v*'
+    branches: [ main ]
+    tags:
+    - 'v*'
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
 
 jobs:
   release:
