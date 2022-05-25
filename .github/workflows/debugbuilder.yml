@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  release:
+  build:
     runs-on: windows-latest
 
     env:
@@ -41,8 +41,7 @@ jobs:
         $manifest.save(".\$env:UWP_Project_Directory\Package.appxmanifest")
         
     - name: Build the sideload solution
-      run: msbuild $env:Solution_Path /p:Platform=x64 /p:AppxBundle=$env:AppxBundle /p:AppxBundlePlatforms="x86|x64" /p:AppxPackageDir=C:\DeployOutput /restore
+      run: msbuild $env:Solution_Path /p:Platform=x64 /restore
       env:
-        AppxBundle: Always
         BuildMode: StoreUpload
         Configuration: Debug
