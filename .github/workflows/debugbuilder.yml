@@ -43,5 +43,4 @@ jobs:
     - name: Build the sideload solution
       run: msbuild $env:Solution_Path /p:Platform=x64 /restore
       env:
-        BuildMode: StoreUpload
         Configuration: Debug
