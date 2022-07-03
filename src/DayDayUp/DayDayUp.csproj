@@ -157,6 +157,9 @@
     <Compile Include="Views\DashboardPage.xaml.cs">
       <DependentUpon>DashboardPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DurationPredictionPage.xaml.cs">
+      <DependentUpon>DurationPredictionPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\DurationSettingPage.xaml.cs">
       <DependentUpon>DurationSettingPage.xaml</DependentUpon>
     </Compile>
@@ -266,6 +269,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\DurationPredictionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\DurationSettingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -293,7 +300,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="LiteDB">
-      <Version>5.0.11</Version>
+      <Version>5.0.12</Version>
     </PackageReference>
     <PackageReference Include="LiveChartsCore.SkiaSharpView.UWP">
       <Version>2.0.0-beta.101</Version>
@@ -302,7 +309,7 @@
       <Version>6.0.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.13</Version>
+      <Version>6.2.14</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Toolkit.Mvvm">
       <Version>7.1.2</Version>

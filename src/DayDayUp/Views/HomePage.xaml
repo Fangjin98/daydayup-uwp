@@ -242,12 +242,11 @@
                                 Height="44"
                                 VerticalContentAlignment="Center"
                                 Visibility="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}"
-                                Click="ProgressButton_Click">
+                                Click="PredictionButton_Click">
                             <Button.Content>
-                                <TextBlock TextWrapping="Wrap">
-                                    <Run  x:Uid="Progress" />
-                                    <Run Text="{x:Bind ViewModel.SelectedTodo.Progress, Mode=OneWay, Converter={StaticResource ProgressToStringConverter}}"
-                                         FontWeight="Bold" /></TextBlock>
+                                <TextBlock TextWrapping="Wrap"
+                                           FontWeight="Bold">
+                                    <Run  x:Uid="Prediction"/></TextBlock>
                             </Button.Content>
                         </Button>
                         <muxc:Expander HorizontalAlignment="Stretch"

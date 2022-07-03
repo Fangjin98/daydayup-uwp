@@ -199,10 +199,13 @@
   <data name="Start.Text" xml:space="preserve">
     <value>Start</value>
   </data>
-  <data name="Progress.Text" xml:space="preserve">
-    <value>Progress is </value>
+  <data name="Prediction.Text" xml:space="preserve">
+    <value>Predicted Durations</value>
   </data>
   <data name="Status.Text" xml:space="preserve">
     <value>Status is </value>
+  </data>
+  <data name="Progress.Text" xml:space="preserve">
+    <value>Progress is</value>
   </data>
 </root>

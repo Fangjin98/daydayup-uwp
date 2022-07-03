@@ -61,10 +61,5 @@ namespace DayDayUp.ViewModels
                 }
             }
         }
-
-        internal void RefreshProgress(Todo todo)
-        {
-            var tmp= todo.Progress;
-        }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -244,9 +245,23 @@ namespace DayDayUp.Views
             ViewModel.SwapTodoStatus(ViewModel.SelectedTodo);
         }
 
-        private void ProgressButton_Click(object sender, RoutedEventArgs e)
+        private async void PredictionButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.RefreshProgress(ViewModel.SelectedTodo);
+            ContentDialog dialog = new ContentDialog();
+            dialog.Title = "Prediction list";
+            dialog.PrimaryButtonText = "OK";
+            dialog.CloseButtonText = "Cancel";
+            dialog.DefaultButton = ContentDialogButton.Primary;
+            dialog.Content = new DurationPredictionPage(ViewModel.SelectedTodo.ExpectedDurationMins);
+
+            var result = await dialog.ShowAsync();
+
+            //if (result == ContentDialogResult.Primary)
+            //{
+            //    DurationSettingPage tmp = (DurationSettingPage)dialog.Content;
+            //    ViewModel.SelectedTodo.ExpectedDurationMins = tmp.DurationResult;
+            //    ViewModel.Update(ViewModel.SelectedTodo);
+            //}
         }
     }
 }
