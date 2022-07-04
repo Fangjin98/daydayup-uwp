@@ -211,18 +211,6 @@
                                  Text="{x:Bind ViewModel.SelectedTodo.Name, Mode=OneWay}"
                                  KeyUp="DetailPanelTaskName_KeyUp"
                                  FontSize="16" />
-                        <Button HorizontalAlignment="Stretch"
-                                HorizontalContentAlignment="Left"
-                                Click="ExpectedDurationMinsButton_Click"
-                                Height="44"
-                                VerticalContentAlignment="Center">
-                            <Button.Content>
-                                <TextBlock>
-                                    <Run x:Uid="EstimatiedDuration"/>
-                                    <Run Text="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource DurationToStringConverter}}"
-                                         FontWeight="Bold" /></TextBlock>
-                            </Button.Content>
-                        </Button>
                         
                         <Button HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Left"
@@ -237,6 +225,21 @@
                                          FontWeight="Bold" /></TextBlock>
                             </Button.Content>
                         </Button>
+                        
+                        <Button HorizontalAlignment="Stretch"
+                                HorizontalContentAlignment="Left"
+                                Click="ExpectedDurationMinsButton_Click"
+                                Height="44"
+                                VerticalContentAlignment="Center">
+                            <Button.Content>
+                                <TextBlock>
+                                    <Run x:Uid="EstimatiedDuration"/>
+                                    <Run Text="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource DurationToStringConverter}}"
+                                         FontWeight="Bold" /></TextBlock>
+                            </Button.Content>
+                        </Button>
+                        
+                        
                         <Button HorizontalAlignment="Stretch"
                                 HorizontalContentAlignment="Left"
                                 Height="44"
