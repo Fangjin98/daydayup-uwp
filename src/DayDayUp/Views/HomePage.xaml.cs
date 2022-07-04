@@ -1,4 +1,5 @@
-﻿using DayDayUp.Models;
+﻿using DayDayUp.Helpers;
+using DayDayUp.Models;
 using DayDayUp.ViewModels;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
@@ -248,20 +249,12 @@ namespace DayDayUp.Views
         private async void PredictionButton_Click(object sender, RoutedEventArgs e)
         {
             ContentDialog dialog = new ContentDialog();
-            dialog.Title = "Prediction list";
             dialog.PrimaryButtonText = "OK";
-            dialog.CloseButtonText = "Cancel";
-            dialog.DefaultButton = ContentDialogButton.Primary;
-            dialog.Content = new DurationPredictionPage(ViewModel.SelectedTodo.ExpectedDurationMins);
+            dialog.Content = new DurationPredictionPage(
+                Ioc.Default.GetRequiredService<TodoManagementHelper>(),
+                ViewModel.SelectedTodo.ExpectedDurationMins);
 
             var result = await dialog.ShowAsync();
-
-            //if (result == ContentDialogResult.Primary)
-            //{
-            //    DurationSettingPage tmp = (DurationSettingPage)dialog.Content;
-            //    ViewModel.SelectedTodo.ExpectedDurationMins = tmp.DurationResult;
-            //    ViewModel.Update(ViewModel.SelectedTodo);
-            //}
         }
     }
 }
