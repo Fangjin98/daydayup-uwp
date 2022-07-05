@@ -39,12 +39,28 @@
                   Visibility="{x:Bind predictiedDurations.Count,Converter={StaticResource CountConverter}, Mode=OneWay}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="local:predictionItems">
-                    <Grid>
-                        <TextBlock HorizontalAlignment="Left"
-                                   Text="{Binding DurationMins, Converter={StaticResource DurationToStringConverter}}" />
-                        <TextBlock HorizontalAlignment="Right"
-                                   Text="{Binding Probability, Converter={StaticResource DoubleToRatioConverter}}" />
-                    </Grid>
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                       Text="{Binding DurationMins, Converter={StaticResource DurationToStringConverter}}"/>
+                            <TextBlock Grid.Column="1"
+                                       HorizontalAlignment="Right"
+                                       Text="{Binding Probability, Converter={StaticResource DoubleToRatioConverter}}" />
+                        </Grid>
+                        <StackPanel Orientation="Horizontal"
+                                    Spacing="4">
+                            <TextBlock x:Name="BiasRate"
+                                       x:Uid="BiasRate"
+                                       Style="{ThemeResource SmallTextStyle}" />
+                            <TextBlock Text="{x:Bind Bias, Mode=OneTime, Converter={StaticResource DoubleToRatioConverter}}"
+                                       Style="{ThemeResource SmallTextStyle}" />
+                        </StackPanel>
+                    </StackPanel>
+                    
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

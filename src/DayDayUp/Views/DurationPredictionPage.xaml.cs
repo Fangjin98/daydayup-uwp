@@ -26,25 +26,38 @@ namespace DayDayUp.Views
         {
             InitializeComponent();
             baseDuration = duration;
-            todoManager = TodoManager;
+            historyIn7Days = TodoManager.FinishedTodos.FindAll(t => DateTime.Now.Subtract((DateTime) t.FinishDate).TotalDays <= 15);
         }
 
         private void PredictionList_Loaded(object sender, RoutedEventArgs e)
         {
-            List<Todo> history = todoManager.FinishedTodos;
             List<predictionItems> montoCarloSelection = new();
 
             Random random =new Random();
 
             for ( int i = 0; i < SelectionTimes; i++)
             {
-                int index = random.Next(history.Count);
-                int tmpDuration = (int)(baseDuration + baseDuration * history[index].Bias);
+                int index = random.Next(historyIn7Days.Count);
+                int tmpDuration;
+                double tmpBias;
+                try
+                {
+                    tmpBias = historyIn7Days[index].Bias;
+                    tmpDuration = (int)(baseDuration * (1 + tmpBias));
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    predictiedDurations.Clear();
+                    return;
+                }
 
                 if(montoCarloSelection.Count(t => t.DurationMins==tmpDuration) ==0)
                 {
                     montoCarloSelection.Add(
-                        new predictionItems { DurationMins = tmpDuration, Count = 1 });
+                        new predictionItems { 
+                            DurationMins = tmpDuration, 
+                            Bias= tmpBias, 
+                            Count = 1 });
                 }
                 else
                 {
@@ -58,7 +71,7 @@ namespace DayDayUp.Views
             }
         }
 
-        private readonly TodoManagementHelper todoManager;
+        private List<Todo> historyIn7Days { get; set; } = new();
 
         private ObservableCollection<predictionItems> predictiedDurations { get; set; } = new();
 
@@ -67,6 +80,7 @@ namespace DayDayUp.Views
     public class predictionItems
     {
         public int DurationMins { get; set; }
+        public double Bias { get ; set; }
         public int Count { get; set; }
         public double Probability {
             get => (double) Math.Round(Convert.ToDecimal(Count) /
