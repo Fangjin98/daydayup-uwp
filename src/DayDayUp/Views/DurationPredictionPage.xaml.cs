@@ -3,18 +3,9 @@ using DayDayUp.Models;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace DayDayUp.Views
 {
@@ -31,7 +22,7 @@ namespace DayDayUp.Views
 
         private void PredictionList_Loaded(object sender, RoutedEventArgs e)
         {
-            List<predictionItems> montoCarloSelection = new();
+            List<PredictionItem> montoCarloSelection = new();
 
             Random random =new Random();
 
@@ -54,7 +45,7 @@ namespace DayDayUp.Views
                 if(montoCarloSelection.Count(t => t.DurationMins==tmpDuration) ==0)
                 {
                     montoCarloSelection.Add(
-                        new predictionItems { 
+                        new PredictionItem { 
                             DurationMins = tmpDuration, 
                             Bias= tmpBias, 
                             Count = 1 });
@@ -73,11 +64,11 @@ namespace DayDayUp.Views
 
         private List<Todo> historyIn7Days { get; set; } = new();
 
-        private ObservableCollection<predictionItems> predictiedDurations { get; set; } = new();
+        private ObservableCollection<PredictionItem> predictiedDurations { get; set; } = new();
 
         private int baseDuration;
     }
-    public class predictionItems
+    public class PredictionItem
     {
         public int DurationMins { get; set; }
         public double Bias { get ; set; }
