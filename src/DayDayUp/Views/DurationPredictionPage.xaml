@@ -38,7 +38,7 @@
                   ItemsSource="{x:Bind predictiedDurations}"
                   Visibility="{x:Bind predictiedDurations.Count,Converter={StaticResource CountConverter}, Mode=OneWay}">
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="local:predictionItems">
+                <DataTemplate x:DataType="local:PredictionItem">
                     <StackPanel Orientation="Vertical">
                         <Grid>
                             <Grid.ColumnDefinitions>

@@ -63,7 +63,7 @@ namespace DayDayUp.Helpers
         {
             foreach (Todo todo in allTodos)
             {
-                _dataAccess.UpdateDataAsync(todo);
+                Update(todo);
             }
         }
 
