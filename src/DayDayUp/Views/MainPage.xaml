@@ -23,8 +23,8 @@
                                 Value="False" />
                         <Setter Target="ContentFrame.Padding"
                                 Value="0,0,0,0" />
-                        <!--<Setter Target="HeaderTextBlock.Visibility"
-                                Value="Collapsed" />-->
+                        <Setter Target="HeaderTextBlock.Visibility"
+                                Value="Collapsed" />
                         <Setter Target="AppTitleLeftBorder.Width"
                                 Value="16" />
                     </VisualState.Setters>
