@@ -68,7 +68,7 @@ namespace DayDayUp.Views
 
         private int baseDuration;
     }
-    public class PredictionItem
+    internal class PredictionItem
     {
         public int DurationMins { get; set; }
         public double Bias { get ; set; }
