@@ -10,7 +10,7 @@
 </h1>
 
 <p align="center">
-  An Light-weight Todo Manager with Time Estimation Tracking.
+  A Light-weight Todo Manager with Time Estimation Tracking.
 </p>
 
 <p align="center">
