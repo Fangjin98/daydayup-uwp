@@ -36,7 +36,7 @@ namespace DayDayUp.Views
                     tmpBias = historyIn7Days[index].Bias;
                     tmpDuration = (int)(baseDuration * (1 + tmpBias));
                 }
-                catch (IndexOutOfRangeException)
+                catch (ArgumentOutOfRangeException)
                 {
                     predictiedDurations.Clear();
                     return;
