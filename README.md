@@ -56,31 +56,21 @@ For each unfinished todo, DayDayUp adopts Monte Carlo Method to calculate _predi
 
 Open `src/DayDayUp.sln` and hit F5 to compile and run.
 
-## Features
+## Roadmap
 
-**Complete**:
+Status |          Features     |  Memo  |
+--        |  ------------------------ |   -----  |
+✅| _Create Todos_ | Set estimated duration of todos|
+✅| _Start & Pause Todos_ | Switch status of todos|
+✅| _Per-todo Informations_ | Estimated duration, Prediction durations and Current duration|
+🔁| _CLI Support_ | |
+🔁|_Data Export_| |
+🔲|_Multi-language Support_| |
+🔲|_Category_|Todos can be assigned to different categories|
+🔲|_Dashboard_|Statistics summary|
+🔲|_Multi-device Synchronization_| |
 
-- _Create Todos_ - Can set estimated duration of todos.
-- _Start & Pause Todos_ - Set the status of todos to record the duration.
-- _Per-todo Informations_
-  - Status
-  - Progress
-  - Estimated duration
-  - Prediction durations
-  - Current duration
-
-**In progress**:
-
-- _CLI Support_ - Add todos from the terminal.
-- _Multi-language Support_
-  - Chinese
-- _Data Export_
-
-**Not started**:
-
-- _Multi-device Synchronization_
-- _Category_ - Todos can be assigned to different categories.
-- _Dashboard_ - Statistics summary.
+✅ Supported | 🔁 In progress | 🔲 Not started
 
 ## Acknowledgments
 
