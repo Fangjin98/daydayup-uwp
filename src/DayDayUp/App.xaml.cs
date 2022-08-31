@@ -65,6 +65,8 @@ namespace DayDayUp
 
             ThemeSelectorHelper.Initialize();
 
+            LanguageManager.Instance.SetCurrentCulture(LanguageManager.Instance.AvailableLanguages[0]);
+
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
                 //Services

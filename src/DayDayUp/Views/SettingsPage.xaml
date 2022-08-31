@@ -5,54 +5,74 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:helper="using:DayDayUp.Helpers"
+      xmlns:controls="using:DayDayUp.UI.Controls"
+      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       mc:Ignorable="d">
     <Page.Resources>
         <helper:EnumToBooleanConverter x:Key="EnumToBooleanConverter"
                                        EnumType="ElementTheme" />
     </Page.Resources>
-    <Grid  Padding="{StaticResource PagePadding}">
-        <StackPanel x:Name="ContentArea">
-            <StackPanel>
-                <TextBlock Text="Theme"
-                           Style="{ThemeResource SubtitleTextStyle}" />
-                <StackPanel Margin="{StaticResource ElementMargin}">
-                    <RadioButton x:Uid="Settings_Theme_Light"
-                                 Command="{x:Bind ViewModel.SwitchThemeCommand}"
-                                 FontSize="15"
-                                 GroupName="AppTheme"
-                                 IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}">
+    
+    <StackPanel x:Name="ContentArea"
+                Padding="{StaticResource PagePadding}"
+                Spacing="4">
+        <StackPanel.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition IsStaggeringEnabled="True"
+                                            FromVerticalOffset="50" />
+            </TransitionCollection>
+        </StackPanel.ChildrenTransitions>
+            
+        <controls:ExpandableSettingControl Title="{x:Bind ViewModel.Strings.Language}"
+                                            Description="{x:Bind ViewModel.Strings.LanguageDescription}">
+            <controls:ExpandableSettingControl.Icon>
+                <FontIcon Glyph="&#xF4F3;" />
+            </controls:ExpandableSettingControl.Icon>
+            <ComboBox DisplayMemberPath="DisplayName"
+                      SelectedValuePath="InternalName"
+                      ItemsSource="{x:Bind ViewModel.AvailableLanguages}">
+                <!--SelectedValue="{x:Bind ViewModel.Language, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
+                </ComboBox>
+        </controls:ExpandableSettingControl>
+        
+        <controls:ExpandableSettingControl Title="{x:Bind ViewModel.Strings.AppTheme}"
+                                            Description="{x:Bind ViewModel.Strings.AppThemeDescription}">
+            <controls:ExpandableSettingControl.Icon>
+                <FontIcon Glyph="&#xF592;" />
+            </controls:ExpandableSettingControl.Icon>
+            <controls:ExpandableSettingControl.ExpandableContent>
+                <StackPanel Padding="12"
+                            Spacing="4"
+                            Margin="42,0,6,0">
+                    <RadioButton Content="{x:Bind ViewModel.Strings.Light}"
+                                    Command="{x:Bind ViewModel.SwitchThemeCommand}"
+                                    IsChecked="{x:Bind ViewModel.ElementTheme, Mode=OneWay, ConverterParameter=Light, Converter={StaticResource EnumToBooleanConverter}}">
                         <RadioButton.CommandParameter>
                             <ElementTheme>Light</ElementTheme>
                         </RadioButton.CommandParameter>
                     </RadioButton>
-                    <RadioButton x:Uid="Settings_Theme_Dark"
-                                 Command="{x:Bind ViewModel.SwitchThemeCommand}"
-                                 FontSize="15"
-                                 GroupName="AppTheme"
-                                 IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}">
+                    <RadioButton Content="{x:Bind ViewModel.Strings.Dark}"
+                                    Command="{x:Bind ViewModel.SwitchThemeCommand}"
+                                    IsChecked="{x:Bind ViewModel.ElementTheme, Mode=OneWay, ConverterParameter=Dark, Converter={StaticResource EnumToBooleanConverter}}">
                         <RadioButton.CommandParameter>
                             <ElementTheme>Dark</ElementTheme>
                         </RadioButton.CommandParameter>
                     </RadioButton>
-                    <RadioButton x:Uid="Settings_Theme_Default"
-                                 Command="{x:Bind ViewModel.SwitchThemeCommand}"
-                                 FontSize="15"
-                                 GroupName="AppTheme"
-                                 IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Default, Mode=OneWay}">
+                    <RadioButton Content="{x:Bind ViewModel.Strings.UseSystemSettings}"
+                                    Command="{x:Bind ViewModel.SwitchThemeCommand}"
+                                    IsChecked="{x:Bind ViewModel.ElementTheme, Mode=OneWay, ConverterParameter=Default, Converter={StaticResource EnumToBooleanConverter}}">
                         <RadioButton.CommandParameter>
                             <ElementTheme>Default</ElementTheme>
                         </RadioButton.CommandParameter>
                     </RadioButton>
                 </StackPanel>
-            </StackPanel>
-            <TextBlock Text="About"
-                       Style="{ThemeResource SubtitleTextStyle}" />
-            <StackPanel Spacing="12">
-                <TextBlock x:Uid="Settings_AboutDescription"
-                           Style="{ThemeResource CopyrightTextStyle}" />
-                <TextBlock Text="Build with love in Hangzhou."
-                           Style="{ThemeResource CopyrightTextStyle}" />
-            </StackPanel>
-        </StackPanel>
-    </Grid>
+            </controls:ExpandableSettingControl.ExpandableContent>
+        </controls:ExpandableSettingControl>
+            
+        <TextBlock Text="{x:Bind ViewModel.Strings.About}"
+                    Style="{ThemeResource SubtitleTextStyle}" />
+        <TextBlock Text="{x:Bind ViewModel.Strings.AboutDescription}"
+                    Style="{ThemeResource CopyrightTextStyle}" />
+    </StackPanel>
+
 </Page>
