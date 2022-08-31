@@ -128,14 +128,22 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\Converters\CountToVisibilityConverter.cs" />
-    <Compile Include="Helpers\Converters\DateToStringConverter.cs" />
-    <Compile Include="Helpers\Converters\DoubleToRatioConverter.cs" />
-    <Compile Include="Helpers\Converters\EnumToBooleanConverter.cs" />
-    <Compile Include="Helpers\Converters\EnumToVisibilityConverter.cs" />
-    <Compile Include="Helpers\Converters\DurationToStringConverter.cs" />
-    <Compile Include="Helpers\Converters\ProgressToStringConverter.cs" />
-    <Compile Include="Helpers\Converters\StatusToStringConverter.cs" />
+    <Compile Include="UI\Controls\ExpandableSettingControl.xaml.cs">
+      <DependentUpon>ExpandableSettingControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\ExpandableSettingHeaderControl.xaml.cs">
+      <DependentUpon>ExpandableSettingHeaderControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Converters\CountToVisibilityConverter.cs" />
+    <Compile Include="UI\Converters\DateToStringConverter.cs" />
+    <Compile Include="UI\Converters\DoubleToRatioConverter.cs" />
+    <Compile Include="UI\Converters\EnumToBooleanConverter.cs" />
+    <Compile Include="UI\Converters\EnumToVisibilityConverter.cs" />
+    <Compile Include="UI\Converters\DurationToStringConverter.cs" />
+    <Compile Include="UI\Converters\NulltoBooleanConverter.cs" />
+    <Compile Include="UI\Converters\ProgressToStringConverter.cs" />
+    <Compile Include="UI\Converters\StatusToStringConverter.cs" />
+    <Compile Include="Helpers\LanguageDefinition.cs" />
     <Compile Include="Helpers\ResourceExtensions.cs" />
     <Compile Include="Helpers\SettingsHelper.cs" />
     <Compile Include="Helpers\ThemeSelectorHelper.cs" />
@@ -143,6 +151,7 @@
     <Compile Include="Models\Todo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\DataAccess.cs" />
+    <Compile Include="Services\LanguageManager.cs" />
     <Compile Include="ViewModels\ArchivePageViewModel.cs" />
     <Compile Include="ViewModels\BaseTodoListViewModel.cs" />
     <Compile Include="ViewModels\DashboardPageViewModel.cs" />
@@ -150,9 +159,6 @@
     <Compile Include="ViewModels\SettingsPageViewModel.cs" />
     <Compile Include="Views\ArchivePage.xaml.cs">
       <DependentUpon>ArchivePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\BasicItem.xaml.cs">
-      <DependentUpon>BasicItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\DashboardPage.xaml.cs">
       <DependentUpon>DashboardPage.xaml</DependentUpon>
@@ -257,11 +263,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ArchivePage.xaml">
+    <Page Include="UI\Controls\ExpandableSettingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\BasicItem.xaml">
+    <Page Include="UI\Controls\ExpandableSettingHeaderControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ArchivePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -321,9 +331,17 @@
       <Version>5.1.2</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Strings\en-us\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\en-us\SettingsPage.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Strings\zh-cn\SettingsPage.resw" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
