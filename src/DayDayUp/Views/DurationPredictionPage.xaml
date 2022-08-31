@@ -17,48 +17,69 @@
         <helper:StatusToStringConverter x:Key="StatusToStringConverter" />
         <helper:DateToStringConverter x:Key="DateToStringConverter" />
         <helper:DoubleToRatioConverter x:Key="DoubleToRatioConverter" />
+        
+        <Style x:Key="PredictionItemContainerStyle"
+               BasedOn="{StaticResource ListViewItemContainerStyle}"
+               TargetType="ListViewItem">
+            <Setter Property="Margin"
+                    Value="0,0,0,4" />
+        </Style>
+        
     </Page.Resources>
     
-    <Grid RowSpacing="12">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <TextBlock Style="{StaticResource SubsubtitleTextStyle}">
+        
+        <TextBlock Style="{StaticResource SubtitleTextStyle}">
             <Run Text="Estimated: "/>
             <Run Text="{x:Bind baseDuration, Converter={StaticResource DurationToStringConverter}}"/>
         </TextBlock>
+        
         <TextBlock Grid.Row="1"
-                   Text="Prediction Durations + Probabilities"/>
+                   Style="{StaticResource SubsubtitleTextStyle}">
+                <Run Text="Predicted"/></TextBlock>
+        
         <ListView Grid.Row="2"
                   Name="PredictiedDurationList"
                   Loaded="PredictionList_Loaded"
+                  IsItemClickEnabled="False"
                   ItemsSource="{x:Bind predictiedDurations}"
+                  ItemContainerStyle="{StaticResource PredictionItemContainerStyle}"
                   Visibility="{x:Bind predictiedDurations.Count,Converter={StaticResource CountConverter}, Mode=OneWay}">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="local:PredictionItem">
-                    <StackPanel Orientation="Vertical">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0"
-                                       Text="{Binding DurationMins, Converter={StaticResource DurationToStringConverter}}"/>
-                            <TextBlock Grid.Column="1"
-                                       HorizontalAlignment="Right"
-                                       Text="{Binding Probability, Converter={StaticResource DoubleToRatioConverter}}" />
+                    <Grid
+                                Padding="8"
+                                Height="50"
+                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                BorderThickness="1"
+                                CornerRadius="{StaticResource ControlCornerRadius}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0"
+                                       Text="{Binding DurationMins, Converter={StaticResource DurationToStringConverter}}" />
+                            <TextBlock Grid.Row="1"
+                                       Style="{ThemeResource SmallTextStyle}">
+                                 <Run x:Uid="BiasRate" />
+                                 <Run Text="{x:Bind Bias, Mode=OneTime, Converter={StaticResource DoubleToRatioConverter}}"/>
+                            </TextBlock>
                         </Grid>
-                        <StackPanel Orientation="Horizontal"
-                                    Spacing="4">
-                            <TextBlock x:Name="BiasRate"
-                                       x:Uid="BiasRate"
-                                       Style="{ThemeResource SmallTextStyle}" />
-                            <TextBlock Text="{x:Bind Bias, Mode=OneTime, Converter={StaticResource DoubleToRatioConverter}}"
-                                       Style="{ThemeResource SmallTextStyle}" />
-                        </StackPanel>
-                    </StackPanel>
+                        <TextBlock Grid.Column="1"
+                                   HorizontalAlignment="Right"
+                                   Text="{Binding Probability, Converter={StaticResource DoubleToRatioConverter}}" />
+                    </Grid>
                     
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -70,7 +91,7 @@
                        VerticalAlignment="Center">
             <Paragraph>
                 <Run FontStyle="Italic"
-                     FontWeight="Bold">No history data.</Run>
+                     FontWeight="Bold">No finished tasks within 7 days.</Run>
             </Paragraph>
         </RichTextBlock>
     </Grid>

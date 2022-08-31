@@ -1,6 +1,8 @@
 ﻿using DayDayUp.Helpers;
+using DayDayUp.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.ApplicationModel;
@@ -10,6 +12,22 @@ namespace DayDayUp.ViewModels
 {
     public class SettingsPageViewModel: ObservableRecipient
     {
+        private ElementTheme _elementTheme;
+        
+        private ICommand _switchThemeCommand;
+
+        public ElementTheme ElementTheme
+        {
+            get => _elementTheme;
+
+            set { SetProperty(ref _elementTheme, value); }
+        }
+
+        public ICommand SwitchThemeCommand => _switchThemeCommand;
+
+        internal SettingsPageStrings Strings => LanguageManager.Instance.SettingsPage;
+
+        internal List<LanguageDefinition> AvailableLanguages => LanguageManager.Instance.AvailableLanguages;
 
         public SettingsPageViewModel()
         {
@@ -21,23 +39,6 @@ namespace DayDayUp.ViewModels
                             ThemeSelectorHelper.SetTheme((ElementTheme)param);
                         });
         }
-
-        private ElementTheme _elementTheme; 
-
-        public ElementTheme ElementTheme
-        {
-            get => _elementTheme;
-
-            set { SetProperty(ref _elementTheme, value); }
-        }
-
-        private ICommand _switchThemeCommand;
-
-        public ICommand SwitchThemeCommand
-        {
-            get => _switchThemeCommand;
-        }
-
 
     }
 }
