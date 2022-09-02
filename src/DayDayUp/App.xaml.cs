@@ -1,32 +1,22 @@
-﻿using DayDayUp.Helpers;
+﻿#nullable enable
+
+using DayDayUp.Core.Settings;
+using DayDayUp.Helpers;
 using DayDayUp.Services;
 using DayDayUp.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.ApplicationModel.Core;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI;
-using Windows.UI.ViewManagement;
-using Windows.UI.WindowManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 namespace DayDayUp
 {
-  
+
     sealed partial class App : Application
     {
      
@@ -63,22 +53,27 @@ namespace DayDayUp
                 Window.Current.Activate();
             }
 
-            ThemeSelectorHelper.Initialize();
-
-            LanguageManager.Instance.SetCurrentCulture(LanguageManager.Instance.AvailableLanguages[0]);
-
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
                 //Services
-                .AddSingleton<ISettingsService, SettingsHelper>()
+                .AddSingleton<ISettingsProvider,SettingsProvider>()
                 .AddSingleton<IDataAccess, LiteDbDataAccess>()
-                .AddSingleton<TodoManagementHelper>()
+                .AddSingleton<TodoManager>()
+                .AddSingleton<ThemeSelector>()
                 //ViewModels
                 .AddTransient<HomePageViewModel>()
                 .AddTransient<DashboardPageViewModel>()
                 .AddTransient<ArchivePageViewModel>()
                 .AddTransient<SettingsPageViewModel>()
                 .BuildServiceProvider());
+
+            string? userdefinedLanguage = Ioc.Default.GetRequiredService<ISettingsProvider>().GetSetting(PredefinedSettings.Language);
+            LanguageDefinition languageDefinition
+                = LanguageManager.Instance.AvailableLanguages.FirstOrDefault(l => string.Equals(l.InternalName, userdefinedLanguage))
+                ?? LanguageManager.Instance.AvailableLanguages[0];
+            LanguageManager.Instance.SetCurrentCulture(languageDefinition);
+
+            Ioc.Default.GetRequiredService<ThemeSelector>().SetRequestedTheme();
         }
 
 

@@ -1,5 +1,6 @@
 ﻿using DayDayUp.Helpers;
 using DayDayUp.Models;
+using DayDayUp.Services;
 using LiveChartsCore;
 using LiveChartsCore.Defaults;
 using LiveChartsCore.Kernel.Sketches;
@@ -21,6 +22,10 @@ namespace DayDayUp.ViewModels
 {
     public class DashboardPageViewModel : BaseTodoListViewModel
     {
+        private double doingTaskBias;
+
+        private double finishedTaskBias;
+
         public List<ISeries> LineChartHistory { get; set; }
 
         public ObservableCollection<ISeries> PieStatics { get; set; }
@@ -33,14 +38,12 @@ namespace DayDayUp.ViewModels
 
         public int FinishedTaskCount { get; set; }
 
-        private double doingTaskBias;
         public double DoingTaskBias
         {
             get => doingTaskBias;
             set => SetProperty(ref doingTaskBias, value);
         }
 
-        private double finishedTaskBias;
         public double FinishedTaskBias
         {
             get => finishedTaskBias;
@@ -57,7 +60,7 @@ namespace DayDayUp.ViewModels
             "Progress","Duration","Creation date"
         };
 
-        public DashboardPageViewModel(TodoManagementHelper TodoManager):
+        public DashboardPageViewModel(TodoManager TodoManager):
             base(TodoManager)
         {
             FinishedTaskCount = todoManager.FinishedTodos.Count;

@@ -1,5 +1,6 @@
 ﻿using DayDayUp.Helpers;
 using DayDayUp.Models;
+using DayDayUp.Services;
 using Microsoft.Toolkit.Mvvm.Input;
 using System;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace DayDayUp.ViewModels
     {
         public IAsyncRelayCommand AddTodoCommand { get; }
 
-        public HomePageViewModel(TodoManagementHelper TodoManager):
+        public HomePageViewModel(TodoManager TodoManager):
             base(TodoManager)
         {
             AddTodoCommand = new AsyncRelayCommand<Todo>(AddTodoAsync);
@@ -38,7 +39,7 @@ namespace DayDayUp.ViewModels
             {
                 try
                 {
-                    todoManager.AddTask(todo);
+                    todoManager.Add(todo);
                 }
                 catch
                 {

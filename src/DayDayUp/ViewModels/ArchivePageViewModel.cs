@@ -1,13 +1,7 @@
-﻿using DayDayUp.Helpers;
-using DayDayUp.Models;
-using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
-using Nito.AsyncEx;
+﻿using DayDayUp.Models;
+using DayDayUp.Services;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DayDayUp.ViewModels
@@ -15,7 +9,7 @@ namespace DayDayUp.ViewModels
     public class ArchivePageViewModel : BaseTodoListViewModel
     {
 
-        public ArchivePageViewModel(TodoManagementHelper TodoManager):
+        public ArchivePageViewModel(TodoManager TodoManager):
             base(TodoManager)
         {
         }

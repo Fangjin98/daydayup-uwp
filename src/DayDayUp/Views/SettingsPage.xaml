@@ -9,8 +9,7 @@
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       mc:Ignorable="d">
     <Page.Resources>
-        <helper:EnumToBooleanConverter x:Key="EnumToBooleanConverter"
-                                       EnumType="ElementTheme" />
+        <helper:EnumToBooleanConverter x:Key="EnumToBooleanConverter" />
     </Page.Resources>
     
     <StackPanel x:Name="ContentArea"
@@ -26,53 +25,44 @@
         <controls:ExpandableSettingControl Title="{x:Bind ViewModel.Strings.Language}"
                                             Description="{x:Bind ViewModel.Strings.LanguageDescription}">
             <controls:ExpandableSettingControl.Icon>
-                <FontIcon Glyph="&#xF4F3;" />
+                <FontIcon Glyph="&#xe775;" />
             </controls:ExpandableSettingControl.Icon>
             <ComboBox DisplayMemberPath="DisplayName"
                       SelectedValuePath="InternalName"
-                      ItemsSource="{x:Bind ViewModel.AvailableLanguages}">
-                <!--SelectedValue="{x:Bind ViewModel.Language, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
-                </ComboBox>
+                      ItemsSource="{x:Bind ViewModel.AvailableLanguages}"
+                      SelectedValue="{x:Bind ViewModel.Language, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"></ComboBox>
         </controls:ExpandableSettingControl>
         
         <controls:ExpandableSettingControl Title="{x:Bind ViewModel.Strings.AppTheme}"
                                             Description="{x:Bind ViewModel.Strings.AppThemeDescription}">
             <controls:ExpandableSettingControl.Icon>
-                <FontIcon Glyph="&#xF592;" />
+                <FontIcon Glyph="&#xe771;" />
             </controls:ExpandableSettingControl.Icon>
             <controls:ExpandableSettingControl.ExpandableContent>
                 <StackPanel Padding="12"
                             Spacing="4"
                             Margin="42,0,6,0">
                     <RadioButton Content="{x:Bind ViewModel.Strings.Light}"
-                                    Command="{x:Bind ViewModel.SwitchThemeCommand}"
-                                    IsChecked="{x:Bind ViewModel.ElementTheme, Mode=OneWay, ConverterParameter=Light, Converter={StaticResource EnumToBooleanConverter}}">
-                        <RadioButton.CommandParameter>
-                            <ElementTheme>Light</ElementTheme>
-                        </RadioButton.CommandParameter>
-                    </RadioButton>
+                                 IsChecked="{x:Bind ViewModel.Theme, Mode=TwoWay, ConverterParameter='Light', Converter={StaticResource EnumToBooleanConverter}}" />
                     <RadioButton Content="{x:Bind ViewModel.Strings.Dark}"
-                                    Command="{x:Bind ViewModel.SwitchThemeCommand}"
-                                    IsChecked="{x:Bind ViewModel.ElementTheme, Mode=OneWay, ConverterParameter=Dark, Converter={StaticResource EnumToBooleanConverter}}">
-                        <RadioButton.CommandParameter>
-                            <ElementTheme>Dark</ElementTheme>
-                        </RadioButton.CommandParameter>
-                    </RadioButton>
+                                 IsChecked="{x:Bind ViewModel.Theme, Mode=TwoWay, ConverterParameter='Dark', Converter={StaticResource EnumToBooleanConverter}}" />
                     <RadioButton Content="{x:Bind ViewModel.Strings.UseSystemSettings}"
-                                    Command="{x:Bind ViewModel.SwitchThemeCommand}"
-                                    IsChecked="{x:Bind ViewModel.ElementTheme, Mode=OneWay, ConverterParameter=Default, Converter={StaticResource EnumToBooleanConverter}}">
-                        <RadioButton.CommandParameter>
-                            <ElementTheme>Default</ElementTheme>
-                        </RadioButton.CommandParameter>
-                    </RadioButton>
+                                 IsChecked="{x:Bind ViewModel.Theme, Mode=TwoWay, ConverterParameter='Default', Converter={StaticResource EnumToBooleanConverter}}" />
                 </StackPanel>
             </controls:ExpandableSettingControl.ExpandableContent>
         </controls:ExpandableSettingControl>
-            
+        
         <TextBlock Text="{x:Bind ViewModel.Strings.About}"
                     Style="{ThemeResource SubtitleTextStyle}" />
-        <TextBlock Text="{x:Bind ViewModel.Strings.AboutDescription}"
-                    Style="{ThemeResource CopyrightTextStyle}" />
+        <controls:ExpandableSettingControl 
+            Title="{x:Bind ViewModel.Strings.AppTitle}"
+            Description="{x:Bind ViewModel.Strings.AboutDescription}">
+            <controls:ExpandableSettingControl.Icon>
+                <muxc:ImageIcon Source="ms-appx:///Assets/Square44x44Logo.altform-unplated_targetsize-16.png"
+                                Height="16" />
+            </controls:ExpandableSettingControl.Icon>
+        </controls:ExpandableSettingControl>
+ 
     </StackPanel>
 
 </Page>

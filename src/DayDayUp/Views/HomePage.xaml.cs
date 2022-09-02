@@ -1,11 +1,10 @@
-﻿using DayDayUp.Helpers;
-using DayDayUp.Models;
+﻿using DayDayUp.Models;
+using DayDayUp.Services;
 using DayDayUp.ViewModels;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -251,7 +250,7 @@ namespace DayDayUp.Views
             ContentDialog dialog = new ContentDialog();
             dialog.PrimaryButtonText = "OK";
             dialog.Content = new DurationPredictionPage(
-                Ioc.Default.GetRequiredService<TodoManagementHelper>(),
+                Ioc.Default.GetRequiredService<TodoManager>(),
                 ViewModel.SelectedTodo.ExpectedDurationMins);
 
             var result = await dialog.ShowAsync();
