@@ -1,44 +1,34 @@
-﻿using DayDayUp.Helpers;
+﻿using DayDayUp.Core.Settings;
+using DayDayUp.Helpers;
 using DayDayUp.Services;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
-using Microsoft.Toolkit.Mvvm.Input;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using Windows.ApplicationModel;
-using Windows.UI.Xaml;
 
 namespace DayDayUp.ViewModels
 {
-    public class SettingsPageViewModel: ObservableRecipient
+    public class SettingsPageViewModel : ObservableRecipient
     {
-        private ElementTheme _elementTheme;
+        private readonly ISettingsProvider _settingsProvider;
         
-        private ICommand _switchThemeCommand;
-
-        public ElementTheme ElementTheme
-        {
-            get => _elementTheme;
-
-            set { SetProperty(ref _elementTheme, value); }
-        }
-
-        public ICommand SwitchThemeCommand => _switchThemeCommand;
-
+        internal List<LanguageDefinition> AvailableLanguages => LanguageManager.Instance.AvailableLanguages;
+        
         internal SettingsPageStrings Strings => LanguageManager.Instance.SettingsPage;
 
-        internal List<LanguageDefinition> AvailableLanguages => LanguageManager.Instance.AvailableLanguages;
-
-        public SettingsPageViewModel()
+        internal string Language
         {
-            _elementTheme = ThemeSelectorHelper.Theme;
-            _switchThemeCommand = new RelayCommand<object>(
-                        (param) =>
-                        {
-                            ElementTheme = (ElementTheme)param;
-                            ThemeSelectorHelper.SetTheme((ElementTheme)param);
-                        });
+            get => _settingsProvider.GetSetting(PredefinedSettings.Language);
+            set => _settingsProvider.SetSetting(PredefinedSettings.Language, value);
         }
 
+        internal AppTheme Theme
+        {
+            get => _settingsProvider.GetSetting(PredefinedSettings.Theme);
+            set => _settingsProvider.SetSetting(PredefinedSettings.Theme, value);
+        }
+
+        public SettingsPageViewModel(ISettingsProvider settingsProvider)
+        {
+            _settingsProvider = settingsProvider;
+        }
     }
 }

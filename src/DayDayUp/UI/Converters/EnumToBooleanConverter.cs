@@ -1,37 +1,46 @@
-﻿using Windows.UI.Xaml.Data;
+﻿#nullable enable
+
+using Windows.UI.Xaml.Data;
 using System;
+using Windows.UI.Xaml;
 
 namespace DayDayUp.Helpers
 {
     public class EnumToBooleanConverter : IValueConverter
     {
-        public Type EnumType { get; set; }
+        public bool IsInverted { get; set; }
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            if (parameter is string enumString)
+            if (value is null || parameter is null || value is not Enum)
             {
-                if (!Enum.IsDefined(EnumType, value))
-                {
-                    throw new ArgumentException("value must be an Enum!");
-                }
-
-                var enumValue = Enum.Parse(EnumType, enumString);
-
-                return enumValue.Equals(value);
+                return IsInverted;
             }
 
-            throw new ArgumentException("parameter must be an Enum name!");
+            string? currentState = value.ToString();
+            string? stateStrings = parameter.ToString();
+
+            string[]? stateStringsSplitted = stateStrings.Split(',');
+            for (int i = 0; i < stateStringsSplitted.Length; i++)
+            {
+                if (string.Equals(currentState, stateStringsSplitted[i].Trim(), StringComparison.Ordinal))
+                {
+                    return !IsInverted;
+                }
+            }
+
+            return IsInverted;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            if (parameter is string enumString)
+            bool? valueBool = value as bool?;
+            if (parameter is not string parameterString || valueBool is null)
             {
-                return Enum.Parse(EnumType, enumString);
+                return DependencyProperty.UnsetValue;
             }
 
-            throw new ArgumentException("parameter must be an Enum name!");
+            return Enum.Parse(targetType, parameterString);
         }
     }
 }
