@@ -1,31 +1,31 @@
 ﻿using DayDayUp.Models;
-using DayDayUp.Services;
 using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
 
-namespace DayDayUp.Helpers
+namespace DayDayUp.Services
 {
-    public class TodoManagementHelper
+    public class TodoManager
     {
+        private List<Todo> allTodos;
+
+        private IDataAccess _dataAccess;
+
         public List<Todo> UnfinishedTodos
         {
             get { return allTodos.FindAll(t => t.IsFinished == false); }
         }
-
 
         public List<Todo> FinishedTodos
         {
             get { return allTodos.FindAll(t => t.IsFinished == true); }
         }
 
-        public TodoManagementHelper()
+        public TodoManager(IDataAccess dataAccess)
         {
-
-            _dataAccess = Ioc.Default.GetRequiredService<IDataAccess>();
+            _dataAccess = dataAccess;
 
             allTodos = _dataAccess.GetData();
-            
         }
 
         public void Finish(Todo item)
@@ -35,13 +35,13 @@ namespace DayDayUp.Helpers
             Update(item);
         }
 
-        public void RemoveTask(Todo item)
+        public void Remove(Todo item)
         {
             allTodos.Remove(item);
             _dataAccess.DeleteDataAsync(item);
         }
 
-        public void AddTask(Todo item)
+        public void Add(Todo item)
         {
             allTodos.Add(item);
             _dataAccess.AddDataAsync(item);
@@ -59,16 +59,12 @@ namespace DayDayUp.Helpers
             await _dataAccess.UpdateDataAsync(item);
         }
 
-        public void UpdateAll()
+        public void UpdateAllTodos()
         {
             foreach (Todo todo in allTodos)
             {
                 Update(todo);
             }
         }
-
-        private List<Todo> allTodos;
-
-        private IDataAccess _dataAccess;
     }
 }
