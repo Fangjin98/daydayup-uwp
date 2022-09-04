@@ -117,43 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="About" xml:space="preserve">
-    <value>About</value>
+  <data name="Archive" xml:space="preserve">
+    <value>存档</value>
   </data>
-  <data name="AboutDescription" xml:space="preserve">
-    <value>DayDayUp is in progress.</value>
+  <data name="Bias" xml:space="preserve">
+    <value>偏差率为</value>
   </data>
-  <data name="AppTheme" xml:space="preserve">
-    <value>App theme</value>
+  <data name="Delete" xml:space="preserve">
+    <value>删除</value>
   </data>
-  <data name="AppThemeDescription" xml:space="preserve">
-    <value>Select which app theme to display</value>
+  <data name="Duration" xml:space="preserve">
+    <value>完成时间为</value>
   </data>
-  <data name="AppTitle" xml:space="preserve">
-    <value>DayDayUp</value>
+  <data name="EmptyList" xml:space="preserve">
+    <value>列表为空，完成一项任务以开始。</value>
   </data>
-  <data name="Dark" xml:space="preserve">
-    <value>Dark</value>
+  <data name="EstimatedDuration" xml:space="preserve">
+    <value>预计完成时间为</value>
   </data>
-  <data name="DefaultLanguage" xml:space="preserve">
-    <value>Same as Microsoft Windows</value>
+  <data name="Finish" xml:space="preserve">
+    <value>完成于</value>
   </data>
-  <data name="Language" xml:space="preserve">
-    <value>Language</value>
-  </data>
-  <data name="LanguageDescription" xml:space="preserve">
-    <value>The app needs to be restarted when selecting another language</value>
-  </data>
-  <data name="Light" xml:space="preserve">
-    <value>Light</value>
-  </data>
-  <data name="MenuDisplayName" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="Settings" xml:space="preserve">
-    <value>Settings</value>
-  </data>
-  <data name="UseSystemSettings" xml:space="preserve">
-    <value>Use system settings</value>
+  <data name="Restore" xml:space="preserve">
+    <value>恢复</value>
   </data>
 </root>

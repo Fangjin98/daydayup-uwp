@@ -150,6 +150,9 @@
   <data name="MenuDisplayName" xml:space="preserve">
     <value>设置</value>
   </data>
+  <data name="Settings" xml:space="preserve">
+    <value>设置</value>
+  </data>
   <data name="UseSystemSettings" xml:space="preserve">
     <value>使用系统设定</value>
   </data>

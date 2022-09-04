@@ -20,7 +20,7 @@
         <helper:DateToStringConverter x:Key="DateToStringConverter" />
         <MenuFlyout x:Name="TodoItemFlyout">
             <MenuFlyout.Items>
-                <MenuFlyoutItem Text="Delete"
+                <MenuFlyoutItem Text="{x:Bind ViewModel.Strings.Delete}"
                                 Click="DeleteTaskFlyoutButton_Click"
                                 Icon="Delete" />
             </MenuFlyout.Items>
@@ -50,7 +50,7 @@
             </Grid.ColumnDefinitions>
             <TextBox x:Name="newTaskTextBox"
                      Grid.Column="0"
-                     PlaceholderText="Add a new todo..."
+                     PlaceholderText="{x:Bind ViewModel.Strings.AddNewTodo}"
                      VerticalAlignment="Center"
                      HorizontalAlignment="Stretch"
                      KeyUp="newTaskTextBoxKeyUp" />
@@ -58,24 +58,24 @@
                                  Grid.Column="1"
                                  HorizontalAlignment="Center"
                                  Margin="{StaticResource ContentMargin}"
-                                 ToolTipService.ToolTip="Estimated duration">
+                                 ToolTipService.ToolTip="{x:Bind ViewModel.Strings.EstimatedDurationToolTip}">
                 <muxc:DropDownButton.Content>
                     <FontIcon FontFamily="Segoe Fluent Icons"
                               Glyph="&#xe823;" />
                 </muxc:DropDownButton.Content>
                 <muxc:DropDownButton.Flyout>
                     <MenuFlyout Placement="Bottom">
-                        <MenuFlyoutItem Text="None"
+                        <MenuFlyoutItem Text="{x:Bind ViewModel.Strings.DropDownNone}"
                                         Click="AlignmentMenuFlyoutItem5_Click" />
-                        <MenuFlyoutItem Text="30 mins"
+                        <MenuFlyoutItem Text="{x:Bind ViewModel.Strings.DropDown30Mins}"
                                         Click="AlignmentMenuFlyoutItem0_Click" />
-                        <MenuFlyoutItem Text="1 hour"
+                        <MenuFlyoutItem Text="{x:Bind ViewModel.Strings.DropDown1Hour}"
                                         Click="AlignmentMenuFlyoutItem1_Click" />
-                        <MenuFlyoutItem Text="6 hours"
+                        <MenuFlyoutItem Text="{x:Bind ViewModel.Strings.DropDown6Hours}"
                                         Click="AlignmentMenuFlyoutItem2_Click" />
-                        <MenuFlyoutItem Text="12 hours"
+                        <MenuFlyoutItem Text="{x:Bind ViewModel.Strings.DropDown12Hours}"
                                         Click="AlignmentMenuFlyoutItem3_Click" />
-                        <MenuFlyoutItem Text="1 day"
+                        <MenuFlyoutItem Text="{x:Bind ViewModel.Strings.DropDown1Day}"
                                         Click="AlignmentMenuFlyoutItem4_Click" />
                     </MenuFlyout>
                 </muxc:DropDownButton.Flyout>
@@ -189,15 +189,11 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <RichTextBlock Name="DefaultText"
-                               Visibility="{x:Bind ViewModel.Todos.Count, Converter={StaticResource NegativeCountConverter}, Mode=OneWay}"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center">
-                    <Paragraph>The list is empty now. Start by
-                        <Run FontStyle="Italic"
-                             FontWeight="Bold">adding a new task</Run> .
-                    </Paragraph>
-                </RichTextBlock>
+                <TextBlock Name="DefaultText"
+                           Visibility="{x:Bind ViewModel.Todos.Count, Converter={StaticResource NegativeCountConverter}, Mode=OneWay}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="{x:Bind ViewModel.Strings.EmptyList}" />
             </Grid>
             <SplitView.Pane>
                 <ScrollViewer Padding="12"
@@ -220,7 +216,7 @@
                                 Visibility="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
                             <Button.Content>
                                 <TextBlock TextWrapping="Wrap">
-                                    <Run  x:Uid="Status" />
+                                    <Run Text="{x:Bind ViewModel.Strings.Status}" />
                                     <Run Text="{x:Bind ViewModel.SelectedTodo.Status, Mode=OneWay, Converter={StaticResource StatusToStringConverter}}"
                                          FontWeight="Bold" /></TextBlock>
                             </Button.Content>
@@ -233,7 +229,7 @@
                                 VerticalContentAlignment="Center">
                             <Button.Content>
                                 <TextBlock>
-                                    <Run x:Uid="EstimatiedDuration"/>
+                                    <Run Text="{x:Bind ViewModel.Strings.EstimatedDuration}"/>
                                     <Run Text="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource DurationToStringConverter}}"
                                          FontWeight="Bold" /></TextBlock>
                             </Button.Content>
@@ -249,7 +245,7 @@
                             <Button.Content>
                                 <TextBlock TextWrapping="Wrap"
                                            FontWeight="Bold">
-                                    <Run  x:Uid="Prediction"/></TextBlock>
+                                    <Run  Text="{x:Bind ViewModel.Strings.PredictionDuration}"/></TextBlock>
                             </Button.Content>
                         </Button>
                         <muxc:Expander HorizontalAlignment="Stretch"
@@ -259,7 +255,7 @@
                                        Visibility="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
                             <muxc:Expander.Header>
                                 <TextBlock TextWrapping="Wrap">
-                                    <Run x:Uid="Duration" />
+                                    <Run Text="{x:Bind ViewModel.Strings.Duration}" />
                                     <Run Text="{x:Bind ViewModel.SelectedTodo.DurationMins, Mode=OneWay,Converter={StaticResource DurationToStringConverter}}"
                                          FontWeight="Bold"/>
                                 </TextBlock>
@@ -271,7 +267,7 @@
                         </muxc:Expander>
                       
                         <TextBlock Style="{ThemeResource SmallTextStyle}" HorizontalAlignment="Center">
-                                <Run Text="Created in" />
+                                <Run Text="{x:Bind ViewModel.Strings.CreatedIn}" />
                                 <Run Text="{x:Bind ViewModel.SelectedTodo.CreationDate, Mode=OneWay, Converter={StaticResource DateToStringConverter}}" /></TextBlock>
                     </StackPanel>
                 </ScrollViewer>

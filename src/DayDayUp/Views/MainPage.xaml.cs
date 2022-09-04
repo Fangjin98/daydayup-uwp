@@ -1,4 +1,6 @@
-﻿using DayDayUp.Views;
+﻿using DayDayUp.ViewModels;
+using DayDayUp.Views;
+using Microsoft.Toolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +14,13 @@ namespace DayDayUp
 
     public sealed partial class MainPage : Page
     {
-
-        internal List<Scenario> Scenarios { get; } = new ()
-        {
-            new Scenario() { Title = "Home", ClassName = typeof(HomePage).FullName, Icon = "\uE80F" },
-            //new Scenario() { Title = "Dashboard", ClassName = typeof(DashboardPage).FullName, Icon = "\ue8a1" },
-            new Scenario() { Title = "Archive", ClassName = typeof(ArchivePage).FullName, Icon = "\uE8B7" }
-        };
+        public MainPageViewModel ViewModel => (MainPageViewModel)DataContext;
 
         public MainPage()
         {
             this.InitializeComponent();
+
+            DataContext = Ioc.Default.GetRequiredService<MainPageViewModel>();
 
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
@@ -67,7 +65,7 @@ namespace DayDayUp
 
         private void NavView_Loaded(object sender, RoutedEventArgs e)
         {
-            foreach (Scenario item in Scenarios)
+            foreach (Scenario item in ViewModel.Scenarios)
             {
                 NavView.MenuItems.Add(new Microsoft.UI.Xaml.Controls.NavigationViewItem
                 {
@@ -80,9 +78,9 @@ namespace DayDayUp
 
             NavView.SelectedItem = NavView.MenuItems[0];
 
-            if (Scenarios is not null && Scenarios.Count > 0)
+            if (ViewModel.Scenarios is not null && ViewModel.Scenarios.Count > 0)
             {
-                NavView_Navigate(Scenarios.First().ClassName, new Windows.UI.Xaml.Media.Animation.EntranceNavigationTransitionInfo());
+                NavView_Navigate(ViewModel.Scenarios.First().ClassName, new Windows.UI.Xaml.Media.Animation.EntranceNavigationTransitionInfo());
             }
         }
 
@@ -96,7 +94,7 @@ namespace DayDayUp
             }
             else
             {
-                Scenario item = Scenarios.First(p => p.ClassName.Equals(navItemTag));
+                Scenario item = ViewModel.Scenarios.First(p => p.ClassName.Equals(navItemTag));
                 page = Type.GetType(item.ClassName);
             }
 
@@ -145,7 +143,7 @@ namespace DayDayUp
             }
             else if (ContentFrame.SourcePageType != null)
             {
-                var item = Scenarios.First(p => p.ClassName == e.SourcePageType.FullName);
+                var item = ViewModel.Scenarios.First(p => p.ClassName == e.SourcePageType.FullName);
                 var menuItems = NavView.MenuItems;
 
                 NavView.SelectedItem = NavView.MenuItems
@@ -157,13 +155,5 @@ namespace DayDayUp
 
             }
         }
-    }
-
-
-    internal class Scenario
-    {
-        public string Title { get; set; }
-        public string ClassName { get; set; }
-        public string Icon { get; set; }
     }
 }

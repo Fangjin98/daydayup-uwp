@@ -9,7 +9,10 @@ namespace DayDayUp.ViewModels
 {
     public sealed class HomePageViewModel : BaseTodoListViewModel
     {
+       
         public IAsyncRelayCommand AddTodoCommand { get; }
+
+        internal HomePageStrings Strings = LanguageManager.Instance.HomePage;
 
         public HomePageViewModel(TodoManager TodoManager):
             base(TodoManager)

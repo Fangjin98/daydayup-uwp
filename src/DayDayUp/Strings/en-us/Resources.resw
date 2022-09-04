@@ -117,10 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppDisplayName" xml:space="preserve">
-    <value>DayDayUp</value>
-    <comment>Application display name</comment>
-  </data>
   <data name="AppDescription" xml:space="preserve">
     <value>Manage your days</value>
     <comment>Application description</comment>
@@ -128,34 +124,6 @@
   <data name="Shell_Main.Content" xml:space="preserve">
     <value>Main</value>
     <comment>Navigation view item name for Main</comment>
-  </data>
-  <data name="Settings_Theme.Text" xml:space="preserve">
-    <value>Choose Theme</value>
-    <comment>Choose theme text for Settings</comment>
-  </data>
-  <data name="Settings_Theme_Dark.Content" xml:space="preserve">
-    <value>Dark</value>
-    <comment>Dark theme text for Settings</comment>
-  </data>
-  <data name="Settings_Theme_Default.Content" xml:space="preserve">
-    <value>Default</value>
-    <comment>Windows default theme text for Settings</comment>
-  </data>
-  <data name="Settings_Theme_Light.Content" xml:space="preserve">
-    <value>Light</value>
-    <comment>Light theme text for Settings</comment>
-  </data>
-  <data name="Settings_About.Text" xml:space="preserve">
-    <value>About this application</value>
-    <comment>About this application title for Settings</comment>
-  </data>
-  <data name="Settings_AboutDescription.Text" xml:space="preserve">
-    <value>DayDayUp is on progress.</value>
-    <comment>About this application description for Settings</comment>
-  </data>
-  <data name="Settings_Personalization.Text" xml:space="preserve">
-    <value>Personalization</value>
-    <comment>Personalization text for Settings</comment>
   </data>
   <data name="DaysLabel.Text" xml:space="preserve">
     <value>Days</value>
@@ -166,32 +134,11 @@
   <data name="MinsLabel.Text" xml:space="preserve">
     <value>Minutes</value>
   </data>
-  <data name="Archive.Text" xml:space="preserve">
-    <value>Archive</value>
-  </data>
-  <data name="Dashboard_History.Text" xml:space="preserve">
-    <value>History</value>
-  </data>
-  <data name="FinishedIn.Text" xml:space="preserve">
-    <value>Finished in</value>
-  </data>
   <data name="List.Text" xml:space="preserve">
     <value>List</value>
   </data>
-  <data name="Restore_MenuFlyoutItem.Text" xml:space="preserve">
-    <value>Restore</value>
-  </data>
   <data name="SeeAll.Text" xml:space="preserve">
     <value>See All</value>
-  </data>
-  <data name="BiasRate.Text" xml:space="preserve">
-    <value>Bias rate is</value>
-  </data>
-  <data name="Duration.Text" xml:space="preserve">
-    <value>Duration is</value>
-  </data>
-  <data name="EstimatiedDuration.Text" xml:space="preserve">
-    <value>Estimated duration is </value>
   </data>
   <data name="Pause.Text" xml:space="preserve">
     <value>Pause</value>

@@ -11,10 +11,10 @@
     <Page.Resources>
         <MenuFlyout x:Name="TodoItemFlyout">
             <MenuFlyout.Items>
-                <MenuFlyoutItem Text="Delete"
+                <MenuFlyoutItem Text="{x:Bind ViewModel.Strings.Delete}"
                                 Click="DeleteMenuFlyoutItem_Click"
                                 Icon="Delete" />
-                <MenuFlyoutItem x:Uid="Restore_MenuFlyoutItem"
+                <MenuFlyoutItem Text="{x:Bind ViewModel.Strings.Restore}"
                                 Click="RestoreMenuFlyoutItem_Click"
                                 Icon="Refresh"/>
             </MenuFlyout.Items>
@@ -90,7 +90,7 @@
                                                 Margin="{StaticResource ContentMargin}"
                                                 Visibility="{x:Bind ExpectedDurationMins, Converter={StaticResource CountConverter}}">
                                         <TextBlock x:Name="BiasRate"
-                                                   x:Uid="BiasRate"
+                                                   Text="Bias rate is"
                                                    Style="{ThemeResource SmallTextStyle}" />
                                         <TextBlock Text="{x:Bind Bias, Mode=OneTime, Converter={StaticResource DoubleToRatioConverter}}"
                                                    Style="{ThemeResource SmallTextStyle}" />
@@ -100,14 +100,10 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <RichTextBlock Visibility="{x:Bind ViewModel.Todos.Count, Converter={StaticResource NegativeCountConverter}, Mode=OneWay}"
-                               HorizontalAlignment="Center"
-                               VerticalAlignment="Center">
-                    <Paragraph>The list is empty now. Go to
-                        <Run FontStyle="Italic"
-                             FontWeight="Bold">finish a task</Run> .
-                    </Paragraph>
-                </RichTextBlock>
+                <TextBlock Visibility="{x:Bind ViewModel.Todos.Count, Converter={StaticResource NegativeCountConverter}, Mode=OneWay}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Text="{x:Bind ViewModel.Strings.EmptyList}" />
             </Grid>
             <SplitView.Pane>
                 <ScrollViewer Padding="12"
@@ -128,7 +124,7 @@
                                 IsEnabled="False">
                             <Button.Content>
                                 <TextBlock>
-                                    <Run x:Uid="EstimatiedDuration" />
+                                    <Run Text="{x:Bind ViewModel.Strings.EstimatedDuration}" />
                                     <Run Text="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource DurationToStringConverter}}"
                                          FontWeight="Bold" /></TextBlock>
                             </Button.Content>
@@ -140,7 +136,7 @@
                                        Visibility="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
                             <muxc:Expander.Header>
                                 <TextBlock TextWrapping="Wrap">
-                                    <Run x:Uid="Duration" />
+                                    <Run Text="{x:Bind ViewModel.Strings.Duration}" />
                                     <Run Text="{x:Bind ViewModel.SelectedTodo.DurationMins, Mode=OneWay,Converter={StaticResource DurationToStringConverter}}"
                                          FontWeight="Bold" /></TextBlock>
                             </muxc:Expander.Header>
@@ -150,7 +146,7 @@
                             </muxc:Expander.Content>
                         </muxc:Expander>
                         <TextBlock Style="{ThemeResource SmallTextStyle}" HorizontalAlignment="Center">
-                                <Run x:Uid="FinishedIn" />
+                                <Run Text="{x:Bind ViewModel.Strings.Finish}" />
                                 <Run Text="{x:Bind ViewModel.SelectedTodo.FinishDate, Mode=OneWay, Converter={StaticResource DateToStringConverter}}" /></TextBlock>
                     </StackPanel>
                 </ScrollViewer>

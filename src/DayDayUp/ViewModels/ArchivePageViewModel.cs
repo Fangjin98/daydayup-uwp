@@ -8,6 +8,7 @@ namespace DayDayUp.ViewModels
 {
     public class ArchivePageViewModel : BaseTodoListViewModel
     {
+        internal ArchivePageStrings Strings => LanguageManager.Instance.ArchivePage;
 
         public ArchivePageViewModel(TodoManager TodoManager):
             base(TodoManager)

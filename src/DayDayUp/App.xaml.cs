@@ -28,6 +28,25 @@ namespace DayDayUp
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            Ioc.Default.ConfigureServices(
+               new ServiceCollection()
+               //Services
+               .AddSingleton<ISettingsProvider, SettingsProvider>()
+               .AddSingleton<IDataAccess, LiteDbDataAccess>()
+               .AddSingleton<TodoManager>()
+               .AddSingleton<ThemeSelector>()
+               .AddSingleton<MainPageViewModel>()
+               .AddSingleton<SettingsPageViewModel>()
+               .AddTransient<HomePageViewModel>()
+               .AddTransient<ArchivePageViewModel>()
+               .BuildServiceProvider());
+            
+            string? userdefinedLanguage = Ioc.Default.GetRequiredService<ISettingsProvider>().GetSetting(PredefinedSettings.Language);
+            LanguageDefinition languageDefinition
+                = LanguageManager.Instance.AvailableLanguages.FirstOrDefault(l => string.Equals(l.InternalName, userdefinedLanguage))
+                ?? LanguageManager.Instance.AvailableLanguages[0];
+            LanguageManager.Instance.SetCurrentCulture(languageDefinition);
+
             Frame rootFrame = Window.Current.Content as Frame;
 
             if (rootFrame == null)
@@ -52,26 +71,6 @@ namespace DayDayUp
                 }
                 Window.Current.Activate();
             }
-
-            Ioc.Default.ConfigureServices(
-                new ServiceCollection()
-                //Services
-                .AddSingleton<ISettingsProvider,SettingsProvider>()
-                .AddSingleton<IDataAccess, LiteDbDataAccess>()
-                .AddSingleton<TodoManager>()
-                .AddSingleton<ThemeSelector>()
-                //ViewModels
-                .AddTransient<HomePageViewModel>()
-                .AddTransient<DashboardPageViewModel>()
-                .AddTransient<ArchivePageViewModel>()
-                .AddTransient<SettingsPageViewModel>()
-                .BuildServiceProvider());
-
-            string? userdefinedLanguage = Ioc.Default.GetRequiredService<ISettingsProvider>().GetSetting(PredefinedSettings.Language);
-            LanguageDefinition languageDefinition
-                = LanguageManager.Instance.AvailableLanguages.FirstOrDefault(l => string.Equals(l.InternalName, userdefinedLanguage))
-                ?? LanguageManager.Instance.AvailableLanguages[0];
-            LanguageManager.Instance.SetCurrentCulture(languageDefinition);
 
             Ioc.Default.GetRequiredService<ThemeSelector>().SetRequestedTheme();
         }
