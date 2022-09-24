@@ -7,6 +7,7 @@
       xmlns:models="using:DayDayUp.Models"
       xmlns:local="using:DayDayUp.Views"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      xmlns:viewmodels="using:DayDayUp.ViewModels"
       mc:Ignorable="d">
     <Page.Resources>
         <MenuFlyout x:Name="TodoItemFlyout">
@@ -42,15 +43,15 @@
                     PaneBackground="Transparent">
             <Grid>
                 <ListView Name="TaskList"
-                          ItemsSource="{x:Bind ViewModel.Todos}"
+                          ItemsSource="{x:Bind ViewModel.TodoItems}"
                           SelectedItem="{x:Bind ViewModel.SelectedTodo, Mode=TwoWay}"
-                          Visibility="{x:Bind ViewModel.Todos.Count,Converter={StaticResource CountConverter}, Mode=OneWay}"
+                          Visibility="{x:Bind ViewModel.TodoItems.Count,Converter={StaticResource CountConverter}, Mode=OneWay}"
                           Loaded="TaskList_Loaded"
                           RightTapped="ListView_RightTapped"
                           Tapped="TaskList_ItemClick"
                           ItemContainerStyle="{StaticResource FinishedTodoItemContainerStyle}">
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="models:Todo">
+                        <DataTemplate x:DataType="viewmodels:TodoListItemViewModel">
                             <Grid x:Name="itemRoot"
                                   Padding="8"
                                   Height="56"
@@ -83,24 +84,22 @@
                                     <TextBlock x:Name="TodoNameTextBlock"
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Left"
-                                               Text="{x:Bind Name, Mode=OneWay}"
+                                               Text="{x:Bind todo.Name, Mode=OneWay}"
                                                Style="{ThemeResource BasicTextStyle}" />
-                                    <StackPanel Orientation="Horizontal"
-                                                Spacing="4"
-                                                Margin="{StaticResource ContentMargin}"
-                                                Visibility="{x:Bind ExpectedDurationMins, Converter={StaticResource CountConverter}}">
-                                        <TextBlock x:Name="BiasRate"
-                                                   Text="Bias rate is"
-                                                   Style="{ThemeResource SmallTextStyle}" />
-                                        <TextBlock Text="{x:Bind Bias, Mode=OneTime, Converter={StaticResource DoubleToRatioConverter}}"
-                                                   Style="{ThemeResource SmallTextStyle}" />
-                                    </StackPanel>
+                                    <TextBlock Visibility="{x:Bind todo.ExpectedDurationMins, 
+                                        Converter={StaticResource CountConverter}}"
+                                               Style="{ThemeResource SmallTextStyle}"
+                                               HorizontalAlignment="Left">
+                                            <Run Text="{x:Bind BiasString}" />
+                                            <Run Text="{x:Bind todo.Bias, 
+                                                Mode=OneTime, 
+                                                Converter={StaticResource DoubleToRatioConverter}}" /></TextBlock>
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <TextBlock Visibility="{x:Bind ViewModel.Todos.Count, Converter={StaticResource NegativeCountConverter}, Mode=OneWay}"
+                <TextBlock Visibility="{x:Bind ViewModel.TodoItems.Count, Converter={StaticResource NegativeCountConverter}, Mode=OneWay}"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            Text="{x:Bind ViewModel.Strings.EmptyList}" />
@@ -112,9 +111,9 @@
                               CornerRadius="4">
                     <StackPanel Spacing="4">
                         <TextBox x:Name="DetailPanelTaskName"
-                                 PlaceholderText="{x:Bind ViewModel.SelectedTodo.Name}"
+                                 PlaceholderText="{x:Bind ViewModel.SelectedTodo.todo.Name}"
                                  TextWrapping="Wrap"
-                                 Text="{x:Bind ViewModel.SelectedTodo.Name, Mode=OneWay}"
+                                 Text="{x:Bind ViewModel.SelectedTodo.todo.Name, Mode=OneWay}"
                                  IsEnabled="False"
                                  FontSize="16" />
                         <Button HorizontalAlignment="Stretch"
@@ -125,7 +124,7 @@
                             <Button.Content>
                                 <TextBlock>
                                     <Run Text="{x:Bind ViewModel.Strings.EstimatedDuration}" />
-                                    <Run Text="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource DurationToStringConverter}}"
+                                    <Run Text="{x:Bind ViewModel.SelectedTodo.todo.ExpectedDurationMins, Mode=OneWay, Converter={StaticResource DurationToStringConverter}}"
                                          FontWeight="Bold" /></TextBlock>
                             </Button.Content>
                         </Button>
@@ -133,21 +132,21 @@
                                        HorizontalContentAlignment="Left"
                                        ExpandDirection="Down"
                                        IsExpanded="False"
-                                       Visibility="{x:Bind ViewModel.SelectedTodo.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
+                                       Visibility="{x:Bind ViewModel.SelectedTodo.todo.ExpectedDurationMins, Converter={StaticResource CountConverter}, Mode=OneWay}">
                             <muxc:Expander.Header>
                                 <TextBlock TextWrapping="Wrap">
                                     <Run Text="{x:Bind ViewModel.Strings.Duration}" />
-                                    <Run Text="{x:Bind ViewModel.SelectedTodo.DurationMins, Mode=OneWay,Converter={StaticResource DurationToStringConverter}}"
+                                    <Run Text="{x:Bind ViewModel.SelectedTodo.todo.DurationMins, Mode=OneWay,Converter={StaticResource DurationToStringConverter}}"
                                          FontWeight="Bold" /></TextBlock>
                             </muxc:Expander.Header>
                             <muxc:Expander.Content>
                                 <local:TodoTimeStamp x:Name="TodoTimeStamp_Expander"
-                                                     TimeStamps="{x:Bind ViewModel.SelectedTodo.TimeStamps,Mode=OneWay}" />
+                                                     TimeStamps="{x:Bind ViewModel.SelectedTodo.todo.TimeStamps,Mode=OneWay}" />
                             </muxc:Expander.Content>
                         </muxc:Expander>
                         <TextBlock Style="{ThemeResource SmallTextStyle}" HorizontalAlignment="Center">
                                 <Run Text="{x:Bind ViewModel.Strings.Finish}" />
-                                <Run Text="{x:Bind ViewModel.SelectedTodo.FinishDate, Mode=OneWay, Converter={StaticResource DateToStringConverter}}" /></TextBlock>
+                                <Run Text="{x:Bind ViewModel.SelectedTodo.todo.FinishDate, Mode=OneWay, Converter={StaticResource DateToStringConverter}}" /></TextBlock>
                     </StackPanel>
                 </ScrollViewer>
             </SplitView.Pane>

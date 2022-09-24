@@ -172,7 +172,7 @@ namespace DayDayUp.Views
 
         private void TaskList_ItemClick(object sender, TappedRoutedEventArgs e)
         {
-            if (((FrameworkElement)e.OriginalSource).DataContext as Todo == null)
+            if (((FrameworkElement)e.OriginalSource).DataContext as TodoListItemViewModel == null)
             {
                 HomeSplitView.IsPaneOpen = false;
             }
@@ -186,10 +186,10 @@ namespace DayDayUp.Views
         private void ListView_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             ListView listView = sender as ListView;
-            if (((FrameworkElement)e.OriginalSource).DataContext as Todo != null)
+            if (((FrameworkElement)e.OriginalSource).DataContext as TodoListItemViewModel != null)
             {
                 TodoItemFlyout.ShowAt(listView, e.GetPosition(listView));
-                ViewModel.SelectedTodo = ((FrameworkElement)e.OriginalSource).DataContext as Todo;
+                ViewModel.SelectedTodo = ((FrameworkElement)e.OriginalSource).DataContext as TodoListItemViewModel;
             }
         }
 
@@ -203,7 +203,7 @@ namespace DayDayUp.Views
         private void CheckBox_Click(object sender, RoutedEventArgs e)
         {
             CheckBox checkBox = (CheckBox)sender;
-            Todo task = (Todo)checkBox.DataContext;
+            TodoListItemViewModel task = (TodoListItemViewModel) checkBox.DataContext;
             ViewModel.Complete(task);
             resetDetailPanel();
         }
@@ -211,14 +211,14 @@ namespace DayDayUp.Views
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
             var button = (Button)sender;
-            Todo todo = (Todo)button.DataContext;
+            TodoListItemViewModel todo = (TodoListItemViewModel)button.DataContext;
             ViewModel.SwapTodoStatus(todo);
         }
 
         private void DetailPanelTaskName_KeyUp(object sender, KeyRoutedEventArgs e)
         {
             var textbox=(TextBox)sender;
-            ViewModel.SelectedTodo.Name=textbox.Text;
+            ViewModel.SelectedTodo.todo.Name=textbox.Text;
             ViewModel.Update(ViewModel.SelectedTodo);
         }
 
@@ -229,14 +229,14 @@ namespace DayDayUp.Views
             dialog.PrimaryButtonText = "Save";
             dialog.CloseButtonText = "Cancel";
             dialog.DefaultButton = ContentDialogButton.Primary;
-            dialog.Content = new DurationSettingPage(ViewModel.SelectedTodo.ExpectedDurationMins);
+            dialog.Content = new DurationSettingPage(ViewModel.SelectedTodo.todo.ExpectedDurationMins);
 
             var result = await dialog.ShowAsync();
 
             if (result == ContentDialogResult.Primary)
             {
                 DurationSettingPage tmp = (DurationSettingPage)dialog.Content;
-                ViewModel.SelectedTodo.ExpectedDurationMins = tmp.DurationResult;
+                ViewModel.SelectedTodo.todo.ExpectedDurationMins = tmp.DurationResult;
                 ViewModel.Update(ViewModel.SelectedTodo);
             }
         }
@@ -251,7 +251,7 @@ namespace DayDayUp.Views
             dialog.PrimaryButtonText = "OK";
             dialog.Content = new DurationPredictionPage(
                 Ioc.Default.GetRequiredService<TodoManager>(),
-                ViewModel.SelectedTodo.ExpectedDurationMins);
+                ViewModel.SelectedTodo.todo.ExpectedDurationMins);
 
             var result = await dialog.ShowAsync();
         }

@@ -1,15 +1,12 @@
-﻿using DayDayUp.Helpers;
-using DayDayUp.Models;
+﻿using DayDayUp.Models;
 using DayDayUp.Services;
 using Microsoft.Toolkit.Mvvm.Input;
-using System;
 using System.Threading.Tasks;
 
 namespace DayDayUp.ViewModels
 {
     public sealed class HomePageViewModel : BaseTodoListViewModel
     {
-       
         public IAsyncRelayCommand AddTodoCommand { get; }
 
         internal HomePageStrings Strings = LanguageManager.Instance.HomePage;
@@ -20,17 +17,17 @@ namespace DayDayUp.ViewModels
             AddTodoCommand = new AsyncRelayCommand<Todo>(AddTodoAsync);
         }
 
-        public void SwapTodoStatus(Todo todo)
+        public void SwapTodoStatus(TodoListItemViewModel todoItem)
         {
-            todoManager.SwitchStaus(todo);
+            todoManager.SwitchStaus(todoItem.todo);
         }
 
-        public void Complete(Todo todo)
+        public void Complete(TodoListItemViewModel todoItem)
         {
-            Todos.Remove(todo);
-            todoManager.Finish(todo);
+            TodoItems.Remove(todoItem);
+            todoManager.Finish(todoItem.todo);
 
-            if (SelectedTodo == todo)
+            if (SelectedTodo == todoItem)
             {
                 SelectedTodo = null;
             }
@@ -48,7 +45,7 @@ namespace DayDayUp.ViewModels
                 {
                     return;
                 }
-                Todos.Add(todo);
+                TodoItems.Add(new TodoListItemViewModel(todo));
             }
         }
 
@@ -57,11 +54,11 @@ namespace DayDayUp.ViewModels
 
             using (await loadingLock.LockAsync())
             {
-                Todos.Clear();
+                TodoItems.Clear();
 
-                foreach (Todo item in todoManager.UnfinishedTodos)
+                foreach (Todo todo in todoManager.UnfinishedTodos)
                 {
-                    Todos.Add(item);
+                    TodoItems.Add(new TodoListItemViewModel(todo));
                 }
             }
         }

@@ -10,16 +10,23 @@ namespace DayDayUp.ViewModels
 {
     public abstract class BaseTodoListViewModel : ObservableRecipient
     {
+
+        private TodoListItemViewModel selectedTodoItem=new();
+
+        protected abstract Task LoadTodoAsync();
+
+        protected readonly AsyncLock loadingLock = new AsyncLock();
+
+        protected readonly TodoManager todoManager;
+
         public IAsyncRelayCommand LoadTodoCommand { get; }
 
-        public ObservableCollection<Todo> Todos { get; set; } = new();
+        public ObservableCollection<TodoListItemViewModel> TodoItems { get; set; } = new();
 
-        private Todo selectedTodo = new();
-
-        public Todo SelectedTodo
+        public TodoListItemViewModel SelectedTodo
         {
-            get => selectedTodo;
-            set => SetProperty(ref selectedTodo, value);
+            get => selectedTodoItem;
+            set => SetProperty(ref selectedTodoItem, value);
         }
 
         public BaseTodoListViewModel(TodoManager TodoManager)
@@ -29,26 +36,20 @@ namespace DayDayUp.ViewModels
             LoadTodoCommand = new AsyncRelayCommand(LoadTodoAsync);
         }
 
-        public void Delete(Todo todo)
+        public void Delete(TodoListItemViewModel todoItem)
         {
-            Todos.Remove(todo);
-            todoManager.Remove(todo);
+            TodoItems.Remove(todoItem);
+            todoManager.Remove(todoItem.todo);
 
-            if (SelectedTodo == todo)
+            if (SelectedTodo == todoItem)
             {
                 SelectedTodo = null;
             }
         }
 
-        public void Update(Todo todo)
+        public void Update(TodoListItemViewModel todoItem)
         {
-            todoManager.Update(todo);
+            todoManager.Update(todoItem.todo);
         }
-
-        protected abstract Task LoadTodoAsync();
-
-        protected readonly AsyncLock loadingLock = new AsyncLock();
-
-        protected readonly TodoManager todoManager;
     }
 }

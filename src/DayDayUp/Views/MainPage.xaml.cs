@@ -139,21 +139,19 @@ namespace DayDayUp
             if (ContentFrame.SourcePageType == typeof(SettingsPage))
             {
                 NavView.SelectedItem = (Microsoft.UI.Xaml.Controls.NavigationViewItem)NavView.SettingsItem;
-                NavView.Header = "Settings";
+               
             }
             else if (ContentFrame.SourcePageType != null)
             {
                 var item = ViewModel.Scenarios.First(p => p.ClassName == e.SourcePageType.FullName);
-                var menuItems = NavView.MenuItems;
 
                 NavView.SelectedItem = NavView.MenuItems
                     .OfType<Microsoft.UI.Xaml.Controls.NavigationViewItem>()
                     .First(n => n.Tag.Equals(item.ClassName));
-
-                NavView.Header =
-                    ((Microsoft.UI.Xaml.Controls.NavigationViewItem)NavView.SelectedItem)?.Content?.ToString();
-
             }
+
+            NavView.Header =
+                   ((Microsoft.UI.Xaml.Controls.NavigationViewItem)NavView.SelectedItem)?.Content?.ToString();
         }
     }
 }

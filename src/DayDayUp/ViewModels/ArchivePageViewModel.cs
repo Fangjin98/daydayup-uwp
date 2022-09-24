@@ -15,27 +15,27 @@ namespace DayDayUp.ViewModels
         {
         }
         
-        public void Restore(Todo item)
+        public void Restore(TodoListItemViewModel todoItem)
         {
-            item.IsFinished = false;
-            item.TimeStamps.Remove(item.TimeStamps.Last());
-            todoManager.Update(item);
-            Todos.Remove(item);
+            todoItem.todo.IsFinished = false;
+            todoItem.todo.TimeStamps.Remove(todoItem.todo.TimeStamps.Last());
+            todoManager.Update(todoItem.todo);
+            TodoItems.Remove(todoItem);
         }
 
         protected override async Task LoadTodoAsync()
         {
             using (await loadingLock.LockAsync())
             {
-                Todos.Clear();
+                TodoItems.Clear();
                 var tmp = todoManager.FinishedTodos;
                 tmp.Reverse();
                 foreach (Todo item in tmp)
                 {
-                    Todos.Add(item);
+                    TodoItems.Add(new TodoListItemViewModel(item));
                 }
-
             }
         }
     }
+
 }
