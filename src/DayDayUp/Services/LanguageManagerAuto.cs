@@ -219,6 +219,11 @@ namespace DayDayUp.Services
         public string PredictionDuration => _resources.GetString("PredictionDuration");
 
         /// <summary>
+        /// Gets the resource Progress.
+        /// </summary>
+        public string Progress => _resources.GetString("Progress");
+
+        /// <summary>
         /// Gets the resource Status.
         /// </summary>
         public string Status => _resources.GetString("Status");

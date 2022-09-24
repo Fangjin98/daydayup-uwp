@@ -159,6 +159,9 @@
   <data name="PredictionDuration" xml:space="preserve">
     <value>Predicted Durations</value>
   </data>
+  <data name="Progress" xml:space="preserve">
+    <value>Progress is</value>
+  </data>
   <data name="Status" xml:space="preserve">
     <value>Status is</value>
   </data>

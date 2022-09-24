@@ -159,6 +159,9 @@
   <data name="PredictionDuration" xml:space="preserve">
     <value>持续时间预测</value>
   </data>
+  <data name="Progress" xml:space="preserve">
+    <value>进度为</value>
+  </data>
   <data name="Status" xml:space="preserve">
     <value>状态为</value>
   </data>
