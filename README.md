@@ -13,10 +13,14 @@
   A Light-weight Todo Manager with Time Estimation Tracking.
 </p>
 
+
+
 <p align="center">
   <a style="text-decoration:none" href="https://svgshare.com/i/ZhY.svg" target="_blank">
     <img src="https://svgshare.com/i/ZhY.svg"/>
   </a>
+  <img src="https://visitor-badge.glitch.me/badge?page_id=Fangjin98.DayDayUp&right_color=red" alt="visitor badge"/>
+  <a href="https://dev.azure.com/fangjin98/DayDayUp/_build/latest?definitionId=2&amp;branchName=master"><img src="https://dev.azure.com/fangjin98/DayDayUp/_apis/build/status/Fangjin98.DayDayUp?branchName=master" alt="Build Status"></a>
 
   <img src="/assets/screenshots/1.png">
 </p>
