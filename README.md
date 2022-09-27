@@ -67,12 +67,12 @@ Status |          Features     |  Memo  |
 ✅| _Create Todos_ | Set estimated duration of todos|
 ✅| _Start & Pause Todos_ | Switch status of todos|
 ✅| _Per-todo Informations_ | Estimated duration, Prediction durations and Current duration|
-🔁| _CLI Support_ | |
+🔁| _Multi-language Support_ | |
 🔁|_Data Export_| |
-🔲|_Multi-language Support_| |
+🔲|_Multi-device Synchronization_| |
 🔲|_Category_|Todos can be assigned to different categories|
 🔲|_Dashboard_|Statistics summary|
-🔲|_Multi-device Synchronization_| |
+🔲| _CLI Support_ | |
 
 ✅ Supported | 🔁 In progress | 🔲 Not started
 
