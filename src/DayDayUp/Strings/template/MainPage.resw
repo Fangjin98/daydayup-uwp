@@ -117,64 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddNewTodo" xml:space="preserve">
-    <value>Add a new todo...</value>
+  <data name="AppDisplayName" xml:space="preserve">
+    <value>DayDayUp</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="Archive" xml:space="preserve">
+    <value>存档</value>
   </data>
-  <data name="CreatedIn" xml:space="preserve">
-    <value>Created in</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
-  </data>
-  <data name="DropDown12Hours" xml:space="preserve">
-    <value>12 hours</value>
-  </data>
-  <data name="DropDown1Day" xml:space="preserve">
-    <value>1 day</value>
-  </data>
-  <data name="DropDown1Hour" xml:space="preserve">
-    <value>1 hour</value>
-  </data>
-  <data name="DropDown30Mins" xml:space="preserve">
-    <value>30 mins</value>
-  </data>
-  <data name="DropDown6Hours" xml:space="preserve">
-    <value>6 hours</value>
-  </data>
-  <data name="DropDownNone" xml:space="preserve">
-    <value>None</value>
-  </data>
-  <data name="Duration" xml:space="preserve">
-    <value>Duration is</value>
-  </data>
-  <data name="EmptyList" xml:space="preserve">
-    <value>The list is empty now. Start by adding a new task.</value>
-  </data>
-  <data name="EstimatedDuration" xml:space="preserve">
-    <value>Estimated duration is </value>
-  </data>
-  <data name="EstimatedDurationToolTip" xml:space="preserve">
-    <value>Esitimated duration</value>
-  </data>
-  <data name="OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="PredictionDuration" xml:space="preserve">
-    <value>Predicted Durations</value>
-  </data>
-  <data name="Progress" xml:space="preserve">
-    <value>Progress is</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="SetTheDuration" xml:space="preserve">
-    <value>Set the Duration</value>
-  </data>
-  <data name="Status" xml:space="preserve">
-    <value>Status is</value>
+  <data name="Home" xml:space="preserve">
+    <value>主页</value>
   </data>
 </root>

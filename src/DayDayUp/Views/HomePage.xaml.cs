@@ -225,9 +225,9 @@ namespace DayDayUp.Views
         private async void ExpectedDurationMinsButton_Click(object sender, RoutedEventArgs e)
         {
             ContentDialog dialog = new ContentDialog();
-            dialog.Title = "Set the duration";
-            dialog.PrimaryButtonText = "Save";
-            dialog.CloseButtonText = "Cancel";
+            dialog.Title = ViewModel.Strings.SetTheDuration;
+            dialog.PrimaryButtonText = ViewModel.Strings.Save;
+            dialog.CloseButtonText = ViewModel.Strings.Cancel;
             dialog.DefaultButton = ContentDialogButton.Primary;
             dialog.Content = new DurationSettingPage(ViewModel.SelectedTodo.todo.ExpectedDurationMins);
 
@@ -248,7 +248,7 @@ namespace DayDayUp.Views
         private async void PredictionButton_Click(object sender, RoutedEventArgs e)
         {
             ContentDialog dialog = new ContentDialog();
-            dialog.PrimaryButtonText = "OK";
+            dialog.PrimaryButtonText = ViewModel.Strings.OK;
             dialog.Content = new DurationPredictionPage(
                 Ioc.Default.GetRequiredService<TodoManager>(),
                 ViewModel.SelectedTodo.todo.ExpectedDurationMins);

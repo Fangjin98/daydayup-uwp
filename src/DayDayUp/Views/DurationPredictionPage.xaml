@@ -34,14 +34,13 @@
             <RowDefinition />
         </Grid.RowDefinitions>
         
-        <TextBlock Style="{StaticResource SubtitleTextStyle}">
-            <Run Text="Estimated: "/>
+        <!--<TextBlock Style="{StaticResource SubtitleTextStyle}">
             <Run Text="{x:Bind baseDuration, Converter={StaticResource DurationToStringConverter}}"/>
-        </TextBlock>
+        </TextBlock>-->
         
         <TextBlock Grid.Row="1"
-                   Style="{StaticResource SubsubtitleTextStyle}">
-                <Run Text="Predicted"/></TextBlock>
+                   Style="{StaticResource SubsubtitleTextStyle}"
+                   x:Uid="PredictionList" />
         
         <ListView Grid.Row="2"
                   Name="PredictiedDurationList"
@@ -91,7 +90,8 @@
                        VerticalAlignment="Center">
             <Paragraph>
                 <Run FontStyle="Italic"
-                     FontWeight="Bold">No finished tasks within 7 days.</Run>
+                     FontWeight="Bold"
+                     x:Uid="DefaultTextPrediction"></Run>
             </Paragraph>
         </RichTextBlock>
     </Grid>

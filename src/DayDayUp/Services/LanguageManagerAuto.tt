@@ -20,7 +20,7 @@
 <#@ import namespace="Microsoft.VisualStudio.TextTemplating" #>
 
 <#
-    var stringsFolder = Host.ResolvePath(@"../Strings/zh-cn");
+    var stringsFolder = Host.ResolvePath(@"../Strings/template");
 #>
 
 #nullable enable

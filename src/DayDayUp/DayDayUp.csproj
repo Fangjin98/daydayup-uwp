@@ -382,6 +382,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DayDayUp_TemporaryKey.pfx" />
+    <PRIResource Include="Strings\template\SettingsPage.resw" />
+    <PRIResource Include="Strings\template\MainPage.resw" />
+    <PRIResource Include="Strings\template\HomePage.resw" />
+    <PRIResource Include="Strings\template\ArchivePage.resw" />
+    <PRIResource Include="Strings\zh-cn\Resources.resw" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

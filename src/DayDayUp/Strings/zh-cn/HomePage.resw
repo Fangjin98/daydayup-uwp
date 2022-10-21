@@ -120,6 +120,9 @@
   <data name="AddNewTodo" xml:space="preserve">
     <value>添加一个待办事项</value>
   </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>取消</value>
+  </data>
   <data name="CreatedIn" xml:space="preserve">
     <value>创建于</value>
   </data>
@@ -156,11 +159,20 @@
   <data name="EstimatedDurationToolTip" xml:space="preserve">
     <value>预计持续时间</value>
   </data>
+  <data name="OK" xml:space="preserve">
+    <value>好</value>
+  </data>
   <data name="PredictionDuration" xml:space="preserve">
     <value>持续时间预测</value>
   </data>
   <data name="Progress" xml:space="preserve">
     <value>进度为</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>保存</value>
+  </data>
+  <data name="SetTheDuration" xml:space="preserve">
+    <value>设置持续时间</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>状态为</value>

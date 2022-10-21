@@ -117,64 +117,43 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddNewTodo" xml:space="preserve">
-    <value>Add a new todo...</value>
+  <data name="About" xml:space="preserve">
+    <value>关于</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="AboutDescription" xml:space="preserve">
+    <value>DayDayUp 正在开发中。</value>
   </data>
-  <data name="CreatedIn" xml:space="preserve">
-    <value>Created in</value>
+  <data name="AppTheme" xml:space="preserve">
+    <value>应用主题</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+  <data name="AppThemeDescription" xml:space="preserve">
+    <value>选择一个主题用于显示</value>
   </data>
-  <data name="DropDown12Hours" xml:space="preserve">
-    <value>12 hours</value>
+  <data name="AppTitle" xml:space="preserve">
+    <value>DayDayUp</value>
   </data>
-  <data name="DropDown1Day" xml:space="preserve">
-    <value>1 day</value>
+  <data name="Dark" xml:space="preserve">
+    <value>暗色</value>
   </data>
-  <data name="DropDown1Hour" xml:space="preserve">
-    <value>1 hour</value>
+  <data name="DefaultLanguage" xml:space="preserve">
+    <value>与操作系统相同</value>
   </data>
-  <data name="DropDown30Mins" xml:space="preserve">
-    <value>30 mins</value>
+  <data name="Language" xml:space="preserve">
+    <value>语言</value>
   </data>
-  <data name="DropDown6Hours" xml:space="preserve">
-    <value>6 hours</value>
+  <data name="LanguageDescription" xml:space="preserve">
+    <value>当选择另一种语言后，需要重启应用以生效。</value>
   </data>
-  <data name="DropDownNone" xml:space="preserve">
-    <value>None</value>
+  <data name="Light" xml:space="preserve">
+    <value>亮色</value>
   </data>
-  <data name="Duration" xml:space="preserve">
-    <value>Duration is</value>
+  <data name="MenuDisplayName" xml:space="preserve">
+    <value>设置</value>
   </data>
-  <data name="EmptyList" xml:space="preserve">
-    <value>The list is empty now. Start by adding a new task.</value>
+  <data name="Settings" xml:space="preserve">
+    <value>设置</value>
   </data>
-  <data name="EstimatedDuration" xml:space="preserve">
-    <value>Estimated duration is </value>
-  </data>
-  <data name="EstimatedDurationToolTip" xml:space="preserve">
-    <value>Esitimated duration</value>
-  </data>
-  <data name="OK" xml:space="preserve">
-    <value>OK</value>
-  </data>
-  <data name="PredictionDuration" xml:space="preserve">
-    <value>Predicted Durations</value>
-  </data>
-  <data name="Progress" xml:space="preserve">
-    <value>Progress is</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="SetTheDuration" xml:space="preserve">
-    <value>Set the Duration</value>
-  </data>
-  <data name="Status" xml:space="preserve">
-    <value>Status is</value>
+  <data name="UseSystemSettings" xml:space="preserve">
+    <value>使用系统设定</value>
   </data>
 </root>

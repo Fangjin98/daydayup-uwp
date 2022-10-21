@@ -118,55 +118,55 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddNewTodo" xml:space="preserve">
-    <value>Add a new todo...</value>
+    <value>添加一个待办事项</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
   <data name="CreatedIn" xml:space="preserve">
-    <value>Created in</value>
+    <value>创建于</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>删除</value>
   </data>
   <data name="DropDown12Hours" xml:space="preserve">
-    <value>12 hours</value>
+    <value>12 小时</value>
   </data>
   <data name="DropDown1Day" xml:space="preserve">
-    <value>1 day</value>
+    <value>1 天</value>
   </data>
   <data name="DropDown1Hour" xml:space="preserve">
-    <value>1 hour</value>
+    <value>1 小时</value>
   </data>
   <data name="DropDown30Mins" xml:space="preserve">
-    <value>30 mins</value>
+    <value>30 分钟</value>
   </data>
   <data name="DropDown6Hours" xml:space="preserve">
-    <value>6 hours</value>
+    <value>6 小时</value>
   </data>
   <data name="DropDownNone" xml:space="preserve">
-    <value>None</value>
+    <value>无</value>
   </data>
   <data name="Duration" xml:space="preserve">
-    <value>Duration is</value>
+    <value>持续时间为</value>
   </data>
   <data name="EmptyList" xml:space="preserve">
-    <value>The list is empty now. Start by adding a new task.</value>
+    <value>列表为空，添加一个待办事项以开始</value>
   </data>
   <data name="EstimatedDuration" xml:space="preserve">
-    <value>Estimated duration is </value>
+    <value>预计持续时间为</value>
   </data>
   <data name="EstimatedDurationToolTip" xml:space="preserve">
-    <value>Esitimated duration</value>
+    <value>预计持续时间</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
   <data name="PredictionDuration" xml:space="preserve">
-    <value>Predicted Durations</value>
+    <value>持续时间预测</value>
   </data>
   <data name="Progress" xml:space="preserve">
-    <value>Progress is</value>
+    <value>进度为</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
@@ -175,6 +175,6 @@
     <value>Set the Duration</value>
   </data>
   <data name="Status" xml:space="preserve">
-    <value>Status is</value>
+    <value>状态为</value>
   </data>
 </root>

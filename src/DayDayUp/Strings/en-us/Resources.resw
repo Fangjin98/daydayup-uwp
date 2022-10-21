@@ -117,14 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AppDescription" xml:space="preserve">
-    <value>Manage your days</value>
-    <comment>Application description</comment>
-  </data>
-  <data name="Shell_Main.Content" xml:space="preserve">
-    <value>Main</value>
-    <comment>Navigation view item name for Main</comment>
-  </data>
   <data name="DaysLabel.Text" xml:space="preserve">
     <value>Days</value>
   </data>
@@ -137,22 +129,22 @@
   <data name="List.Text" xml:space="preserve">
     <value>List</value>
   </data>
-  <data name="SeeAll.Text" xml:space="preserve">
-    <value>See All</value>
-  </data>
   <data name="Pause.Text" xml:space="preserve">
     <value>Pause</value>
   </data>
   <data name="Start.Text" xml:space="preserve">
     <value>Start</value>
   </data>
-  <data name="Prediction.Text" xml:space="preserve">
-    <value>Predicted Durations</value>
+  <data name="TotalDuration.Text" xml:space="preserve">
+    <value>Total Duration</value>
   </data>
-  <data name="Status.Text" xml:space="preserve">
-    <value>Status is </value>
+  <data name="BiasRate.Text" xml:space="preserve">
+    <value>Bias rate is</value>
   </data>
-  <data name="Progress.Text" xml:space="preserve">
-    <value>Progress is</value>
+  <data name="DefaultTextPrediction.Text" xml:space="preserve">
+    <value>No finished tasks within 7 days.</value>
+  </data>
+  <data name="PredictionList.Text" xml:space="preserve">
+    <value>Prediction List</value>
   </data>
 </root>

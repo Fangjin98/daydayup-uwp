@@ -57,7 +57,7 @@
         </Grid>
         <StackPanel VerticalAlignment="Bottom"
                     Orientation="Horizontal">
-            <TextBlock Text="Total duration: "
+            <TextBlock x:Uid="TotalDuration"
                        Style="{ThemeResource SubsubtitleTextStyle}" />
             <TextBlock Margin="5,0,0,0"
                        Text="{x:Bind durationPicker.Duration, Mode=OneWay, Converter={StaticResource DurationToStringConverter}}"

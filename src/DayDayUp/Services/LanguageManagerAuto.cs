@@ -154,6 +154,11 @@ namespace DayDayUp.Services
         public string AddNewTodo => _resources.GetString("AddNewTodo");
 
         /// <summary>
+        /// Gets the resource Cancel.
+        /// </summary>
+        public string Cancel => _resources.GetString("Cancel");
+
+        /// <summary>
         /// Gets the resource CreatedIn.
         /// </summary>
         public string CreatedIn => _resources.GetString("CreatedIn");
@@ -214,6 +219,11 @@ namespace DayDayUp.Services
         public string EstimatedDurationToolTip => _resources.GetString("EstimatedDurationToolTip");
 
         /// <summary>
+        /// Gets the resource OK.
+        /// </summary>
+        public string OK => _resources.GetString("OK");
+
+        /// <summary>
         /// Gets the resource PredictionDuration.
         /// </summary>
         public string PredictionDuration => _resources.GetString("PredictionDuration");
@@ -222,6 +232,16 @@ namespace DayDayUp.Services
         /// Gets the resource Progress.
         /// </summary>
         public string Progress => _resources.GetString("Progress");
+
+        /// <summary>
+        /// Gets the resource Save.
+        /// </summary>
+        public string Save => _resources.GetString("Save");
+
+        /// <summary>
+        /// Gets the resource SetTheDuration.
+        /// </summary>
+        public string SetTheDuration => _resources.GetString("SetTheDuration");
 
         /// <summary>
         /// Gets the resource Status.

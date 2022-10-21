@@ -199,8 +199,7 @@
                               Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                               CornerRadius="4">
                     <StackPanel Spacing="4">
-                        <TextBox x:Name="DetailPanelTaskName"
-                                 PlaceholderText="{x:Bind ViewModel.SelectedTodo.todo.Name}"
+                        <TextBox PlaceholderText="{x:Bind ViewModel.SelectedTodo.todo.Name}"
                                  TextWrapping="Wrap"
                                  Text="{x:Bind ViewModel.SelectedTodo.todo.Name, Mode=OneWay}"
                                  KeyUp="DetailPanelTaskName_KeyUp"

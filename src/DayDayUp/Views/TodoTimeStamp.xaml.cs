@@ -12,6 +12,8 @@ namespace DayDayUp.Views
 {
     public partial class TodoTimeStamp : UserControl
     {
+        private ObservableCollection<StartEndPair> startEndPairs = new();
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public TodoTimeStamp()
@@ -29,7 +31,7 @@ namespace DayDayUp.Views
             set { setValueDp(TimeStampProperty, value); }
         }
 
-        private ObservableCollection<StartEndPair> startEndPairs = new();
+        
 
         private void ItemsRepeater_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
