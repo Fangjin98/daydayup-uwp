@@ -147,4 +147,10 @@
   <data name="PredictionList.Text" xml:space="preserve">
     <value>Prediction List</value>
   </data>
+  <data name="DoingStatus" xml:space="preserve">
+    <value>Doing</value>
+  </data>
+  <data name="PauseStatus" xml:space="preserve">
+    <value>Pause</value>
+  </data>
 </root>
