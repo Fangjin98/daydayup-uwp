@@ -16,14 +16,12 @@ using Windows.UI.Xaml.Navigation;
 
 namespace DayDayUp
 {
-
     sealed partial class App : Application
-    {
-     
+    {    
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            InitializeComponent();
+            Suspending += OnSuspending;
         }
 
         protected override void OnLaunched(LaunchActivatedEventArgs e)
@@ -47,7 +45,7 @@ namespace DayDayUp
                 ?? LanguageManager.Instance.AvailableLanguages[0];
             LanguageManager.Instance.SetCurrentCulture(languageDefinition);
 
-            Frame rootFrame = Window.Current.Content as Frame;
+            Frame? rootFrame = Window.Current.Content as Frame;
 
             if (rootFrame == null)
             {
@@ -75,9 +73,7 @@ namespace DayDayUp
             Ioc.Default.GetRequiredService<ThemeSelector>().SetRequestedTheme();
         }
 
-
-
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
+        private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }

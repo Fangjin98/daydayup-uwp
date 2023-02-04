@@ -18,7 +18,7 @@ namespace DayDayUp
 
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             DataContext = Ioc.Default.GetRequiredService<MainPageViewModel>();
 

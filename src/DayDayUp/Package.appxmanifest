@@ -7,9 +7,9 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="f2f2a4f4-00a8-41ab-a4a5-353a1ddd4182"
-    Publisher="CN=Joey_Test"
-    Version="1.0.2.0" />
+    Name="DayDayUp"
+    Publisher="CN=Joey"
+    Version="0.8.3.0" />
 
   <mp:PhoneIdentity PhoneProductId="f2f2a4f4-00a8-41ab-a4a5-353a1ddd4182" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
