@@ -197,7 +197,7 @@
     <Compile Include="Views\SummaryItem.xaml.cs">
       <DependentUpon>SummaryItem.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TodoTimeStamp.xaml.cs">
+    <Compile Include="UI\Controls\TodoTimeStamp.xaml.cs">
       <DependentUpon>TodoTimeStamp.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -319,7 +319,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\TodoTimeStamp.xaml">
+    <Page Include="UI\Controls\TodoTimeStamp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
