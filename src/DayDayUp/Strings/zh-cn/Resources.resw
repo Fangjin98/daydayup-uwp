@@ -139,7 +139,7 @@
     <value>总持续时间</value>
   </data>
   <data name="BiasRate.Text" xml:space="preserve">
-    <value>偏差率为</value>
+    <value>误差为</value>
   </data>
   <data name="DefaultTextPrediction.Text" xml:space="preserve">
     <value>七天内无任务完成。</value>
@@ -152,5 +152,23 @@
   </data>
   <data name="PauseStatus" xml:space="preserve">
     <value>暂停</value>
+  </data>
+  <data name="Probability.Text" xml:space="preserve">
+    <value>概率</value>
+  </data>
+  <data name="RealDuration.Text" xml:space="preserve">
+    <value>持续时间</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>天</value>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>时</value>
+  </data>
+  <data name="Minute" xml:space="preserve">
+    <value>分</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>无</value>
   </data>
 </root>

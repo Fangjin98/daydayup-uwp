@@ -153,4 +153,22 @@
   <data name="PauseStatus" xml:space="preserve">
     <value>Pause</value>
   </data>
+  <data name="Probability.Text" xml:space="preserve">
+    <value>Probability</value>
+  </data>
+  <data name="RealDuration.Text" xml:space="preserve">
+    <value>Duration</value>
+  </data>
+  <data name="Day" xml:space="preserve">
+    <value>Day</value>
+  </data>
+  <data name="Hour" xml:space="preserve">
+    <value>Hour</value>
+  </data>
+  <data name="Minute" xml:space="preserve">
+    <value>Min</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>None</value>
+  </data>
 </root>
