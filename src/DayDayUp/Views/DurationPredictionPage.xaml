@@ -6,7 +6,7 @@
       xmlns:helper="using:DayDayUp.Helpers"
       xmlns:local="using:DayDayUp.Views"
       mc:Ignorable="d"
-      Height="400">
+      Height="200">
     
     <Page.Resources>
         <helper:EnumToVisibilityConverter x:Key="TaskStatusConverter" />
@@ -17,32 +17,29 @@
         <helper:StatusToStringConverter x:Key="StatusToStringConverter" />
         <helper:DateToStringConverter x:Key="DateToStringConverter" />
         <helper:DoubleToRatioConverter x:Key="DoubleToRatioConverter" />
-        
         <Style x:Key="PredictionItemContainerStyle"
                BasedOn="{StaticResource ListViewItemContainerStyle}"
-               TargetType="ListViewItem">
-            <Setter Property="Margin"
-                    Value="0,0,0,4" />
-        </Style>
-        
+               TargetType="ListViewItem"></Style>
     </Page.Resources>
-    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
+        <Grid Padding="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0"
+                       x:Uid="RealDuration" />
+            <TextBlock Grid.Column="1"
+                       HorizontalAlignment="Right"
+                       x:Uid="Probability" />
+        </Grid>
         
-        <!--<TextBlock Style="{StaticResource SubtitleTextStyle}">
-            <Run Text="{x:Bind baseDuration, Converter={StaticResource DurationToStringConverter}}"/>
-        </TextBlock>-->
-        
-        <TextBlock Grid.Row="1"
-                   Style="{StaticResource SubsubtitleTextStyle}"
-                   x:Uid="PredictionList" />
-        
-        <ListView Grid.Row="2"
+        <ListView 
+                  Grid.Row="1"
                   Name="PredictiedDurationList"
                   Loaded="PredictionList_Loaded"
                   IsItemClickEnabled="False"
@@ -53,7 +50,6 @@
                 <DataTemplate x:DataType="local:PredictionItem">
                     <Grid
                                 Padding="8"
-                                Height="50"
                                 Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                                 BorderThickness="1"
@@ -62,19 +58,9 @@
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition />
                         </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <TextBlock Grid.Row="0"
-                                       Text="{Binding DurationMins, Converter={StaticResource DurationToStringConverter}}" />
-                            <TextBlock Grid.Row="1"
-                                       Style="{ThemeResource SmallTextStyle}">
-                                 <Run x:Uid="BiasRate" />
-                                 <Run Text="{x:Bind Bias, Mode=OneTime, Converter={StaticResource DoubleToRatioConverter}}"/>
-                            </TextBlock>
-                        </Grid>
+                        <TextBlock Grid.Column="0"
+                                   Text="{Binding DurationMins, Converter={StaticResource DurationToStringConverter}}" />
+                        
                         <TextBlock Grid.Column="1"
                                    HorizontalAlignment="Right"
                                    Text="{Binding Probability, Converter={StaticResource DoubleToRatioConverter}}" />
@@ -83,7 +69,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <RichTextBlock Grid.Row="2"
+        <RichTextBlock 
                        Name="DefaultText"
                        Visibility="{x:Bind predictiedDurations.Count, Converter={StaticResource NegativeCountConverter}, Mode=OneWay}"
                        HorizontalAlignment="Center"
