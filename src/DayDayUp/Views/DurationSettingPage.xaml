@@ -1,68 +1,31 @@
-﻿<Page
-    x:Class="DayDayUp.Views.DurationSettingPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:DayDayUp.Views"
-      xmlns:helper="using:DayDayUp.Helpers"
+﻿<Page x:Class="DayDayUp.Views.DurationSettingPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
-
-    <StackPanel Spacing="12">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <TextBlock x:Name="DaysLabel"
-                       x:Uid="DaysLabel"
-                       Margin="0,0,0,6"
-                       TextWrapping="Wrap" />
-            <ComboBox x:Name="DaysValue"
-                      Grid.Row="1"
-                      MinWidth="84"
-                      AutomationProperties.LabeledBy="{Binding ElementName=DaysLabel}"
-                      ItemsSource="{x:Bind dayOffsetValues, Mode=OneTime}"
-                      SelectedIndex="{x:Bind durationPicker.DaysOffset, Mode=TwoWay}" />
-            <TextBlock x:Name="HoursLabel"
-                       x:Uid="HoursLabel"
-                       Grid.Column="1"
-                       Margin="12,0,12,6"
-                       TextWrapping="Wrap" />
-            <ComboBox x:Name="HoursValue"
-                      Grid.Row="1"
-                      Grid.Column="1"
-                      MinWidth="84"
-                      Margin="12,0,12,0"
-                      AutomationProperties.LabeledBy="{Binding ElementName=HoursLabel}"
-                      ItemsSource="{x:Bind offsetValues, Mode=OneTime}"
-                      SelectedIndex="{x:Bind durationPicker.HoursOffset, Mode=TwoWay}" />
-            <TextBlock x:Name="MinsLabel"
-                       x:Uid="MinsLabel"
-                       Grid.Column="2"
-                       Margin="0,0,0,6"
-                       TextWrapping="Wrap" />
-            <ComboBox x:Name="MinsValue"
-                      Grid.Row="1"
-                      Grid.Column="2"
-                      MinWidth="84"
-                      AutomationProperties.LabeledBy="{Binding ElementName=MinsLabel}"
-                      ItemsSource="{x:Bind offsetValues, Mode=OneTime}"
-                      SelectedIndex="{x:Bind durationPicker.MinsOffset, Mode=TwoWay}" />
-        </Grid>
-        <StackPanel VerticalAlignment="Bottom"
-                    Orientation="Horizontal">
-            <TextBlock x:Uid="TotalDuration"
-                       Style="{ThemeResource SubsubtitleTextStyle}" />
-            <TextBlock Margin="5,0,0,0"
-                       Text="{x:Bind durationPicker.Duration, Mode=OneWay, Converter={StaticResource DurationToStringConverter}}"
-                       Style="{ThemeResource BasicTextStyle}" />
-        </StackPanel>
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d">
+    <StackPanel Spacing="6"
+                Orientation="Horizontal">
+        <ComboBox x:Name="DaysValue"
+                  AutomationProperties.LabeledBy="{Binding ElementName=DaysLabel}"
+                  ItemsSource="{x:Bind dayValues, Mode=OneTime}"
+                  SelectedIndex="{x:Bind durationPicker.DaysOffset, Mode=TwoWay}" />
+        <TextBlock x:Name="DaysLabel"
+                   x:Uid="DaysLabel"
+                   VerticalAlignment="Center" />
+        <ComboBox x:Name="HoursValue"
+                  AutomationProperties.LabeledBy="{Binding ElementName=HoursLabel}"
+                  ItemsSource="{x:Bind hourValues, Mode=OneTime}"
+                  SelectedIndex="{x:Bind durationPicker.HoursOffset, Mode=TwoWay}" />
+        <TextBlock x:Name="HoursLabel"
+                   x:Uid="HoursLabel"
+                   VerticalAlignment="Center" />
+        <ComboBox x:Name="MinsValue"
+                  AutomationProperties.LabeledBy="{Binding ElementName=MinsLabel}"
+                  ItemsSource="{x:Bind minuteValues, Mode=OneTime}"
+                  SelectedIndex="{x:Bind durationPicker.MinsOffset, Mode=TwoWay}" />
+        <TextBlock x:Name="MinsLabel"
+                   x:Uid="MinsLabel"
+                   VerticalAlignment="Center" />
     </StackPanel>
-    
 </Page>
