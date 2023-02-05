@@ -141,7 +141,7 @@
                             </muxc:Expander.Header>
                             <muxc:Expander.Content>
                                 <local:TodoTimeStamp x:Name="TodoTimeStamp_Expander"
-                                                     TimeStamps="{x:Bind ViewModel.SelectedTodo.todo.TimeStamps,Mode=OneWay}" />
+                                                     todo="{x:Bind ViewModel.SelectedTodo.todo,Mode=OneWay}" />
                             </muxc:Expander.Content>
                         </muxc:Expander>
                         <TextBlock Style="{ThemeResource SmallTextStyle}" HorizontalAlignment="Center">

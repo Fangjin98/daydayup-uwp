@@ -5,10 +5,9 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:helper="using:DayDayUp.Helpers"
-      xmlns:models="using:DayDayUp.Models"
-      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-      xmlns:views="using:DayDayUp.Views"
       xmlns:viewmodels="using:DayDayUp.ViewModels"
+      xmlns:views="using:DayDayUp.Views"
+      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       mc:Ignorable="d">
     
     <Page.Resources>
@@ -261,7 +260,7 @@
                             </muxc:Expander.Header>
                             <muxc:Expander.Content>
                                 <views:TodoTimeStamp x:Name="TodoTimeStamp_Expander"
-                                                     TimeStamps="{x:Bind ViewModel.SelectedTodo.todo.TimeStamps,Mode=OneWay}" />
+                                                     todo="{x:Bind ViewModel.SelectedTodo.todo,Mode=OneWay}" />
                             </muxc:Expander.Content>
                         </muxc:Expander>
                       

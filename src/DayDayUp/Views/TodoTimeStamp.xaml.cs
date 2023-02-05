@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DayDayUp.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -12,26 +13,22 @@ namespace DayDayUp.Views
 {
     public partial class TodoTimeStamp : UserControl
     {
-        private ObservableCollection<StartEndPair> startEndPairs = new();
+        public Todo todo
+        {
+            get { return (Todo)GetValue(TodoProperty); }
+            set { setValueDp(TodoProperty, value); }
+        }
+
+        public static readonly DependencyProperty TodoProperty = DependencyProperty.Register(
+           "Todo", typeof(Todo), typeof(TodoTimeStamp), new PropertyMetadata(null));
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         public TodoTimeStamp()
         {
-            this.InitializeComponent();
-            TimeStamps=new();
+            InitializeComponent();
+            todo = new();
         }
-
-        public static readonly DependencyProperty TimeStampProperty = DependencyProperty.Register(
-            "TimeStamp", typeof(List<DateTime>), typeof(TodoTimeStamp), new PropertyMetadata(null));
-
-        public List<DateTime> TimeStamps
-        {
-            get { return (List<DateTime>)GetValue(TimeStampProperty); }
-            set { setValueDp(TimeStampProperty, value); }
-        }
-
-        
 
         private void ItemsRepeater_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
         {
@@ -44,7 +41,7 @@ namespace DayDayUp.Views
             SetValue(property, value);
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(p));
             Debug.WriteLine("TimeStamps changed", "Expander");
-            if (TimeStamps != null)
+            if (todo.TimeStamps != null)
             {
                 updateStartEndPairs();
             }
@@ -54,58 +51,39 @@ namespace DayDayUp.Views
         {
             startEndPairs.Clear();
 
-            if (TimeStamps.Count != 0 && TimeStamps.Count % 2 == 0)
+            var len = todo.IsFinished ? todo.TimeStamps.Count-1 : todo.TimeStamps.Count;
+
+            for(int i = 0; i < len; i++)
             {
-                for (int i = 0; i < TimeStamps.Count; i += 2)
+                if( i%2 == 0 )
                 {
                     startEndPairs.Add(
-                        new StartEndPair
+                        new TimeStampItem
                         {
                             IsPaused = true,
-                            StartDate = TimeStamps[i],
-                            EndDate = TimeStamps[i + 1]
+                            Date = todo.TimeStamps[i]
                         });
                 }
-            }
-            else if (TimeStamps.Count != 0 && TimeStamps.Count % 2 == 1)
-            {
-                for (int i = 0; i < TimeStamps.Count - 1; i += 2)
+                else
                 {
                     startEndPairs.Add(
-                        new StartEndPair
+                        new TimeStampItem
                         {
-                            IsPaused = true,
-                            StartDate = TimeStamps[i],
-                            EndDate = TimeStamps[i + 1]
+                            IsPaused = false,
+                            Date = todo.TimeStamps[i]
                         });
                 }
-                startEndPairs.Add(
-                    new StartEndPair
-                    {
-                        IsPaused = false,
-                        StartDate = TimeStamps.Last(),
-                        EndDate = DateTime.Now
-                    });
             }
         }
+
+        private ObservableCollection<TimeStampItem> startEndPairs = new();
     }
 
-    public class StartEndPair
+    public struct TimeStampItem
     {
+        public DateTime Date{ get; set; }
+        public String DateString { get => Date.ToString("g"); }
         public bool IsPaused { get; set; }
-
-        public DateTime StartDate { get; set; }
-
-        public DateTime EndDate { get; set; }
-
-        public string StartTime { get => StartDate.ToString("T"); }
-        public string EndTime { get => EndDate.ToString("T"); }
-
-        public bool IsTodayStart { get=> DateTime.Now.ToString("d") != StartDate.ToString("d"); }
-        public bool IsTodayEnd { get => DateTime.Now.ToString("d") != EndDate.ToString("d"); }
-        public int DurationMins
-        {
-            get => (EndDate - StartDate).Minutes;
-        }
+        public bool IsStarted { get => !IsPaused; }
     }
 }

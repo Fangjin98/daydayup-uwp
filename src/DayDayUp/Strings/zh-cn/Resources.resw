@@ -130,10 +130,10 @@
     <value>列表</value>
   </data>
   <data name="Pause.Text" xml:space="preserve">
-    <value>暂停时间</value>
+    <value>暂停</value>
   </data>
   <data name="Start.Text" xml:space="preserve">
-    <value>开始时间</value>
+    <value>开始</value>
   </data>
   <data name="TotalDuration.Text" xml:space="preserve">
     <value>总持续时间</value>

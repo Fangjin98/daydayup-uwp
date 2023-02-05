@@ -253,7 +253,7 @@ namespace DayDayUp.Views
                 Ioc.Default.GetRequiredService<TodoManager>(),
                 ViewModel.SelectedTodo.todo.ExpectedDurationMins);
 
-            var result = await dialog.ShowAsync();
+            await dialog.ShowAsync();
         }
     }
 }

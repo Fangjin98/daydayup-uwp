@@ -11,23 +11,17 @@
                           Orientation="Vertical"
                           Spacing="8" />
         <DataTemplate x:Key="HorizontalPairTemplate"
-                      x:DataType="local:StartEndPair">
-            <StackPanel Orientation="Vertical" Spacing="4">
-                <TextBlock >
+                      x:DataType="local:TimeStampItem">
+            <Grid>
+                <TextBlock Visibility="{x:Bind IsStarted}" >
                     <Run x:Uid="Start" />
                     <Run Text=": " />
-                    <Run Text="{x:Bind StartDate, Converter={StaticResource DateToStringConverter}}" />
-                </TextBlock>
-                <TextBlock Text="{x:Bind StartTime}" Style="{StaticResource SmallTextStyle}"
-                           Visibility="{x:Bind IsTodayStart}"/>
-                <TextBlock>
+                    <Run Text="{x:Bind DateString}" /></TextBlock>
+                <TextBlock Visibility="{x:Bind IsPaused}">
                     <Run x:Uid="Pause" />
                     <Run Text=": " />
-                    <Run Text="{x:Bind EndDate, Converter={StaticResource DateToStringConverter}}" /></TextBlock>
-                <TextBlock Text="{x:Bind EndTime}"
-                           Style="{StaticResource SmallTextStyle}"
-                           Visibility="{x:Bind IsTodayEnd}"/>
-            </StackPanel>
+                    <Run Text="{x:Bind DateString}" /></TextBlock>
+            </Grid>
         </DataTemplate>
     </UserControl.Resources>
     
