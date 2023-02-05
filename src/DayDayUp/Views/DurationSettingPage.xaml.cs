@@ -25,19 +25,14 @@ namespace DayDayUp.Views
 
         public DurationSettingPage(int duration)
         {
-            this.InitializeComponent();
+            InitializeComponent();
             durationPicker = new DurationPicker(duration);
         }
         
         private DurationPicker durationPicker;
-
         private List<string> minuteValues = (from minute in Enumerable.Range(0,60) select minute.ToString()).ToList();
-
         private List<string> hourValues = (from hour in Enumerable.Range(0, 24) select hour.ToString()).ToList();
-
         private List<string> dayValues = (from day in Enumerable.Range(0, 8) select day.ToString()).ToList();
-
-
     }
 
     internal class DurationPicker : ObservableObject
