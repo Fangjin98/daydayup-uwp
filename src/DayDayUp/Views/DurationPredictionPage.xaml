@@ -26,7 +26,8 @@
             <RowDefinition Height="Auto" />
             <RowDefinition />
         </Grid.RowDefinitions>
-        <Grid Padding="8">
+        <Grid Padding="8"
+              Visibility="{x:Bind predictiedDurations.Count, Converter={StaticResource CountConverter}, Mode=OneWay}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition />
@@ -70,6 +71,7 @@
             </ListView.ItemTemplate>
         </ListView>
         <RichTextBlock 
+            Grid.Row="1"
                        Name="DefaultText"
                        Visibility="{x:Bind predictiedDurations.Count, Converter={StaticResource NegativeCountConverter}, Mode=OneWay}"
                        HorizontalAlignment="Center"
