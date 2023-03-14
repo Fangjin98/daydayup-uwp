@@ -1,8 +1,10 @@
+> ***This project has been migrated to [WinUI 3 implementation](https://github.com/Fangjin98/daydayup-winui3).*** 
+
 <p align="center">
   <a href="#">
     
   </a>
-  <img width="128" src="/assets/logo/300x300.png">
+  <img width="32" src="/assets/logo/300x300.png">
 </p>
 
 <h1 align="center">
@@ -12,8 +14,6 @@
 <p align="center">
   A Light-weight Todo Manager with Time Estimation Tracking.
 </p>
-
-
 
 <p align="center">
   <a style="text-decoration:none" href="https://svgshare.com/i/ZhY.svg" target="_blank">
